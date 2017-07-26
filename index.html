@@ -58,30 +58,30 @@
 
 
 <script>
-let dot11 = document.getElementById("dot11");
-let dot12 = document.getElementById("dot12");
-let dot13 = document.getElementById("dot13");
-let dot14 = document.getElementById("dot14");
-let dot15 = document.getElementById("dot15");
-let dot16 = document.getElementById("dot16");
+var dot11 = document.getElementById("dot11");
+var dot12 = document.getElementById("dot12");
+var dot13 = document.getElementById("dot13");
+var dot14 = document.getElementById("dot14");
+var dot15 = document.getElementById("dot15");
+var dot16 = document.getElementById("dot16");
 
-let dot21 = document.getElementById("dot21");
-let dot22 = document.getElementById("dot22");
-let dot23 = document.getElementById("dot23");
-let dot24 = document.getElementById("dot24");
-let dot25 = document.getElementById("dot25");
-let dot26 = document.getElementById("dot26");
+var dot21 = document.getElementById("dot21");
+var dot22 = document.getElementById("dot22");
+var dot23 = document.getElementById("dot23");
+var dot24 = document.getElementById("dot24");
+var dot25 = document.getElementById("dot25");
+var dot26 = document.getElementById("dot26");
 
-let a1;
-let a2;
-let a3;
-let a4;
-let a5;
-let a6;
+var a1;
+var a2;
+var a3;
+var a4;
+var a5;
+var a6;
 
 var map = {}; // You could also use an array
 
-const clearDots = function() {
+var clearDots = function() {
 	dot11.className = dot12.className = dot13.className = dot14.className = dot15.className = dot16.className = "field";
 }
 
@@ -92,7 +92,7 @@ onkeydown = function(e) {
 	console.log("Key pressed");
 	console.log("Map " + map[e.keyCode]);
 
-	for(let i = 0, len = 12; i < 12; i++) {}
+	for(var i = 0, len = 12; i < 12; i++) {}
 
 	clearDots();
 
@@ -132,14 +132,14 @@ onkeydown = function(e) {
 
 
 
-let ssu = new SpeechSynthesisUtterance();
-let dirty;
+var ssu = new SpeechSynthesisUtterance();
+var dirty;
 
-const allFalse = function() {
+var allFalse = function() {
 	return a1 = a2 = a2 = a3 = a4 = a5 = a6 = false;
 }
 
-const checkSound = function() {
+var checkSound = function() {
 	if(a1 && !(a2 || a3 || a4 || a5 || a6)) {
 		ssu.text = 'a';
 		speechSynthesis.speak(ssu);
@@ -245,7 +245,7 @@ const checkSound = function() {
 		speechSynthesis.speak(ssu);
 	}
 }
-const pronounceSound = function() {
+var pronounceSound = function() {
 
 }
 onkeyup = function(e) {
