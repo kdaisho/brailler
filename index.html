@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS Key Bindings</title>
+</head>
+<body>
+<style>
+.wrapper {
+	display: flex;
+}
+.box {
+	display: block;
+	margin: 0 9px;
+}
+.col {
+	display: inline-block;
+}
+.field {
+	border: 1px solid #666;
+	border-radius: 6px;
+	margin: 6px;
+	height: 12px;
+	width: 12px;
+}
+.field.dot {
+	background: #000;
+}
+</style>
+<h1>JS Key Bindings</h1>
+<div class="wrapper">
+	<div class="box">
+		<div class="col">
+			<div id="dot11" class="field"></div>
+			<div id="dot12" class="field"></div>
+			<div id="dot13" class="field"></div>
+		</div>
+		<div class="col">
+			<div id="dot14" class="field"></div>
+			<div id="dot15" class="field"></div>
+			<div id="dot16" class="field"></div>
+		</div>
+	</div>
+
+	<div class="box">
+		<div class="col">
+			<div id="dot21" class="field"></div>
+			<div id="dot22" class="field"></div>
+			<div id="dot23" class="field"></div>
+		</div>
+		<div class="col">
+			<div id="dot24" class="field"></div>
+			<div id="dot25" class="field"></div>
+			<div id="dot26" class="field"></div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+let dot11 = document.getElementById("dot11");
+let dot12 = document.getElementById("dot12");
+let dot13 = document.getElementById("dot13");
+let dot14 = document.getElementById("dot14");
+let dot15 = document.getElementById("dot15");
+let dot16 = document.getElementById("dot16");
+
+let dot21 = document.getElementById("dot21");
+let dot22 = document.getElementById("dot22");
+let dot23 = document.getElementById("dot23");
+let dot24 = document.getElementById("dot24");
+let dot25 = document.getElementById("dot25");
+let dot26 = document.getElementById("dot26");
+
+let a1;
+let a2;
+let a3;
+let a4;
+let a5;
+let a6;
+
+var map = {}; // You could also use an array
+
+const clearDots = function() {
+	dot11.className = dot12.className = dot13.className = dot14.className = dot15.className = dot16.className = "field";
+}
+
+onkeydown = function(e) {
+	e = e || event; // to deal with IE
+	map[e.keyCode] = e.type == 'keydown';
+	/* insert conditional here */
+	console.log("Key pressed");
+	console.log("Map " + map[e.keyCode]);
+
+	for(let i = 0, len = 12; i < 12; i++) {}
+
+	clearDots();
+
+	if(map[70]) { //F
+		dot11.className = "field dot";
+		map[70] = false;
+		a1 = true;
+	}
+	if(map[68]) { //D
+		dot12.className = "field dot";
+		map[68] = false;
+		a2 = true;
+	}
+	if(map[83]) { //S
+		dot13.className = "field dot";
+		map[83] = false;
+		a3 = true;
+	}
+	if(map[74]) { //J
+		dot14.className = "field dot";
+		map[74] = false;
+		a4 = true;
+	}
+	if(map[75]) { //K
+		dot15.className = "field dot";
+		map[75] = false;
+		a5 = true;
+	}
+	if(map[76]) { //L
+		dot16.className = "field dot";
+		map[76] = false;
+		a6 = true;
+	}
+
+	console.log("widthin " + a1);
+}
+
+
+
+let ssu = new SpeechSynthesisUtterance();
+let dirty;
+
+const allFalse = function() {
+	return a1 = a2 = a2 = a3 = a4 = a5 = a6 = false;
+}
+
+const checkSound = function() {
+	if(a1 && !(a2 || a3 || a4 || a5 || a6)) {
+		ssu.text = 'a';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && !(a3 || a4 || a5 || a6)) {
+		ssu.text = 'b';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a4 && !(a2 || a3 || a5 || a6)) {
+		ssu.text = 'c';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a4 && a5 && !(a2 || a3 ||a6)) {
+		ssu.text = 'd';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a5 && !(a2 || a3 || a4 || a6)) {
+		ssu.text = 'e';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a4 && !(a3 || a5 || a6)) {
+		ssu.text = 'f';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a4 && a5 && !(a3 || a6)) {
+		ssu.text = 'g';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a5 && !(a3 || a4 || a6)) {
+		ssu.text = 'h';
+		speechSynthesis.speak(ssu);
+	}
+	if(a2 && a4 && !(a1 || a3 || a5 || a6)) {
+		ssu.text = 'i';
+		speechSynthesis.speak(ssu);
+	}
+	if(a2 && a4 && a5 && !(a1 || a3 || a6)) {
+		ssu.text = 'j';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && !(a2 || a4 || a5 || a6)) {
+		ssu.text = 'k';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a3 && !(a4 || a5 || a6)) {
+		ssu.text = 'l';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a4 && !(a2 || a5 || a6)) {
+		ssu.text = 'm';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a4 && a5 && !(a2 || a6)) {
+		ssu.text = 'n';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a5 && !(a2 || a4 ||  a6)) {
+		ssu.text = 'o';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a3 && a4 && !(a5 || a6)) {
+		ssu.text = 'p';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a3 && a4 && a5 && !a6) {
+		ssu.text = 'q';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a3 && a5 && !(a4 || a6)) {
+		ssu.text = 'r';
+		speechSynthesis.speak(ssu);
+	}
+	if(a2 && a3 && a4 && !(a1 || a5 || a6)) {
+		ssu.text = 's';
+		speechSynthesis.speak(ssu);
+	}
+	if(a2 && a3 && a4 && a5 && !(a1 || a6)) {
+		ssu.text = 't';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a6 && !(a2 || a4 || a5)) {
+		ssu.text = 'u';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a2 && a3 && a6 && !(a4 || a5)) {
+		ssu.text = 'v';
+		speechSynthesis.speak(ssu);
+	}
+	if(a2 && a4 && a5 && a6 && !(a1 || a3)) {
+		ssu.text = 'w';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a4 && a6 && !(a2 || a5)) {
+		ssu.text = 'x';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a4 && a5 && a6 && !a2) {
+		ssu.text = 'y';
+		speechSynthesis.speak(ssu);
+	}
+	if(a1 && a3 && a5 && a6 && !(a2 || a4)) {
+		ssu.text = 'z';
+		speechSynthesis.speak(ssu);
+	}
+}
+const pronounceSound = function() {
+
+}
+onkeyup = function(e) {
+	checkSound();
+	allFalse();
+}
+
+</script>
+</body>
+</html>
