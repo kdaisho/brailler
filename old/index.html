@@ -86,30 +86,39 @@ var clearDots = function() {
 }
 
 onkeydown = function(e) {
+	// clearDots();
 	e = e || event; // to deal with IE
 	map[e.keyCode] = e.type == 'keydown';
 	/* insert conditional here */
 	console.log("Key pressed");
 	console.log("Map " + map[e.keyCode]);
 
-	for(var i = 0, len = 12; i < 12; i++) {}
-
-	clearDots();
+	// if(!token) {
+		// clearDots();
+	// }
 
 	if(map[70]) { //F
 		dot11.className = "field dot";
 		map[70] = false;
 		a1 = true;
+		dot12.className = dot13.className = dot14.className = dot15.className = dot16.className = 'field';
 	}
 	if(map[68]) { //D
 		dot12.className = "field dot";
 		map[68] = false;
 		a2 = true;
+		if(a1) {
+			dot13.className = dot14.className = dot15.className = dot16.className = 'field';
+		}
+		if(a3) {
+			dot11.className = dot14.className = dot15.className = dot16.className = 'field';
+		}
 	}
 	if(map[83]) { //S
 		dot13.className = "field dot";
 		map[83] = false;
 		a3 = true;
+		dot11.className = dot11.className = dot14.className = dot15.className = dot16.className = 'field';
 	}
 	if(map[74]) { //J
 		dot14.className = "field dot";
@@ -127,7 +136,7 @@ onkeydown = function(e) {
 		a6 = true;
 	}
 
-	console.log("widthin " + a1);
+	// clearDots();
 }
 
 
@@ -143,22 +152,32 @@ var checkSound = function() {
 	if(a1 && !(a2 || a3 || a4 || a5 || a6)) {
 		ssu.text = 'a';
 		speechSynthesis.speak(ssu);
+		// dot11.className = 'field dot';
+		// dot12.className = dot13.className = dot14.className = dot15.className = dot16.className = 'field';
 	}
 	if(a1 && a2 && !(a3 || a4 || a5 || a6)) {
 		ssu.text = 'b';
 		speechSynthesis.speak(ssu);
+		// dot11.className = dot12.className = 'field dot';
+		// dot13.className = dot14.className = dot15.className = dot16.className = 'field';
 	}
 	if(a1 && a4 && !(a2 || a3 || a5 || a6)) {
 		ssu.text = 'c';
 		speechSynthesis.speak(ssu);
+		// dot11.className = dot14.className = 'field dot';
+		// dot12.className = dot13.className = dot15.className = dot16.className = 'field';
 	}
 	if(a1 && a4 && a5 && !(a2 || a3 ||a6)) {
 		ssu.text = 'd';
 		speechSynthesis.speak(ssu);
+		// dot11.className = dot14.className = dot15.className = 'field dot';
+		// dot12.className = dot13.className = dot16.className = 'field';
 	}
 	if(a1 && a5 && !(a2 || a3 || a4 || a6)) {
 		ssu.text = 'e';
 		speechSynthesis.speak(ssu);
+		// dot11.className = dot15.className = 'field dot';
+		// dot12.className = dot13.className = dot14.className = dot16.className = 'field';
 	}
 	if(a1 && a2 && a4 && !(a3 || a5 || a6)) {
 		ssu.text = 'f';
@@ -244,13 +263,27 @@ var checkSound = function() {
 		ssu.text = 'z';
 		speechSynthesis.speak(ssu);
 	}
+	if(!a1 && !a2 && !a3 && !a4 && !a5 && !a6) {
+		clearDots();
+	}
 }
 var pronounceSound = function() {
 
 }
+// var token = 0;
+var token = false;
 onkeyup = function(e) {
 	checkSound();
+	
 	allFalse();
+
+	// if(token) {
+	// 	clearDots();
+	// }
+
+	console.log('token after clear ' + token);
+	token = true;
+	console.log('token last ' + token);
 }
 
 </script>

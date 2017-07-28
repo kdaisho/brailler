@@ -1,0 +1,20 @@
+.wrapper {
+	display: flex;
+}
+.lego {
+	display: block;
+	margin: 0 9px;
+}
+.col {
+	display: inline-block;
+}
+.field {
+	border: 1px solid #666;
+	border-radius: 6px;
+	margin: 6px;
+	height: 12px;
+	width: 12px;
+}
+.field.dot {
+	background: #000;
+}
