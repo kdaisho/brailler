@@ -11,31 +11,42 @@ import * as patterns from './lego-mock';
 
 export class AppComponent {
 
-	title = 'Brailler 1.0';
+	title = 'Brailler 2.0';
 	items;
 	counter = 0;
+	maxCounter;
 	map;
 	say;
 
+	rows = [1];
+
 	constructor(private winRef: WindowRef) {
-		this.items = patterns.legos;
+		this.items = patterns.legos.first;
+		this.maxCounter = this.items.length;
+		console.log(this.maxCounter);
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 	}
 
 	@HostListener('window:keydown', ['$event'])
-	keyboardInput(event: KeyboardEvent) {
+	keyDown(event: KeyboardEvent) {
 		this.map = [];
 		this.map[event.keyCode] = event.type == 'keydown';
 		this.saveKeyCode(this.counter);
 	}
 
 	@HostListener('window:keyup', ['$event'])
-	keyboardInput2(event: KeyboardEvent) {
+	keyUp(event: KeyboardEvent) {
 		this.map = [];
 		this.map[event.keyCode] = event.type == 'keyup';
 		this.sayKeyCode(this.counter);
+		this.checkCounter();
 		this.clearDots(this.counter);
 		this.allFalse(this.counter);
+		if(this.map[32]) {
+			this.addCounter(1);
+		}
+		if(this.map[13]) {
+		}
 	}
 
 	allFalse(x) {
@@ -81,8 +92,18 @@ export class AppComponent {
 		}
 	}
 	
-	addCounter() {
-		return this.counter += 1;
+	addCounter(x) {
+		return this.counter += x;
+	}
+	checkCounter() {
+		if(this.counter >= this.maxCounter - 1) {
+			// this.say.text = 'Do this again!';
+			// this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+			for(var i = 0, len = this.counter; i <= len; i++) {
+				this.clearDots(i);
+			}
+			this.counter = 0;
+		}
 	}
 
 	clearDots(x) {
@@ -92,136 +113,132 @@ export class AppComponent {
 	sayKeyCode(x) {
 		if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'a';
-			// this.counter += 1;
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-			this.say.text = null;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'b';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-			this.say.text = null;
 		}
 		if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'c';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-			this.say.text = null;
 		}
 		if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
 			this.say.text = 'd';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
 			this.say.text = 'e';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'f';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
 			this.say.text = 'g';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
 			this.say.text = 'h';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'i';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
 			this.say.text = 'j';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'k';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && !(this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'l';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'm';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot6)) {
 			this.say.text = 'n';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot4 ||  this.items[x].dot6)) {
 			this.say.text = 'o';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 'p';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !this.items[x].dot6) {
 			this.say.text = 'q';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot4 || this.items[x].dot6)) {
 			this.say.text = 'r';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.say.text = 's';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot6)) {
 			this.say.text = 't';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5)) {
 			this.say.text = 'u';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot4 || this.items[x].dot5)) {
 			this.say.text = 'v';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot3)) {
 			this.say.text = 'w';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot5)) {
 			this.say.text = 'x';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !this.items[x].dot2) {
 			this.say.text = 'y';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4)) {
 			this.say.text = 'z';
-			this.addCounter();
+			this.addCounter(1);
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 		}
 	}

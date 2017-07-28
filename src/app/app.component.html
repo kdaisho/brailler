@@ -1,16 +1,18 @@
-<h1>{{title}}</h1>
 
-<div class="wrapper">
-	<div *ngFor="let item of items; let i = index" class="lego">
-		<div class="col">
-			<div id="dot-{{i+1}}-1" class="field" [class.dot]="item.active1"></div>
-			<div id="dot-{{i+1}}-2" class="field" [class.dot]="item.active2"></div>
-			<div id="dot-{{i+1}}-3" class="field" [class.dot]="item.active3"></div>
-		</div>
-		<div class="col">
-			<div id="dot-{{i+1}}-4" class="field" [class.dot]="item.active4"></div>
-			<div id="dot-{{i+1}}-5" class="field" [class.dot]="item.active5"></div>
-			<div id="dot-{{i+1}}-6" class="field" [class.dot]="item.active6"></div>
+<div class="brailler">
+	<h1 class="title">{{title}}</h1>
+	<div *ngFor="let row of rows; let idx = index; trackBy:post?.id" class="rows">
+		<div *ngFor="let item of items; let i = index" class="lego">
+			<div class="col">
+				<div id="dot-{{idx+1}}-{{i+1}}-1" class="field" [class.dot]="item.active1"></div>
+				<div id="dot-{{idx+1}}-{{i+1}}-2" class="field" [class.dot]="item.active2"></div>
+				<div id="dot-{{idx+1}}-{{i+1}}-3" class="field" [class.dot]="item.active3"></div>
+			</div>
+			<div class="col">
+				<div id="dot-{{idx+1}}-{{i+1}}-4" class="field" [class.dot]="item.active4"></div>
+				<div id="dot-{{idx+1}}-{{i+1}}-5" class="field" [class.dot]="item.active5"></div>
+				<div id="dot-{{idx+1}}-{{i+1}}-6" class="field" [class.dot]="item.active6"></div>
+			</div>
 		</div>
 	</div>
 </div>

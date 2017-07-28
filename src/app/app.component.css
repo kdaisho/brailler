@@ -1,19 +1,31 @@
+h1, h2, p, a {
+	font-family: "Helvetica", "Arial", sans-serif;
+}
+.brailler {
+	padding: 2em .25em;
+}
+.title {
+	font-size: 3em;
+	text-align: center;
+}
 .wrapper {
-	display: flex;
 }
+.rows,
 .lego {
-	display: block;
-	margin: 0 9px;
+	display: flex;
+	margin: 0 auto;
+	max-width: 1366px;
+	text-align: center;
 }
-.col {
-	display: inline-block;
+.lego:last-child {
+	display: none;
 }
 .field {
 	border: 1px solid #666;
-	border-radius: 6px;
-	margin: 6px;
-	height: 12px;
-	width: 12px;
+	border-radius: 8px;
+	margin: 6px 4px;
+	height: 16px;
+	width: 16px;
 }
 .field.dot {
 	background: #000;
