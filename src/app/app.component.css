@@ -5,6 +5,7 @@ h1, h2, p, a {
 	padding: 2em .25em;
 }
 .title {
+	color: #222;
 	font-size: 3em;
 	text-align: center;
 }
@@ -33,7 +34,7 @@ h1, h2, p, a {
 	width: 60px;
 }
 .pointer.display {
-	background: #ff0000;
+	background: #ff1744;
 }
 .field {
 	border: 1px solid #666;
@@ -43,5 +44,5 @@ h1, h2, p, a {
 	width: 16px;
 }
 .field.dot {
-	background: #000;
+	background: #222;
 }

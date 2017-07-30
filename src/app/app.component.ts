@@ -21,8 +21,7 @@ export class AppComponent {
 	keyUpCount = 0;
 	keyCount = 0;
 	isRightKey = false;
-	// isWrongKey;
-
+	audio;
 	rows = [1];
 
 	constructor(private winRef: WindowRef) {
@@ -30,6 +29,7 @@ export class AppComponent {
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.items[0].pointer = true;
+		this.audio = new Audio();
 		console.log(this.maxCounter);
 	}
 
@@ -89,6 +89,13 @@ export class AppComponent {
 		console.log("clearDots fired");
 		this.items[x].active1 = this.items[x].active2 = this.items[x].active3 = this.items[x].active4 = this.items[x].active5 = this.items[x].active6 = false;
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
+	}
+
+	playAudio() {
+		this.audio.src = "assets/sound/typewriter.mp3";
+		this.audio.load();
+		this.audio.volume = .25;
+		this.audio.play();
 	}
 
 	saveSound(x) {
@@ -227,33 +234,33 @@ export class AppComponent {
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		this.map = [];
-		this.map[event.keyCode] = event.type == 'keydown';
+		this.map[event.keyCode] = event.type === 'keydown';
 		this.saveKeyCode(this.counter);
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
 		this.map = [];
-		this.map[event.keyCode] = event.type == 'keyup';
+		this.map[event.keyCode] = event.type === 'keyup';
 		this.saveSound(this.counter);
 		this.keyUpCount++;
-		if(this.isRightKey && (this.keyUpCount == this.keyCount)) {
+		if(this.isRightKey && (this.keyUpCount === this.keyCount)) {
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 			this.keyUpCount = 0;
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
-			if(this.counter != 0) {
+			if(this.counter !== 0) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
 			}
-			if(this.counter == 0) {
+			if(this.counter === 0) {
 				this.items[this.maxCounter - 2].pointer = false;
 				this.items[0].pointer = true;
 			}
 			return;
 		}
-		if(this.isRightKey == false) {
+		if(this.isRightKey === false) {
 			console.log('false key pressed');
 			this.keyUpCount = 0;
 			this.clearDots(this.counter);
@@ -263,12 +270,13 @@ export class AppComponent {
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
+			this.playAudio();
 			if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
 				return;
 			}
-			if(this.counter == 0) {
+			if(this.counter === 0) {
 				console.log("loop by space key");
 				this.items[this.maxCounter - 2].pointer = false;
 				this.items[0].pointer = true;
@@ -276,6 +284,15 @@ export class AppComponent {
 			}
 			this.keyUpCount = 0;
 		}
-		this.isRightKey = false;
+		if(this.map[8]) {
+			if(this.counter !== 0) {
+				this.items[this.counter].pointer = false;
+				this.items[this.counter - 1].pointer = true;
+				this.counter--;
+				this.clearDots(this.counter);
+				this.playAudio();
+				console.log(Object.keys(this.audio));
+			}
+		}
 	}
 }
