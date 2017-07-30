@@ -31,17 +31,17 @@ h1, h2, p, a {
 .pointer {
 	margin-top: 6px;
 	height: 20px;
-	width: 60px;
+	width: 50px;
 }
 .pointer.display {
 	background: #ff1744;
 }
 .field {
 	border: 1px solid #666;
-	border-radius: 8px;
-	margin: 6px 4px;
-	height: 16px;
-	width: 16px;
+	border-radius: 7px;
+	margin: 6px 3px;
+	height: 14px;
+	width: 14px;
 }
 .field.dot {
 	background: #222;
