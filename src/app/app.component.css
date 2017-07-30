@@ -20,8 +20,7 @@ h1, h2, p, a {
 	margin: 0 6px;
 }
 .row:last-child {
-	/*display: none;*/
-	opacity: .5;
+	display: none;
 }
 .dot-group {
 	display: flex;
