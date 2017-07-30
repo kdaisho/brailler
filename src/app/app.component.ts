@@ -78,15 +78,16 @@ export class AppComponent {
 	checkCounter() {
 		if(this.counter >= this.maxCounter - 1) {
 			for(var i = 0, len = this.counter; i <= len; i++) {
-				this.clearDots(i);
+				this.clearRow(i);
 			}
 			this.counter = 0;
 		}
 	}
 
-	clearDots(x) {
+	clearRow(x) {
 		this.items[x].active1 = this.items[x].active2 = this.items[x].active3 = this.items[x].active4 = this.items[x].active5 = this.items[x].active6 = false;
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
+		this.items[x].text = '';
 	}
 
 	playAudio(volume) {
@@ -98,132 +99,132 @@ export class AppComponent {
 
 	saveSound(x) {
 		if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'a';
+			this.items[x].text = this.say.text = 'a';
 			this.keyCount = 1;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'b';
+			this.items[x].text = this.say.text = 'b';
 			this.keyCount = 2;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'c';
+			this.items[x].text = this.say.text = 'c';
 			this.keyCount = 2;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
-			this.say.text = 'd';
+			this.items[x].text = this.say.text = 'd';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-			this.say.text = 'e';
+			this.items[x].text = this.say.text = 'e';
 			this.keyCount = 2;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'f';
+			this.items[x].text = this.say.text = 'f';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
-			this.say.text = 'g';
+			this.items[x].text = this.say.text = 'g';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-			this.say.text = 'h';
+			this.items[x].text = this.say.text = 'h';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'i';
+			this.items[x].text = this.say.text = 'i';
 			this.keyCount = 2;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
-			this.say.text = 'j';
+			this.items[x].text = this.say.text = 'j';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'k';
+			this.items[x].text = this.say.text = 'k';
 			this.keyCount = 2;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && !(this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'l';
+			this.items[x].text = this.say.text = 'l';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'm';
+			this.items[x].text = this.say.text = 'm';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot6)) {
-			this.say.text = 'n';
+			this.items[x].text = this.say.text = 'n';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot4 ||  this.items[x].dot6)) {
-			this.say.text = 'o';
+			this.items[x].text = this.say.text = 'o';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 'p';
+			this.items[x].text = this.say.text = 'p';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !this.items[x].dot6) {
-			this.say.text = 'q';
+			this.items[x].text = this.say.text = 'q';
 			this.keyCount = 5;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot4 || this.items[x].dot6)) {
-			this.say.text = 'r';
+			this.items[x].text = this.say.text = 'r';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot5 || this.items[x].dot6)) {
-			this.say.text = 's';
+			this.items[x].text = this.say.text = 's';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot6)) {
-			this.say.text = 't';
+			this.items[x].text = this.say.text = 't';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5)) {
-			this.say.text = 'u';
+			this.items[x].text = this.say.text = 'u';
 			this.keyCount = 3;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot4 || this.items[x].dot5)) {
-			this.say.text = 'v';
+			this.items[x].text = this.say.text = 'v';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot3)) {
-			this.say.text = 'w';
+			this.items[x].text = this.say.text = 'w';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot5)) {
-			this.say.text = 'x';
+			this.items[x].text = this.say.text = 'x';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !this.items[x].dot2) {
-			this.say.text = 'y';
+			this.items[x].text = this.say.text = 'y';
 			this.keyCount = 5;
 			this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4)) {
-			this.say.text = 'z';
+			this.items[x].text = this.say.text = 'z';
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
@@ -270,7 +271,7 @@ export class AppComponent {
 		if(this.isRightKey === false) {
 			console.log('false key pressed');
 			this.keyUpCount = 0;
-			this.clearDots(this.counter);
+			this.clearRow(this.counter);
 			this.checkCounter();
 		}
 		if(this.map[32]) {
@@ -295,8 +296,9 @@ export class AppComponent {
 				this.items[this.counter].pointer = false;
 				this.items[this.counter - 1].pointer = true;
 				this.counter--;
-				this.clearDots(this.counter);
+				this.clearRow(this.counter);
 				this.playAudio(.3);
+				this.items[this.counter].text = '';
 			}
 		}
 	}

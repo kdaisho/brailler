@@ -46,3 +46,8 @@ h1, h2, p, a {
 .field.dot {
 	background: #222;
 }
+.character {
+	font-size: 4em;
+	margin: .1em 0 0;
+	text-align: center;
+}
