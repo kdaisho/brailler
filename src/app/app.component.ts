@@ -91,10 +91,10 @@ export class AppComponent {
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
 	}
 
-	playAudio() {
+	playAudio(volume) {
 		this.audio.src = "assets/sound/typewriter.mp3";
 		this.audio.load();
-		this.audio.volume = .25;
+		this.audio.volume = volume;
 		this.audio.play();
 	}
 
@@ -258,6 +258,7 @@ export class AppComponent {
 				this.items[this.maxCounter - 2].pointer = false;
 				this.items[0].pointer = true;
 			}
+			this.playAudio(.15);
 			return;
 		}
 		if(this.isRightKey === false) {
@@ -270,7 +271,7 @@ export class AppComponent {
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
-			this.playAudio();
+			this.playAudio(.3);
 			if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
@@ -290,7 +291,7 @@ export class AppComponent {
 				this.items[this.counter - 1].pointer = true;
 				this.counter--;
 				this.clearDots(this.counter);
-				this.playAudio();
+				this.playAudio(.3);
 				console.log(Object.keys(this.audio));
 			}
 		}
