@@ -10,7 +10,7 @@ h1, h2, p, a {
 	text-align: center;
 }
 .wrapper {
-	max-width: 1366px;
+	max-width: 1199px;
 	margin: 0 auto;
 }
 .rows {
@@ -18,7 +18,7 @@ h1, h2, p, a {
 	justify-content: center;
 }
 .row {
-	margin: 0 6px;
+	margin: 0 2px;
 }
 .row:last-child {
 	display: none;
