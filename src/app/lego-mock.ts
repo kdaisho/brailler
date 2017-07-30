@@ -13,41 +13,7 @@ export const legos = {
 			dot4: false,
 			dot5: false,
 			dot6: false,
-			counter: 0
-		},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	],
-	second: [
-		{
-			active1: false,
-			active2: false,
-			active3: false,
-			active4: false,
-			active5: false,
-			active6: false,
-			dot1: false,
-			dot2: false,
-			dot3: false,
-			dot4: false,
-			dot5: false,
-			dot6: false,
-			counter: 0
+			pointer: false
 		},
 		{},
 		{},
@@ -67,4 +33,38 @@ export const legos = {
 		{},
 		{}
 	]
+	// second: [
+	// 	{
+	// 		active1: false,
+	// 		active2: false,
+	// 		active3: false,
+	// 		active4: false,
+	// 		active5: false,
+	// 		active6: false,
+	// 		dot1: false,
+	// 		dot2: false,
+	// 		dot3: false,
+	// 		dot4: false,
+	// 		dot5: false,
+	// 		dot6: false,
+	// 		pointer: false
+	// 	},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{},
+	// 	{}
+	// ]
 };

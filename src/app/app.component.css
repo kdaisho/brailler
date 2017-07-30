@@ -9,16 +9,32 @@ h1, h2, p, a {
 	text-align: center;
 }
 .wrapper {
-}
-.rows,
-.lego {
-	display: flex;
-	margin: 0 auto;
 	max-width: 1366px;
-	text-align: center;
+	margin: 0 auto;
 }
-.lego:last-child {
-	display: none;
+.rows {
+	display: flex;
+	justify-content: center;
+}
+.row {
+	margin: 0 6px;
+}
+.row:last-child {
+	/*display: none;*/
+	opacity: .5;
+}
+.dot-group {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+.pointer {
+	margin-top: 6px;
+	height: 20px;
+	width: 60px;
+}
+.pointer.display {
+	background: #ff0000;
 }
 .field {
 	border: 1px solid #666;
