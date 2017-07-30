@@ -29,7 +29,6 @@ export class AppComponent {
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.items[0].pointer = true;
-		this.audio = new Audio();
 		console.log(this.maxCounter);
 	}
 
@@ -86,14 +85,13 @@ export class AppComponent {
 	}
 
 	clearDots(x) {
-		console.log("clearDots fired");
 		this.items[x].active1 = this.items[x].active2 = this.items[x].active3 = this.items[x].active4 = this.items[x].active5 = this.items[x].active6 = false;
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
 	}
 
 	playAudio(volume) {
+		this.audio = new Audio();
 		this.audio.src = "assets/sound/typewriter.mp3";
-		this.audio.load();
 		this.audio.volume = volume;
 		this.audio.play();
 	}
@@ -229,6 +227,11 @@ export class AppComponent {
 			this.keyCount = 4;
 			this.isRightKey = true;
 		}
+		//Issue: when 5 keys pressed then released one of them, you can press key for dot6 and it reads 'q' when you release everything.
+		//This is a patch.
+		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6) {
+			this.isRightKey = false;
+		}
 	}
 
 	@HostListener('window:keydown', ['$event'])
@@ -245,6 +248,9 @@ export class AppComponent {
 		this.saveSound(this.counter);
 		this.keyUpCount++;
 		if(this.isRightKey && (this.keyUpCount === this.keyCount)) {
+			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+				this.winRef.nativeWindow.speechSynthesis.cancel();
+			}
 			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
 			this.keyUpCount = 0;
 			this.isRightKey = false;
@@ -278,7 +284,6 @@ export class AppComponent {
 				return;
 			}
 			if(this.counter === 0) {
-				console.log("loop by space key");
 				this.items[this.maxCounter - 2].pointer = false;
 				this.items[0].pointer = true;
 				return;
@@ -292,7 +297,6 @@ export class AppComponent {
 				this.counter--;
 				this.clearDots(this.counter);
 				this.playAudio(.3);
-				console.log(Object.keys(this.audio));
 			}
 		}
 	}
