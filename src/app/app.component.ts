@@ -24,10 +24,16 @@ export class AppComponent {
 	audio;
 	rows = [1];
 
+	//Experimental: audio
+	audioCtx;
+	oscillator;
+	volume;
+
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
+		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 		console.log(this.maxCounter);
 	}
@@ -90,11 +96,20 @@ export class AppComponent {
 		this.items[x].text = '';
 	}
 
-	playAudio(volume) {
-		this.audio = new Audio();
-		this.audio.src = "assets/sound/typewriter.mp3";
-		this.audio.volume = volume;
-		this.audio.play();
+	playAudio(freq, vol, duration) {
+		//create the volume node;
+		this.volume = this.audioCtx.createGain();
+		this.volume.connect(this.audioCtx.destination);
+		this.volume.gain.value = vol;
+
+		//connect the oscillator to the nodes
+		this.oscillator = this.audioCtx.createOscillator();
+		this.oscillator.type = 'sawtooth';
+		this.oscillator.frequency.value = freq;
+
+		this.oscillator.connect(this.volume);
+		this.oscillator.start();
+		this.oscillator.stop(this.audioCtx.currentTime + duration);
 	}
 
 	saveSound(x) {
@@ -265,7 +280,6 @@ export class AppComponent {
 				this.items[this.maxCounter - 2].pointer = false;
 				this.items[0].pointer = true;
 			}
-			this.playAudio(.15);
 			return;
 		}
 		if(this.isRightKey === false) {
@@ -278,7 +292,7 @@ export class AppComponent {
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
-			this.playAudio(.3);
+			this.playAudio(400, .2, .06);
 			if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
@@ -297,7 +311,7 @@ export class AppComponent {
 				this.items[this.counter - 1].pointer = true;
 				this.counter--;
 				this.clearRow(this.counter);
-				this.playAudio(.3);
+				this.playAudio(400, .2, .06);
 				this.items[this.counter].text = '';
 			}
 		}
