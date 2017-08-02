@@ -1,11 +1,12 @@
 h1, h2, p, a {
+	color: #fff;
 	font-family: "Helvetica", "Arial", sans-serif;
 }
 .brailler {
 	padding: 2em .25em;
 }
 .title {
-	color: #222;
+	color: #fff;
 	font-size: 3em;
 	text-align: center;
 }
@@ -28,26 +29,37 @@ h1, h2, p, a {
 	justify-content: center;
 	margin: 0 auto;
 }
+.dot-group.focused {
+	/*background: rgba(255, 23, 68, .5);*/
+	background: rgba(118, 255, 3, .75);
+}
 .pointer {
-	margin-top: 6px;
-	height: 20px;
+	height: 16px;
 	width: 50px;
 }
-.pointer.display {
-	background: #ff1744;
+.pointer.focused {
+	/*background: rgba(255, 23, 68, 1);*/
+	background: rgba(118, 255, 3, 1);
 }
 .field {
-	border: 1px solid #666;
+	border: 1px solid #fff;
 	border-radius: 7px;
 	margin: 6px 3px;
 	height: 14px;
 	width: 14px;
 }
+.field.focused {
+	border: 1px solid #000;
+}
 .field.dot {
-	background: #222;
+	background: #fff;
+}
+.field.dot.focused {
+	background: #000;
 }
 .character {
 	font-size: 4em;
+	height: 1.2em;
 	margin: .1em 0 0;
 	text-align: center;
 }

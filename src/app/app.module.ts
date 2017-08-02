@@ -5,10 +5,12 @@ import { HttpModule } from '@angular/http';
 import { WindowRef } from './windowRef';
 
 import { AppComponent } from './app.component';
+import { SoundComponent } from './sound.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		SoundComponent
 	],
 	imports: [
 		BrowserModule,
