@@ -111,137 +111,208 @@ export class SoundComponent {
 		this.oscillator.stop(this.audioCtx.currentTime + duration);
 	}
 
+	isNum: boolean;
+
+	saveNumber(x) {
+		if(this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2)) {
+			this.keyCount = 4;
+			this.items[x].text = '#';
+			this.say.text = 'Numbers';
+			this.isNum = true;
+			this.isRightKey = true;
+			console.log(this.isNum);
+		}
+		if(this.isNum) {
+			if(this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4)) {
+				this.keyCount = 2;
+				// this.isRightKey = true;
+				this.isNum = false;
+			}
+			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '0';
+				this.keyCount = 3;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '1';
+				this.keyCount = 1;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '2';
+				this.keyCount = 2;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '3';
+				this.keyCount = 2;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '4';
+				this.keyCount = 3;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '5';
+				this.keyCount = 2;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '6';
+				this.keyCount = 3;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '7';
+				this.keyCount = 4;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '8';
+				this.keyCount = 3;
+				// this.isRightKey = true;
+			}
+			if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
+				this.items[x].text = this.say.text = '9';
+				this.keyCount = 2;
+				// this.isRightKey = true;
+			}
+		}
+	}
+
 	saveSound(x) {
 		if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'a';
 			this.keyCount = 1;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'b';
 			this.keyCount = 2;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'c';
 			this.keyCount = 2;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'd';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'e';
 			this.keyCount = 2;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'f';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'g';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'h';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'i';
 			this.keyCount = 2;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'j';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'k';
 			this.keyCount = 2;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && !(this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'l';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'm';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'n';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot4 ||  this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'o';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'p';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !this.items[x].dot6) {
 			this.items[x].text = this.say.text = 'q';
 			this.keyCount = 5;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot4 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 'r';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot5 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 's';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot6)) {
 			this.items[x].text = this.say.text = 't';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5)) {
 			this.items[x].text = this.say.text = 'u';
 			this.keyCount = 3;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot4 || this.items[x].dot5)) {
 			this.items[x].text = this.say.text = 'v';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot3)) {
 			this.items[x].text = this.say.text = 'w';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot5)) {
 			this.items[x].text = this.say.text = 'x';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !this.items[x].dot2) {
 			this.items[x].text = this.say.text = 'y';
 			this.keyCount = 5;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
 		if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4)) {
 			this.items[x].text = this.say.text = 'z';
 			this.keyCount = 4;
-			this.isRightKey = true;
+			// this.isRightKey = true;
 		}
+		// this.isRightKey = true;
 		//Issue: when 5 keys pressed then released one of them, you can press key for dot6 and it reads 'q' when you release everything.
 		//This is a patch.
 		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6) {
@@ -261,6 +332,7 @@ export class SoundComponent {
 		this.map = [];
 		this.map[event.keyCode] = event.type === 'keyup';
 		this.saveSound(this.counter);
+		this.saveNumber(this.counter);
 		this.keyUpCount++;
 		if(this.isRightKey && (this.keyUpCount === this.keyCount)) {
 			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
@@ -287,7 +359,9 @@ export class SoundComponent {
 			this.clearRow(this.counter);
 			this.checkCounter();
 		}
+		//Space key
 		if(this.map[32]) {
+			this.isNum = false;
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
@@ -304,6 +378,7 @@ export class SoundComponent {
 			}
 			this.keyUpCount = 0;
 		}
+		//Delete key
 		if(this.map[8]) {
 			if(this.counter !== 0) {
 				this.items[this.counter].pointer = false;
