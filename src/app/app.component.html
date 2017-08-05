@@ -4,7 +4,9 @@
 		<!-- <div *ngFor="let row of rows; let idx = index; trackBy:post?.id" class="rows"> -->
 		<div class="rows">
 			<div *ngFor="let item of items; let i = index" class="row">
-				<p class="character">{{item.text}}</p>
+				<p class="character">
+					<span *ngIf="item.text !== 'alphabet'">{{item.text}}</span>
+				</p>
 				<div class="dot-group" [class.focused]="item.pointer">
 					<div class="col">
 						<div id="dot-{{idx+1}}-{{i+1}}-1" class="field" [ngClass]="{'dot': item.active1, 'focused': item.pointer}"></div>

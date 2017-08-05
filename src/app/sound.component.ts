@@ -21,7 +21,7 @@ export class SoundComponent {
 	keyCount = 0;
 	isRightKey = false;
 	audio;
-	rows = [1];
+	// rows = [1];
 	stroke = 0;
 
 	//Experimental: audio
@@ -120,27 +120,31 @@ export class SoundComponent {
 
 	isNum: boolean;
 	isNumKey: boolean = false;
-	numInit = 0;
-	numCanceller: boolean;
+	numSignCount: number = 0;
+	// numCancelCount: boolean;
+	isNumCancel: boolean = false;
+	numCancelCount: number = 0;
 
 	saveNumber(x) {
 		if(this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2)) {
 			this.items[x].text = '#';
-			this.say.text = 'Numbers';
-			// this.numInit += 1;
+			this.say.text = 'numbers';
+			// this.numSignCount += 1;
 			this.isNum = true;
 			this.isNumKey = true;
 			this.isRightKey = true;
 			console.log("isNum? " +this.isNum);
-			console.log("first numInit " + this.numInit);
+			console.log("first numSignCount " + this.numSignCount);
 		}
 
 		//Num canceller
 		if(this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4)) {
+			this.items[x].text = 'alphabet';
 			this.isRightKey = true;
-			this.numInit = 0;
-			this.numCanceller = true;
-			this.isNum = false;
+			this.isNumCancel = true;
+			// this.numSignCount = 0;
+			// this.numCancelCount = true;
+			// this.isNum = false;
 		}
 		if(this.isNum) {
 			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
@@ -294,11 +298,23 @@ export class SoundComponent {
 			this.addCounter(1);
 			this.checkCounter();
 			if(this.isNum && this.isNumKey) {
-				this.numInit += 1;
-				console.log("numInit when numKey pressed " + this.numInit);
+				this.numSignCount += 1;
+				console.log("numSignCount when numKey pressed " + this.numSignCount);
 				this.isNumKey = false;
 			}
-			console.log("numInit when released " + this.numInit);
+			console.log("numSignCount when released " + this.numSignCount);
+			//NumCancel Keys released;
+			// if(this.isNumCancel && this.numCancelCount == 0) {
+			// if(this.isNumCancel) {
+			let self = this.counter - 1;
+			if(this.items[self].text === 'alphabet') {
+				this.numSignCount--;
+				console.log("numCancelCount: " + this.numCancelCount);
+				if(this.numSignCount <= 0) {
+					this.isNum = false;
+					console.log("num is successfully cancelled");
+				}
+			}
 			if(this.counter !== 0) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
@@ -314,7 +330,6 @@ export class SoundComponent {
 			this.clearBlock(this.counter);
 			this.checkCounter();
 		}
-		console.log("first active3? " + this.items[this.counter].active3);
 		//Space key
 		if(this.map[32]) {
 			this.isNum = false;
@@ -339,26 +354,25 @@ export class SoundComponent {
 
 			if(this.counter !== 0) {
 				let self = this.counter - 1;
-				if(this.numInit > 0 && this.items[self].text === '#') {
+				//When numSign was erased
+				if(this.numSignCount > 0 && this.items[self].text === '#') {
 					console.log("self " + self);
 
-					this.numInit--;
+					this.numSignCount--;
 					console.log("Num -1");
-					if(this.numInit === 0) {
+					if(this.numSignCount === 0) {
 						this.isNum = false;
 						console.log("Num cancelled!");
 					}
 
 				}
-				if(this.numCanceller) {
-					console.log('numCanceller was ' + this.numCanceller);
-					let self2 = this.counter - 1;
-					console.log("self2 " + self2);
-					console.log("second active3? " + this.items[self2].active5);
-
-					if(this.items[self2].active5 && this.items[self2].active6 && !(this.items[self2].active1 || this.items[self2].active2 || this.items[self2].active3 || this.items[self2].active4)) {
-						console.log("numCanceller cancelled => number");
-						this.isNum =true;
+				//When numCancelSign was erased
+				if(this.items[self].text === 'alphabet') {
+					console.log("one alphabetSign erased");
+					this.numSignCount++;
+					if(this.numSignCount >= 1) {
+						this.isNum = true;
+						console.log("Num has come back");
 					}
 				}
 
