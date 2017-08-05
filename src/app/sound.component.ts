@@ -17,12 +17,9 @@ export class SoundComponent {
 	map;
 	say;
 
-	// keyUpCount = 0;
 	keyCount = 0;
 	isRightKey = false;
 	audio;
-	// rows = [1];
-	stroke = 0;
 
 	//Experimental: audio
 	audioCtx;
@@ -43,37 +40,31 @@ export class SoundComponent {
 			this.items[x].dot1 = true;
 			this.items[x].test = true;
 			this.map[70] = false;
-			this.stroke++;
 		}
 		if(this.map[68]) {
 			this.items[x].dot2 = true;
 			this.items[x].test = true;
 			this.map[68] = false;
-			this.stroke++;
 		}
 		if(this.map[83]) {
 			this.items[x].dot3 = true;
 			this.items[x].test = true;
 			this.map[83] = false;
-			this.stroke++;
 		}
 		if(this.map[74]) {
 			this.items[x].dot4 = true;
 			this.items[x].test = true;
 			this.map[74] = false;
-			this.stroke++;
 		}
 		if(this.map[75]) {
 			this.items[x].dot5 = true;
 			this.items[x].test = true;
 			this.map[75] = false;
-			this.stroke++;
 		}
 		if(this.map[76]) {
 			this.items[x].dot6 = true;
 			this.items[x].test = true;
 			this.map[76] = false;
-			this.stroke++;
 		}
 	}
 	
@@ -122,12 +113,9 @@ export class SoundComponent {
 		if(this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2)) {
 			this.items[x].text = '#';
 			this.say.text = 'numbers';
-			// this.numSignCount += 1;
 			this.isNum = true;
 			this.isNumKey = true;
 			this.isRightKey = true;
-			console.log("isNum? " +this.isNum);
-			console.log("first numSignCount " + this.numSignCount);
 		}
 
 		//Num canceller
@@ -135,9 +123,6 @@ export class SoundComponent {
 			this.items[x].text = 'alphabet';
 			this.isRightKey = true;
 			this.isNumCancel = true;
-			// this.numSignCount = 0;
-			// this.numCancelCount = true;
-			// this.isNum = false;
 		}
 		if(this.isNum) {
 			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
@@ -277,10 +262,6 @@ export class SoundComponent {
 		this.map[event.keyCode] = event.type === 'keyup';
 		this.saveSound(this.counter);
 		this.saveNumber(this.counter);
-		// this.keyUpCount++;
-		console.log("Stroke? " + this.stroke);
-		this.stroke--;
-		// if(this.isRightKey && this.stroke == 0) {
 		if(this.isRightKey) {
 			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
 				this.winRef.nativeWindow.speechSynthesis.cancel();
