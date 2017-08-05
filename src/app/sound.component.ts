@@ -40,42 +40,36 @@ export class SoundComponent {
 
 	saveKeyCode(x) {
 		if(this.map[70]) {
-			this.items[x].active1 = true;
 			this.items[x].dot1 = true;
 			this.items[x].test = true;
 			this.map[70] = false;
 			this.stroke++;
 		}
 		if(this.map[68]) {
-			this.items[x].active2 = true;
 			this.items[x].dot2 = true;
 			this.items[x].test = true;
 			this.map[68] = false;
 			this.stroke++;
 		}
 		if(this.map[83]) {
-			this.items[x].active3 = true;
 			this.items[x].dot3 = true;
 			this.items[x].test = true;
 			this.map[83] = false;
 			this.stroke++;
 		}
 		if(this.map[74]) {
-			this.items[x].active4 = true;
 			this.items[x].dot4 = true;
 			this.items[x].test = true;
 			this.map[74] = false;
 			this.stroke++;
 		}
 		if(this.map[75]) {
-			this.items[x].active5 = true;
 			this.items[x].dot5 = true;
 			this.items[x].test = true;
 			this.map[75] = false;
 			this.stroke++;
 		}
 		if(this.map[76]) {
-			this.items[x].active6 = true;
 			this.items[x].dot6 = true;
 			this.items[x].test = true;
 			this.map[76] = false;
@@ -97,7 +91,6 @@ export class SoundComponent {
 	}
 
 	clearBlock(x) {
-		this.items[x].active1 = this.items[x].active2 = this.items[x].active3 = this.items[x].active4 = this.items[x].active5 = this.items[x].active6 = false;
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
 		this.items[x].text = '';
 	}
