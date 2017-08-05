@@ -304,10 +304,8 @@ export class SoundComponent {
 			}
 			console.log("numSignCount when released " + this.numSignCount);
 			//NumCancel Keys released;
-			// if(this.isNumCancel && this.numCancelCount == 0) {
-			// if(this.isNumCancel) {
 			let self = this.counter - 1;
-			if(this.items[self].text === 'alphabet') {
+			if(this.counter !== 0 && this.items[self].text === 'alphabet') {
 				this.numSignCount--;
 				console.log("numCancelCount: " + this.numCancelCount);
 				if(this.numSignCount <= 0) {
