@@ -119,6 +119,7 @@ export class SoundComponent {
 	}
 
 	isNum: boolean;
+	isNumKey: boolean = false;
 	numInit = 0;
 	numCanceller: boolean;
 
@@ -126,9 +127,11 @@ export class SoundComponent {
 		if(this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2)) {
 			this.items[x].text = '#';
 			this.say.text = 'Numbers';
+			// this.numInit += 1;
 			this.isNum = true;
+			this.isNumKey = true;
 			this.isRightKey = true;
-			console.log("oioi " +this.isNum);
+			console.log("isNum? " +this.isNum);
 			console.log("first numInit " + this.numInit);
 		}
 
@@ -280,7 +283,8 @@ export class SoundComponent {
 		// this.keyUpCount++;
 		console.log("Stroke? " + this.stroke);
 		this.stroke--;
-		if(this.isRightKey && this.stroke == 0) {
+		// if(this.isRightKey && this.stroke == 0) {
+		if(this.isRightKey) {
 			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
 				this.winRef.nativeWindow.speechSynthesis.cancel();
 			}
@@ -289,6 +293,12 @@ export class SoundComponent {
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
+			if(this.isNum && this.isNumKey) {
+				this.numInit += 1;
+				console.log("numInit when numKey pressed " + this.numInit);
+				this.isNumKey = false;
+			}
+			console.log("numInit when released " + this.numInit);
 			if(this.counter !== 0) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
@@ -328,20 +338,15 @@ export class SoundComponent {
 		if(this.map[8]) {
 
 			if(this.counter !== 0) {
-				console.log('numInit? ' + this.numInit);
-				let haha = this.counter - 1;
-				console.log('text? ' + this.items[haha].text);
-				if(this.numInit !== 0) {
-					let self = this.counter - 1;
+				let self = this.counter - 1;
+				if(this.numInit > 0 && this.items[self].text === '#') {
 					console.log("self " + self);
-					console.log("second active3? " + this.items[self].active3);
 
-					if(this.items[self].text == '#') {
-						console.log("Num cancelled");
-						this.numInit--;
-						if(this.numInit == 0) {
-							this.isNum = false;
-						}
+					this.numInit--;
+					console.log("Num -1");
+					if(this.numInit === 0) {
+						this.isNum = false;
+						console.log("Num cancelled!");
 					}
 
 				}
