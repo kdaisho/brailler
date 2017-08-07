@@ -293,7 +293,7 @@ export class SoundComponent {
 		//Space key
 		if(this.map[32]) {
 			this.playAudio(600, .15, .06);
-			this.items[this.counter].text = '!';
+			this.items[this.counter].text = ' ';
 			this.addCounter(1);
 			this.checkCounter();
 			
@@ -334,7 +334,7 @@ export class SoundComponent {
 				}
 
 				//When space is erased
-				if(this.items[self].text === '!') {
+				if(this.items[self].text === ' ') {
 					this.isNum = false;
 					if(this.items[this.counter].wasNum) {
 						this.isNum = true;
