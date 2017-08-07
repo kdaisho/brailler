@@ -105,7 +105,7 @@ export class SoundComponent {
 	}
 
 	isNum: boolean = false;
-	// wasNum: boolean = false;
+	// isLetter: boolean = true;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
 
@@ -326,28 +326,19 @@ export class SoundComponent {
 
 			if(this.counter !== 0) {
 				let self = this.counter - 1;
+
 				//When numSign is erased
 				if(this.items[self].text === '#') {
-					
+					this.isNum = false;
 				}
-				// else if(this.isNum && this.wasNum) {
 
-				// }
-				//When numCancelSign is erased
-				// if(this.items[self].text === 'alphabet') {
-				// 	console.log("one alphabetSign erased");
-				// 	// this.numSignCount++;
-				// 	if(this.numSignCount >= 1) {
-				// 		this.isNum = true;
-				// 		console.log("Num has come back");
-				// 	}
-				// }
+				//When numCanceller is erased
+				if(this.items[self].text === 'alphabet') {
+					this.isNum = true;
+				}
 
 				//When space is erased
 				if(this.items[self].text === '!') {
-					console.log("space was erased. position " + self);
-					console.log(self + " was num? " + this.items[self].wasNum);
-					console.log(this.counter + " was num? " + this.items[this.counter].wasNum);
 					this.isNum = false;
 					if(this.items[this.counter].wasNum) {
 						this.isNum = true;
