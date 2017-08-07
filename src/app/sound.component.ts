@@ -79,7 +79,7 @@ export class SoundComponent {
 			}
 			this.counter = 0;
 			this.isNum = false;
-			this.numSignCount = 0;
+			// this.numSignCount = 0;
 		}
 	}
 
@@ -104,51 +104,31 @@ export class SoundComponent {
 		this.oscillator.stop(this.audioCtx.currentTime + duration);
 	}
 
-	isNum: boolean;
-	isNumKey: boolean = false;
+	isNum: boolean = false;
+	// wasNum: boolean = false;
 	numSignCount: number = 0;
-	// numCancelCount: boolean;
-	isNumCancel: boolean = false;
 	numCancelCount: number = 0;
 
 	saveNumber(x) {
 		//Num initiator
-		// if(this.numSignCount === 0 && !this.isNum) {
-		if(this.numSignCount <= 0) {
+		if(!this.isNum) {
 			if(this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2)) {
 				this.items[x].text = '#';
 				this.say.text = 'numbers';
-				this.isNum = true;
-				this.isNumKey = true;
 				this.isRightKey = true;
-
-
-				this.numSignCount++;
+				this.isNum = true;
 			}
 		}
-
+		console.log('ff ' + this.isNum);
 		//Num canceller
-		//Prevent this to be typed in a row
-		let self;
-		if(x !== 0) {
-			self = x - 1;
-		}
-		else {
-			self = x;
-		}
-		// let re = RegExp(/^[a-zA-Z]*$/);
-		// console.log(re);
-
-		// if((this.items[self].text !== 'alphabet') || (this.items[self].text == (0 || 1 || 2 || 3|| 4||5||6||7||8||9))) {
-		if((this.items[self].text !== 'alphabet') && this.isNum) {
-		// if((this.items[self].text !== 'alphabet') && (this.items[self].text != re)) {
-		// if(this.items[self].text !== 'alphabet') {
+		if(this.isNum) {
 			if(this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4)) {
 				this.items[x].text = 'alphabet';
 				this.isRightKey = true;
-				this.isNumCancel = true;
+				this.isNum = false;
 			}
 		}
+
 		if(this.isNum) {
 			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
 				this.items[x].text = this.say.text = '0';
@@ -296,22 +276,7 @@ export class SoundComponent {
 			this.isRightKey = false;
 			this.addCounter(1);
 			this.checkCounter();
-			if(this.isNum && this.isNumKey) {
-				// this.numSignCount++;
-				console.log("numSignCount when numKey pressed " + this.numSignCount);
-				this.isNumKey = false;
-			}
-			console.log("numSignCount when released " + this.numSignCount);
-			//NumCancel Keys released;
-			let self = this.counter - 1;
-			if(this.counter !== 0 && this.items[self].text === 'alphabet') {
-				this.numSignCount--;
-				console.log("numCancelCount: " + this.numCancelCount);
-				if(this.numSignCount <= 0) {
-					this.isNum = false;
-					console.log("num is successfully cancelled");
-				}
-			}
+
 			if(this.counter !== 0) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
@@ -333,19 +298,17 @@ export class SoundComponent {
 			this.items[this.counter].text = '!';
 			this.addCounter(1);
 			this.checkCounter();
-			// this.items[this.counter].isSpace = true;
-
-			// this.isNum = false;
-			if(this.numSignCount >= 1) {
-				this.numSignCount--;
-				console.log("numSingCount subtracted by 1: " + this.numSignCount);
-			}
-			if(this.numSignCount <= 0) {
-				console.log("Num completely cancelled by space key")
+			
+			if(this.isNum) {
+				this.items[this.counter].wasNum = true;
 				this.isNum = false;
 			}
+			else if(!this.isNum){
+				this.items[this.counter].wasNum = false;
+			}
+			// this.isNum = false;
+			console.log("position: " + this.counter + " wasNum? " + this.items[this.counter].wasNum);
 
-			// this.isRightKey = false;
 			if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
 				this.items[this.counter].pointer = true;
 				this.items[this.counter - 1].pointer = false;
@@ -364,40 +327,30 @@ export class SoundComponent {
 			if(this.counter !== 0) {
 				let self = this.counter - 1;
 				//When numSign is erased
-				if(this.numSignCount > 0 && this.items[self].text === '#') {
-					console.log("self " + self);
-
-					this.numSignCount--;
-					console.log("Num -1");
-					if(this.numSignCount === 0) {
-						this.isNum = false;
-						console.log("Num cancelled!");
-					}
-
+				if(this.items[self].text === '#') {
+					
 				}
+				// else if(this.isNum && this.wasNum) {
+
+				// }
 				//When numCancelSign is erased
-				if(this.items[self].text === 'alphabet') {
-					console.log("one alphabetSign erased");
-					this.numSignCount++;
-					if(this.numSignCount >= 1) {
-						this.isNum = true;
-						console.log("Num has come back");
-					}
-				}
+				// if(this.items[self].text === 'alphabet') {
+				// 	console.log("one alphabetSign erased");
+				// 	// this.numSignCount++;
+				// 	if(this.numSignCount >= 1) {
+				// 		this.isNum = true;
+				// 		console.log("Num has come back");
+				// 	}
+				// }
 
 				//When space is erased
-				console.log("isSpace: " + this.items[self].isSpace);
-				console.log("numSingCount: " + this.numSignCount);
 				if(this.items[self].text === '!') {
-					let self2 = self - 1;
-					if(this.items[self2].text !== 'alphabet') {
-						alert("One space erased");
-						this.numSignCount++;
-					}
-					console.log("last numSignCount: " + this.numSignCount);
-					if(this.numSignCount >= 1) {
+					console.log("space was erased. position " + self);
+					console.log(self + " was num? " + this.items[self].wasNum);
+					console.log(this.counter + " was num? " + this.items[this.counter].wasNum);
+					this.isNum = false;
+					if(this.items[this.counter].wasNum) {
 						this.isNum = true;
-						console.log("Num is still on");
 					}
 				}
 
