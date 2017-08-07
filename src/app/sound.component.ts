@@ -119,7 +119,6 @@ export class SoundComponent {
 				this.isNum = true;
 			}
 		}
-		console.log('ff ' + this.isNum);
 		//Num canceller
 		if(this.isNum) {
 			if(this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4)) {
@@ -244,7 +243,6 @@ export class SoundComponent {
 			}
 		this.isRightKey = true;
 		if(this.say.text == '') {
-			console.log("WRONG KEY");
 			this.isRightKey = false;
 		}
 		//Issue: when 5 keys pressed then released one of them, you can press key for dot6 and it reads 'q' when you release everything.
@@ -288,7 +286,7 @@ export class SoundComponent {
 			return;
 		}
 		if(this.isRightKey === false) {
-			console.log('false key pressed');
+			console.log('Falsy key pressed');
 			this.clearBlock(this.counter);
 			this.checkCounter();
 		}
@@ -306,8 +304,6 @@ export class SoundComponent {
 			else if(!this.isNum){
 				this.items[this.counter].wasNum = false;
 			}
-			// this.isNum = false;
-			console.log("position: " + this.counter + " wasNum? " + this.items[this.counter].wasNum);
 
 			if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
 				this.items[this.counter].pointer = true;
@@ -351,8 +347,6 @@ export class SoundComponent {
 				this.clearBlock(this.counter);
 				this.playAudio(300, .15, .06);
 				this.items[this.counter].text = '';
-				console.log(this.counter);
-				
 			}
 		}
 	}
