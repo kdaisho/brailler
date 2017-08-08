@@ -105,7 +105,7 @@ export class SoundComponent {
 	}
 
 	isNum: boolean = false;
-	// isLetter: boolean = true;
+	stroke: number = 0;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
 
@@ -257,96 +257,101 @@ export class SoundComponent {
 		this.map = [];
 		this.map[event.keyCode] = event.type === 'keydown';
 		this.saveKeyCode(this.counter);
+		this.stroke++;
 	}
+
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		this.map = [];
-		this.map[event.keyCode] = event.type === 'keyup';
-		this.saveSound(this.counter);
-		this.saveNumber(this.counter);
-		if(this.isRightKey) {
-			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
-				this.winRef.nativeWindow.speechSynthesis.cancel();
-			}
-			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-			this.say.text = '';
-			this.isRightKey = false;
-			this.addCounter(1);
-			this.checkCounter();
+		this.stroke--;
+		if(this.stroke === 0) {
+			this.map = [];
+			this.map[event.keyCode] = event.type === 'keyup';
+			this.saveSound(this.counter);
+			this.saveNumber(this.counter);
+			if(this.isRightKey) {
+				if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+					this.winRef.nativeWindow.speechSynthesis.cancel();
+				}
+				this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+				this.say.text = '';
+				this.isRightKey = false;
+				this.addCounter(1);
+				this.checkCounter();
 
-			if(this.counter !== 0) {
-				this.items[this.counter].pointer = true;
-				this.items[this.counter - 1].pointer = false;
-			}
-			if(this.counter === 0) {
-				this.items[this.maxCounter - 2].pointer = false;
-				this.items[0].pointer = true;
-			}
-			return;
-		}
-		if(this.isRightKey === false) {
-			console.log('Falsy key pressed');
-			this.clearBlock(this.counter);
-			this.checkCounter();
-		}
-		//Space key
-		if(this.map[32]) {
-			this.playAudio(600, .15, .06);
-			this.items[this.counter].text = ' ';
-			this.addCounter(1);
-			this.checkCounter();
-			
-			if(this.isNum) {
-				this.items[this.counter].wasNum = true;
-				this.isNum = false;
-			}
-			else if(!this.isNum){
-				this.items[this.counter].wasNum = false;
-			}
-
-			if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
-				this.items[this.counter].pointer = true;
-				this.items[this.counter - 1].pointer = false;
+				if(this.counter !== 0) {
+					this.items[this.counter].pointer = true;
+					this.items[this.counter - 1].pointer = false;
+				}
+				if(this.counter === 0) {
+					this.items[this.maxCounter - 2].pointer = false;
+					this.items[0].pointer = true;
+				}
 				return;
 			}
-			if(this.counter === 0) {
-				this.items[this.maxCounter - 2].pointer = false;
-				this.items[0].pointer = true;
-				return;
+			if(this.isRightKey === false) {
+				console.log('Falsy key pressed');
+				this.clearBlock(this.counter);
+				this.checkCounter();
 			}
-			
-		}
-		//Delete key
-		if(this.map[8]) {
-
-			if(this.counter !== 0) {
-				let self = this.counter - 1;
-
-				//When numSign is erased
-				if(this.items[self].text === '#') {
+			//Space key
+			if(this.map[32]) {
+				this.playAudio(600, .15, .06);
+				this.items[this.counter].text = ' ';
+				this.addCounter(1);
+				this.checkCounter();
+				
+				if(this.isNum) {
+					this.items[this.counter].wasNum = true;
 					this.isNum = false;
 				}
-
-				//When numCanceller is erased
-				if(this.items[self].text === 'alphabet') {
-					this.isNum = true;
+				else if(!this.isNum){
+					this.items[this.counter].wasNum = false;
 				}
 
-				//When space is erased
-				if(this.items[self].text === ' ') {
-					this.isNum = false;
-					if(this.items[this.counter].wasNum) {
+				if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
+					this.items[this.counter].pointer = true;
+					this.items[this.counter - 1].pointer = false;
+					return;
+				}
+				if(this.counter === 0) {
+					this.items[this.maxCounter - 2].pointer = false;
+					this.items[0].pointer = true;
+					return;
+				}	
+			}
+
+			//Delete key
+			if(this.map[8]) {
+
+				if(this.counter !== 0) {
+					let self = this.counter - 1;
+
+					//When numSign is erased
+					if(this.items[self].text === '#') {
+						this.isNum = false;
+					}
+
+					//When numCanceller is erased
+					if(this.items[self].text === 'alphabet') {
 						this.isNum = true;
 					}
-				}
 
-				this.items[this.counter].pointer = false;
-				this.items[this.counter - 1].pointer = true;
-				this.counter--;
-				this.clearBlock(this.counter);
-				this.playAudio(300, .15, .06);
-				this.items[this.counter].text = '';
+					//When space is erased
+					if(this.items[self].text === ' ') {
+						this.isNum = false;
+						if(this.items[this.counter].wasNum) {
+							this.isNum = true;
+						}
+					}
+
+					this.items[this.counter].pointer = false;
+					this.items[this.counter - 1].pointer = true;
+					this.counter--;
+					this.clearBlock(this.counter);
+					this.playAudio(300, .15, .06);
+					this.items[this.counter].text = '';
+				}
 			}
 		}
 	}
