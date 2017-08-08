@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { WindowRef } from './windowRef';
 import * as patterns from './lego-mock';
+import * as p from './letters-mock';
 
 @Component({
 	selector: 'sound',
@@ -26,8 +27,13 @@ export class SoundComponent {
 	oscillator;
 	volume;
 
+	keyId = [];
+	id: string;
+	p;
+
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
+		this.p = p.letters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
@@ -40,32 +46,43 @@ export class SoundComponent {
 			this.items[x].dot1 = true;
 			this.items[x].test = true;
 			this.map[70] = false;
+			this.keyId.push('a');
 		}
 		if(this.map[68]) {
 			this.items[x].dot2 = true;
 			this.items[x].test = true;
 			this.map[68] = false;
+			this.keyId.push('b');
 		}
 		if(this.map[83]) {
 			this.items[x].dot3 = true;
 			this.items[x].test = true;
 			this.map[83] = false;
+			this.keyId.push('c');
 		}
 		if(this.map[74]) {
 			this.items[x].dot4 = true;
 			this.items[x].test = true;
 			this.map[74] = false;
+			this.keyId.push('d');
 		}
 		if(this.map[75]) {
 			this.items[x].dot5 = true;
 			this.items[x].test = true;
 			this.map[75] = false;
+			this.keyId.push('e');
 		}
 		if(this.map[76]) {
 			this.items[x].dot6 = true;
 			this.items[x].test = true;
 			this.map[76] = false;
+			this.keyId.push('f');
 		}
+		this.keyId = this.keyId.sort();
+		console.log(this.keyId);
+		this.id = this.keyId.join('');
+		console.log('keyId is ' + this.keyId);
+		console.log('id is ' + this.id);
 	}
 	
 	addCounter(x) {
@@ -163,87 +180,104 @@ export class SoundComponent {
 	}
 
 	saveSound(x) {
-			if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'a';
+		for(let i = 0, len = this.p.length; i < len; i++) {
+			if(this.id === this.p[i].id) {
+				console.log('matched!: ' + this.p[i].value);
+				this.items[x].text = this.say.text = this.p[i].value;
+
 			}
-			if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'b';
-			}
-			if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'c';
-			}
-			if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'd';
-			}
-			if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'e';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'f';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'g';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'h';
-			}
-			if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'i';
-			}
-			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'j';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'k';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && !(this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'l';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'm';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'n';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot4 ||  this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'o';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'p';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !this.items[x].dot6) {
-				this.items[x].text = this.say.text = 'q';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot4 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 'r';
-			}
-			if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 's';
-			}
-			if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = 't';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5)) {
-				this.items[x].text = this.say.text = 'u';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot4 || this.items[x].dot5)) {
-				this.items[x].text = this.say.text = 'v';
-			}
-			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot3)) {
-				this.items[x].text = this.say.text = 'w';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot5)) {
-				this.items[x].text = this.say.text = 'x';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !this.items[x].dot2) {
-				this.items[x].text = this.say.text = 'y';
-			}
-			if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4)) {
-				this.items[x].text = this.say.text = 'z';
-			}
-		this.isRightKey = true;
+		}
+		console.log('say? ' + this.items[x].text);
+		if(this.say.text) {
+			this.isRightKey = true;
+		}
+
+		this.id = '';
+		this.keyId = [];
+		console.log('id: ' + this.id);
+
+			// if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'a';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'b';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'c';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'd';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'e';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'f';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'g';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'h';
+			// }
+			// if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'i';
+			// }
+			// if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'j';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'k';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && !(this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'l';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'm';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'n';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot4 ||  this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'o';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'p';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !this.items[x].dot6) {
+			// 	this.items[x].text = this.say.text = 'q';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot4 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 'r';
+			// }
+			// if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot5 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 's';
+			// }
+			// if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot6)) {
+			// 	this.items[x].text = this.say.text = 't';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5)) {
+			// 	this.items[x].text = this.say.text = 'u';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot4 || this.items[x].dot5)) {
+			// 	this.items[x].text = this.say.text = 'v';
+			// }
+			// if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot3)) {
+			// 	this.items[x].text = this.say.text = 'w';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot5)) {
+			// 	this.items[x].text = this.say.text = 'x';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !this.items[x].dot2) {
+			// 	this.items[x].text = this.say.text = 'y';
+			// }
+			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4)) {
+			// 	this.items[x].text = this.say.text = 'z';
+			// }
+		// this.isRightKey = true;
+
 		if(this.say.text == '') {
-			this.isRightKey = false;
+			// this.isRightKey = false;
 		}
 		//Issue: when 5 keys pressed then released one of them, you can press key for dot6 and it reads 'q' when you release everything.
 		//This is a patch.
