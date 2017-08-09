@@ -11,7 +11,6 @@ import * as p from './letters-mock';
 
 export class SoundComponent {
 
-	// title = 'Brailler 2.0';
 	items;
 	counter = 0;
 	maxCounter;
@@ -30,6 +29,8 @@ export class SoundComponent {
 	keyId = [];
 	id: string;
 	p;
+	lastBlock: boolean;
+	exceedBlock: boolean;
 
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
@@ -44,45 +45,36 @@ export class SoundComponent {
 	saveKeyCode(x) {
 		if(this.map[70]) {
 			this.items[x].dot1 = true;
-			this.items[x].test = true;
 			this.map[70] = false;
 			this.keyId.push('a');
 		}
 		if(this.map[68]) {
 			this.items[x].dot2 = true;
-			this.items[x].test = true;
 			this.map[68] = false;
 			this.keyId.push('b');
 		}
 		if(this.map[83]) {
 			this.items[x].dot3 = true;
-			this.items[x].test = true;
 			this.map[83] = false;
 			this.keyId.push('c');
 		}
 		if(this.map[74]) {
 			this.items[x].dot4 = true;
-			this.items[x].test = true;
 			this.map[74] = false;
 			this.keyId.push('d');
 		}
 		if(this.map[75]) {
 			this.items[x].dot5 = true;
-			this.items[x].test = true;
 			this.map[75] = false;
 			this.keyId.push('e');
 		}
 		if(this.map[76]) {
 			this.items[x].dot6 = true;
-			this.items[x].test = true;
 			this.map[76] = false;
 			this.keyId.push('f');
 		}
 		this.keyId = this.keyId.sort();
-		console.log(this.keyId);
 		this.id = this.keyId.join('');
-		console.log('keyId is ' + this.keyId);
-		console.log('id is ' + this.id);
 	}
 	
 	addCounter(x) {
@@ -91,12 +83,7 @@ export class SoundComponent {
 
 	checkCounter() {
 		if(this.counter >= this.maxCounter - 1) {
-			for(var i = 0, len = this.counter; i <= len; i++) {
-				this.clearBlock(i);
-			}
-			this.counter = 0;
-			this.isNum = false;
-			// this.numSignCount = 0;
+			this.lastBlock = true;
 		}
 	}
 
@@ -179,121 +166,26 @@ export class SoundComponent {
 		}
 	}
 
-	saveSound(x) {
+	saveSound(x, max) {
 		for(let i = 0, len = this.p.length; i < len; i++) {
 			if(this.id === this.p[i].id) {
-				console.log('matched!: ' + this.p[i].value);
-				this.items[x].text = this.say.text = this.p[i].value;
-
+				this.isRightKey = true;
+				return this.items[x].text = this.say.text = this.p[i].value;
 			}
 		}
-		console.log('say? ' + this.items[x].text);
-		if(this.say.text) {
-			this.isRightKey = true;
-		}
-
-		this.id = '';
-		this.keyId = [];
-		console.log('id: ' + this.id);
-
-			// if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'a';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'b';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'c';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'd';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'e';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'f';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'g';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'h';
-			// }
-			// if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'i';
-			// }
-			// if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'j';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'k';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && !(this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'l';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'm';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'n';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot4 ||  this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'o';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'p';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !this.items[x].dot6) {
-			// 	this.items[x].text = this.say.text = 'q';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot5 && !(this.items[x].dot4 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 'r';
-			// }
-			// if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot5 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 's';
-			// }
-			// if(this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot6)) {
-			// 	this.items[x].text = this.say.text = 't';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4 || this.items[x].dot5)) {
-			// 	this.items[x].text = this.say.text = 'u';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot6 && !(this.items[x].dot4 || this.items[x].dot5)) {
-			// 	this.items[x].text = this.say.text = 'v';
-			// }
-			// if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot3)) {
-			// 	this.items[x].text = this.say.text = 'w';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot5)) {
-			// 	this.items[x].text = this.say.text = 'x';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !this.items[x].dot2) {
-			// 	this.items[x].text = this.say.text = 'y';
-			// }
-			// if(this.items[x].dot1 && this.items[x].dot3 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot2 || this.items[x].dot4)) {
-			// 	this.items[x].text = this.say.text = 'z';
-			// }
-		// this.isRightKey = true;
-
-		if(this.say.text == '') {
-			// this.isRightKey = false;
-		}
-		//Issue: when 5 keys pressed then released one of them, you can press key for dot6 and it reads 'q' when you release everything.
-		//This is a patch.
-		if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6) {
-			this.isRightKey = false;
-		}
+		console.log('Not right key');
+		this.isRightKey = false;
 	}
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		this.map = [];
 		this.map[event.keyCode] = event.type === 'keydown';
-		this.saveKeyCode(this.counter);
+		if(!this.exceedBlock) {
+			this.saveKeyCode(this.counter);
+		}
 		this.stroke++;
 	}
-
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
@@ -301,16 +193,32 @@ export class SoundComponent {
 		if(this.stroke === 0) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keyup';
-			this.saveSound(this.counter);
+
+			this.saveSound(this.counter, this.maxCounter);
+
+			if(!this.exceedBlock) {
+				this.id = '';
+				this.keyId = [];
+				console.log('id: ' + this.id);
+			}
+
 			this.saveNumber(this.counter);
+
 			if(this.isRightKey) {
 				if(this.winRef.nativeWindow.speechSynthesis.speaking) {
 					this.winRef.nativeWindow.speechSynthesis.cancel();
 				}
 				this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+
 				this.say.text = '';
-				this.isRightKey = false;
-				this.addCounter(1);
+
+				if(!this.lastBlock) {
+					this.addCounter(1);
+				}
+				else {
+					this.exceedBlock = true;
+				}
+
 				this.checkCounter();
 
 				if(this.counter !== 0) {
@@ -323,69 +231,100 @@ export class SoundComponent {
 				}
 				return;
 			}
+
+			else if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
+				this.playAudio(120, .15, .06);
+			}
+
 			if(this.isRightKey === false) {
 				console.log('Falsy key pressed');
-				this.clearBlock(this.counter);
-				this.checkCounter();
+				if(!this.exceedBlock) {
+					this.clearBlock(this.counter);
+					this.checkCounter();
+				}
 			}
-			//Space key
-			if(this.map[32]) {
-				this.playAudio(600, .15, .06);
-				this.items[this.counter].text = ' ';
-				this.addCounter(1);
-				this.checkCounter();
-				
-				if(this.isNum) {
-					this.items[this.counter].wasNum = true;
-					this.isNum = false;
-				}
-				else if(!this.isNum){
-					this.items[this.counter].wasNum = false;
-				}
 
-				if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
-					this.items[this.counter].pointer = true;
-					this.items[this.counter - 1].pointer = false;
-					return;
+			//Enter key
+			if(this.map[13]) {
+				for(var i = 0, len = this.counter; i <= len; i++) {
+					this.clearBlock(i);
+					this.items[i].pointer = false;
 				}
-				if(this.counter === 0) {
-					this.items[this.maxCounter - 2].pointer = false;
-					this.items[0].pointer = true;
-					return;
-				}	
+				this.counter = 0;
+				this.isNum = false;
+				this.numSignCount = 0;
+				this.items[0].pointer = true;
+				this.exceedBlock = this.lastBlock = false;
+			}
+
+			//Space key
+			if(!this.lastBlock) {
+				if(this.map[32]) {
+					this.playAudio(600, .15, .06);
+					this.items[this.counter].text = ' ';
+
+					this.addCounter(1);
+
+					this.checkCounter();
+
+					if(this.isNum) {
+						this.items[this.counter].wasNum = true;
+						this.isNum = false;
+					}
+					else if(!this.isNum){
+						this.items[this.counter].wasNum = false;
+					}
+
+					if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
+						this.items[this.counter].pointer = true;
+						this.items[this.counter - 1].pointer = false;
+						return;
+					}
+					if(this.counter === 0) {
+						this.items[this.maxCounter - 2].pointer = false;
+						this.items[0].pointer = true;
+						return;
+					}
+				}
 			}
 
 			//Delete key
-			if(this.map[8]) {
+			if(this.map[8] && this.counter !== 0) {
 
-				if(this.counter !== 0) {
-					let self = this.counter - 1;
+				let max = this.maxCounter - 1;
+				let self = this.counter - 1;
 
-					//When numSign is erased
-					if(this.items[self].text === '#') {
-						this.isNum = false;
-					}
+				//When pointer was in last position
+				if(this.lastBlock) {
+					this.clearBlock(max);
+					this.lastBlock = false;
+					this.exceedBlock = false;
+				}
 
-					//When numCanceller is erased
-					if(this.items[self].text === 'alphabet') {
+				//When numSign is erased
+				if(this.items[self].text === '#') {
+					this.isNum = false;
+				}
+
+				//When numCanceller is erased
+				if(this.items[self].text === 'alphabet') {
+					this.isNum = true;
+				}
+
+				//When space is erased
+				if(this.items[self].text === ' ') {
+					this.isNum = false;
+					if(this.items[this.counter].wasNum) {
 						this.isNum = true;
 					}
-
-					//When space is erased
-					if(this.items[self].text === ' ') {
-						this.isNum = false;
-						if(this.items[this.counter].wasNum) {
-							this.isNum = true;
-						}
-					}
-
-					this.items[this.counter].pointer = false;
-					this.items[this.counter - 1].pointer = true;
-					this.counter--;
-					this.clearBlock(this.counter);
-					this.playAudio(300, .15, .06);
-					this.items[this.counter].text = '';
 				}
+
+				this.items[this.counter].pointer = false;
+				this.items[this.counter - 1].pointer = true;
+				this.counter--;
+				this.clearBlock(this.counter);
+				this.playAudio(300, .15, .06);
+				this.items[this.counter].text = '';
 			}
 		}
 	}
