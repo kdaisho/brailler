@@ -6,7 +6,7 @@ import * as p from './letters-mock';
 
 @Component({
 	selector: 'sound',
-	template: '<h2>Sound</h2>'
+	template: ''
 })
 
 export class SoundComponent {
@@ -21,7 +21,6 @@ export class SoundComponent {
 	isRightKey = false;
 	audio;
 
-	//Experimental: audio
 	audioCtx;
 	oscillator;
 	volume;
@@ -32,6 +31,8 @@ export class SoundComponent {
 	lastBlock: boolean;
 	exceedBlock: boolean;
 
+	keyDown: boolean;
+
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
 		this.p = p.letters;
@@ -39,40 +40,62 @@ export class SoundComponent {
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
-		console.log(this.maxCounter);
+	}
+
+	playAudio(freq, vol, duration) {
+		//create the volume node;
+		this.volume = this.audioCtx.createGain();
+		this.volume.connect(this.audioCtx.destination);
+		this.volume.gain.value = vol;
+
+		//connect the oscillator to the nodes
+		this.oscillator = this.audioCtx.createOscillator();
+		this.oscillator.type = 'sawtooth';
+		this.oscillator.frequency.value = freq;
+
+		this.oscillator.connect(this.volume);
+		this.oscillator.start();
+		this.oscillator.stop(this.audioCtx.currentTime + duration);
 	}
 
 	saveKeyCode(x) {
 		if(this.map[70]) {
 			this.items[x].dot1 = true;
-			this.map[70] = false;
-			this.keyId.push('a');
+			if(this.keyId.indexOf('a') < 0) {
+				this.keyId.push('a');
+			}
 		}
 		if(this.map[68]) {
 			this.items[x].dot2 = true;
-			this.map[68] = false;
-			this.keyId.push('b');
+			if(this.keyId.indexOf('b') < 0) {
+				this.keyId.push('b');
+			}
 		}
 		if(this.map[83]) {
 			this.items[x].dot3 = true;
-			this.map[83] = false;
-			this.keyId.push('c');
+			if(this.keyId.indexOf('c') < 0) {
+				this.keyId.push('c');
+			}
 		}
 		if(this.map[74]) {
 			this.items[x].dot4 = true;
-			this.map[74] = false;
-			this.keyId.push('d');
+			if(this.keyId.indexOf('d') < 0) {
+				this.keyId.push('d');
+			}
 		}
 		if(this.map[75]) {
 			this.items[x].dot5 = true;
-			this.map[75] = false;
-			this.keyId.push('e');
+			if(this.keyId.indexOf('e') < 0) {
+				this.keyId.push('e');
+			}
 		}
 		if(this.map[76]) {
 			this.items[x].dot6 = true;
-			this.map[76] = false;
-			this.keyId.push('f');
+			if(this.keyId.indexOf('f') < 0) {
+				this.keyId.push('f');
+			}
 		}
+
 		this.keyId = this.keyId.sort();
 		this.id = this.keyId.join('');
 	}
@@ -90,22 +113,6 @@ export class SoundComponent {
 	clearBlock(x) {
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
 		this.items[x].text = '';
-	}
-
-	playAudio(freq, vol, duration) {
-		//create the volume node;
-		this.volume = this.audioCtx.createGain();
-		this.volume.connect(this.audioCtx.destination);
-		this.volume.gain.value = vol;
-
-		//connect the oscillator to the nodes
-		this.oscillator = this.audioCtx.createOscillator();
-		this.oscillator.type = 'sawtooth';
-		this.oscillator.frequency.value = freq;
-
-		this.oscillator.connect(this.volume);
-		this.oscillator.start();
-		this.oscillator.stop(this.audioCtx.currentTime + duration);
 	}
 
 	isNum: boolean = false;
@@ -179,12 +186,14 @@ export class SoundComponent {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
-		this.map = [];
-		this.map[event.keyCode] = event.type === 'keydown';
-		if(!this.exceedBlock) {
-			this.saveKeyCode(this.counter);
+		if(!event.repeat) {
+			this.map = [];
+			this.map[event.keyCode] = event.type === 'keydown';
+			if(!this.exceedBlock) {
+				this.saveKeyCode(this.counter);
+			}
+			this.stroke++;
 		}
-		this.stroke++;
 	}
 
 	@HostListener('window:keyup', ['$event'])
