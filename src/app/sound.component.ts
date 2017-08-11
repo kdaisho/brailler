@@ -186,13 +186,15 @@ export class SoundComponent {
 	}
 
 	//Prevent stroke count left unmatched after a user leaves window and come back
-	@HostListener('window:focus', ['$event'])
-		onFocus(event: any): void {
-	    this.stroke = 0;
-	}
+	// @HostListener('window:focus', ['$event'])
+	// 	onFocus(event: any): void {
+	//     this.stroke = 0;
+	// }
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
+		//Reset stroke to prevent it won't match when a user changed window or triggered mission control
+		this.stroke = 0;
 		if(!event.repeat) {
 			// console.log("Stroke on down?: " + this.isStroke);
 			this.map = [];
@@ -273,6 +275,7 @@ export class SoundComponent {
 					this.checkCounter();
 				}
 			}
+		}
 
 			//Enter key
 			if(this.map[13]) {
@@ -285,6 +288,7 @@ export class SoundComponent {
 				this.numSignCount = 0;
 				this.items[0].pointer = true;
 				this.exceedBlock = this.lastBlock = false;
+				this.stroke = 0;
 			}
 
 			//Space key
@@ -360,7 +364,7 @@ export class SoundComponent {
 				this.playAudio(300, .15, .06);
 				this.items[this.counter].text = '';
 			}
-		}
+		// }
 		// this.stroke = 0
 	}
 }
