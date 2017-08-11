@@ -128,7 +128,6 @@ export class SoundComponent {
 	stroke: number = 0;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
-	// isStroke: boolean = false;
 
 	saveSpecialCharacter(x) {
 		for(let i = 0, len = this.sp.length; i < len; i++) {
@@ -185,43 +184,25 @@ export class SoundComponent {
 		}
 	}
 
-	//Prevent stroke count left unmatched after a user leaves window and come back
-	// @HostListener('window:focus', ['$event'])
-	// 	onFocus(event: any): void {
-	//     this.stroke = 0;
-	// }
-
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		//Reset stroke to prevent it won't match when a user changed window or triggered mission control
 		this.stroke = 0;
+
 		if(!event.repeat) {
-			// console.log("Stroke on down?: " + this.isStroke);
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keydown';
 			if(!this.exceedBlock) {
 				this.saveKeyCode(this.counter);
 			}
 			this.stroke++;
-			//new
-			// this.isStroke = true;
 			return;
 		}
-		console.log('key down: ' + event);
-		console.log('stroke on down: ' + this.stroke);
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-
-		console.log('Key up: ' + event);
-		console.log('stroke on up: ' + this.stroke);
-
 		this.stroke--;
-
-		// console.log('Stroke on up?: ' + this.isStroke);
-
-
 		if(this.stroke === 0) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keyup';
@@ -277,94 +258,88 @@ export class SoundComponent {
 			}
 		}
 
-			//Enter key
-			if(this.map[13]) {
-				for(var i = 0, len = this.counter; i <= len; i++) {
-					this.clearBlock(i);
-					this.items[i].pointer = false;
-				}
-				this.counter = 0;
-				this.isNum = false;
-				this.numSignCount = 0;
-				this.items[0].pointer = true;
-				this.exceedBlock = this.lastBlock = false;
-				this.stroke = 0;
+		//Enter key
+		if(this.map[13]) {
+			for(var i = 0, len = this.counter; i <= len; i++) {
+				this.clearBlock(i);
+				this.items[i].pointer = false;
 			}
+			this.counter = 0;
+			this.isNum = false;
+			this.numSignCount = 0;
+			this.items[0].pointer = true;
+			this.exceedBlock = this.lastBlock = false;
+			this.stroke = 0;
+		}
 
-			//Space key
-			if(!this.lastBlock) {
-				if(this.map[32]) {
-					this.playAudio(600, .15, .06);
-					this.items[this.counter].text = ' ';
+		//Space key
+		if(!this.lastBlock) {
+			if(this.map[32]) {
+				this.playAudio(600, .15, .06);
+				this.items[this.counter].text = ' ';
 
-					this.addCounter(1);
+				this.addCounter(1);
 
-					this.checkCounter();
+				this.checkCounter();
 
-					if(this.isNum) {
-						this.items[this.counter].wasNum = true;
-						this.isNum = false;
-					}
-					else if(!this.isNum){
-						this.items[this.counter].wasNum = false;
-					}
-
-					if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
-						this.items[this.counter].pointer = true;
-						this.items[this.counter - 1].pointer = false;
-						return;
-					}
-					if(this.counter === 0) {
-						this.items[this.maxCounter - 2].pointer = false;
-						this.items[0].pointer = true;
-						return;
-					}
-				}
-			}
-
-			//new
-			// this.isStroke = false;
-
-
-			//Delete key
-			if(this.map[8] && this.counter !== 0) {
-
-				let max = this.maxCounter - 1;
-				let self = this.counter - 1;
-
-				//When pointer was in last position
-				if(this.lastBlock) {
-					this.clearBlock(max);
-					this.lastBlock = false;
-					this.exceedBlock = false;
-				}
-
-				//When numSign is erased
-				if(this.items[self].text === '#') {
+				if(this.isNum) {
+					this.items[this.counter].wasNum = true;
 					this.isNum = false;
 				}
+				else if(!this.isNum){
+					this.items[this.counter].wasNum = false;
+				}
 
-				//When numCanceller is erased
-				if(this.items[self].text === 'alphabet') {
+				if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
+					this.items[this.counter].pointer = true;
+					this.items[this.counter - 1].pointer = false;
+					return;
+				}
+				if(this.counter === 0) {
+					this.items[this.maxCounter - 2].pointer = false;
+					this.items[0].pointer = true;
+					return;
+				}
+			}
+		}
+
+		//Delete key
+		if(this.map[8] && this.counter !== 0) {
+
+			let max = this.maxCounter - 1;
+			let self = this.counter - 1;
+
+			//When pointer was in last position
+			if(this.lastBlock) {
+				this.clearBlock(max);
+				this.lastBlock = false;
+				this.exceedBlock = false;
+			}
+
+			//When numSign is erased
+			if(this.items[self].text === '#') {
+				this.isNum = false;
+			}
+
+			//When numCanceller is erased
+			if(this.items[self].text === 'alphabet') {
+				this.isNum = true;
+			}
+
+			//When space is erased
+			if(this.items[self].text === ' ') {
+				this.isNum = false;
+				if(this.items[this.counter].wasNum) {
 					this.isNum = true;
 				}
-
-				//When space is erased
-				if(this.items[self].text === ' ') {
-					this.isNum = false;
-					if(this.items[this.counter].wasNum) {
-						this.isNum = true;
-					}
-				}
-
-				this.items[this.counter].pointer = false;
-				this.items[this.counter - 1].pointer = true;
-				this.counter--;
-				this.clearBlock(this.counter);
-				this.playAudio(300, .15, .06);
-				this.items[this.counter].text = '';
 			}
-		// }
-		// this.stroke = 0
+
+			this.items[this.counter].pointer = false;
+			this.items[this.counter - 1].pointer = true;
+			this.counter--;
+			this.clearBlock(this.counter);
+			this.playAudio(300, .15, .06);
+			this.items[this.counter].text = '';
+		}
 	}
 }
