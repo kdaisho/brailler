@@ -3,6 +3,7 @@ import { HostListener } from '@angular/core';
 import { WindowRef } from './windowRef';
 import * as patterns from './lego-mock';
 import * as p from './letters-mock';
+import * as sp from './special-char-mock';
 
 @Component({
 	selector: 'sound',
@@ -28,6 +29,7 @@ export class SoundComponent {
 	keyId = [];
 	id: string;
 	p;
+	sp;
 	lastBlock: boolean;
 	exceedBlock: boolean;
 
@@ -36,6 +38,7 @@ export class SoundComponent {
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
 		this.p = p.letters;
+		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
@@ -62,42 +65,36 @@ export class SoundComponent {
 		if(this.map[70]) {
 			this.items[x].dot1 = true;
 			if(this.keyId.indexOf('1') < 0) {
-				// this.keyId.push('a');
 				this.keyId.push('1');
 			}
 		}
 		if(this.map[68]) {
 			this.items[x].dot2 = true;
 			if(this.keyId.indexOf('2') < 0) {
-				// this.keyId.push('b');
 				this.keyId.push('2');
 			}
 		}
 		if(this.map[83]) {
 			this.items[x].dot3 = true;
 			if(this.keyId.indexOf('3') < 0) {
-				// this.keyId.push('c');
 				this.keyId.push('3');
 			}
 		}
 		if(this.map[74]) {
 			this.items[x].dot4 = true;
 			if(this.keyId.indexOf('4') < 0) {
-				// this.keyId.push('d');
 				this.keyId.push('4');
 			}
 		}
 		if(this.map[75]) {
 			this.items[x].dot5 = true;
 			if(this.keyId.indexOf('5') < 0) {
-				// this.keyId.push('e');
 				this.keyId.push('5');
 			}
 		}
 		if(this.map[76]) {
 			this.items[x].dot6 = true;
 			if(this.keyId.indexOf('6') < 0) {
-				// this.keyId.push('f');
 				this.keyId.push('6');
 			}
 		}
@@ -129,17 +126,28 @@ export class SoundComponent {
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
 
-	saveNumber(x) {
+	saveSpecialCharacter(x) {
+		for(let i = 0, len = this.sp.length; i < len; i++) {
+			if(this.id === this.sp[i].id) {
+				console.log('special hit: ' + this.id );
+				console.log('special value: ' + this.sp[i].value );
+				this.isRightKey = true;
+				this.items[x].text = this.say.text = this.sp[i].value;
+				return;
+			}
+		}
+		console.log('Not right special character');
+		this.isRightKey = false;
+	}
 
+	saveNumber(x) {
 		if(this.isNum) {
 			for(let i = 0, len = this.p.length; i < len; i++) {
-
 				if(this.id === this.p[i].id && this.p[i].num !== '') {
 					this.isRightKey = true;
 					this.items[x].text = this.say.text = this.p[i].num;
 					return;
 				}
-
 			}
 			console.log('Not right number');
 			this.isRightKey = false;
@@ -155,7 +163,6 @@ export class SoundComponent {
 				}
 			}
 			//Num initiator
-			// if(this.id === 'cdef') {
 			if(this.id === '3456') {
 				this.items[x].text = '#';
 				this.say.text = 'numbers';
@@ -166,7 +173,6 @@ export class SoundComponent {
 			console.log('Not right key');
 			this.isRightKey = false;
 		}
-		// else if(this.isNum && (this.id === 'ef')) {
 		else if(this.isNum && (this.id === '56')) {
 			this.items[x].text = 'alphabet';
 			this.isRightKey = true;
@@ -193,9 +199,12 @@ export class SoundComponent {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keyup';
 
+
 			this.saveNumber(this.counter);
 
 			this.saveSound(this.counter, this.maxCounter);
+
+			this.saveSpecialCharacter(this.counter);
 
 			if(!this.exceedBlock) {
 				this.keyId = [];
