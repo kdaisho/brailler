@@ -1,131 +1,131 @@
 export const letters = [
 	{
-		id: 'a',
+		id: '1',
 		value: 'a',
 		num: '1'
 	},
 	{
-		id: 'ab',
+		id: '12',
 		value: 'b',
 		num: '2'
 	},
 	{
-		id: 'ad',
+		id: '14',
 		value: 'c',
 		num: '3'
 	},
 	{
-		id: 'ade',
+		id: '145',
 		value: 'd',
 		num: '4'
 	},
 	{
-		id: 'ae',
+		id: '15',
 		value: 'e',
 		num: '5'
 	},
 	{
-		id: 'abd',
+		id: '124',
 		value: 'f',
 		num: '6'
 	},
 	{
-		id: 'abde',
+		id: '1245',
 		value: 'g',
 		num: '7'
 	},
 	{
-		id: 'abe',
+		id: '125',
 		value: 'h',
 		num: '8'
 	},
 	{
-		id: 'bd',
+		id: '24',
 		value: 'i',
 		num: '9'
 	},
 	{
-		id: 'bde',
+		id: '245',
 		value: 'j',
 		num: '0'
 	},
 	{
-		id: 'ac',
+		id: '13',
 		value: 'k',
 		num: ''
 	},
 	{
-		id: 'abc',
+		id: '123',
 		value: 'l',
 		num: ''
 	},
 	{
-		id: 'acd',
+		id: '134',
 		value: 'm',
 		num: ''
 	},
 	{
-		id: 'acde',
+		id: '1345',
 		value: 'n',
 		num: ''
 	},
 	{
-		id: 'ace',
+		id: '135',
 		value: 'o',
 		num: ''
 	},
 	{
-		id: 'abcd',
+		id: '1234',
 		value: 'p',
 		num: ''
 	},
 	{
-		id: 'abcde',
+		id: '12345',
 		value: 'q',
 		num: ''
 	},
 	{
-		id: 'abce',
+		id: '1235',
 		value: 'r',
 		num: ''
 	},
 	{
-		id: 'bcd',
+		id: '234',
 		value: 's',
 		num: ''
 	},
 	{
-		id: 'bcde',
+		id: '2345',
 		value: 't',
 		num: ''
 	},
 	{
-		id: 'acf',
+		id: '136',
 		value: 'u',
 		num: ''
 	},
 	{
-		id: 'abcf',
+		id: '1236',
 		value: 'v',
 		num: ''
 	},
 	{
-		id: 'bdef',
+		id: '2456',
 		value: 'w',
 		num: ''
 	},
 	{
-		id: 'acdf',
+		id: '1346',
 		value: 'x',
 		num: ''
 	},
 	{
-		id: 'acdef',
+		id: '13456',
 		value: 'y',
 		num: ''
 	},
 	{
-		id: 'acef',
+		id: '1356',
 		value: 'z',
 		num: ''
 	}

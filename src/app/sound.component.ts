@@ -61,38 +61,44 @@ export class SoundComponent {
 	saveKeyCode(x) {
 		if(this.map[70]) {
 			this.items[x].dot1 = true;
-			if(this.keyId.indexOf('a') < 0) {
-				this.keyId.push('a');
+			if(this.keyId.indexOf('1') < 0) {
+				// this.keyId.push('a');
+				this.keyId.push('1');
 			}
 		}
 		if(this.map[68]) {
 			this.items[x].dot2 = true;
-			if(this.keyId.indexOf('b') < 0) {
-				this.keyId.push('b');
+			if(this.keyId.indexOf('2') < 0) {
+				// this.keyId.push('b');
+				this.keyId.push('2');
 			}
 		}
 		if(this.map[83]) {
 			this.items[x].dot3 = true;
-			if(this.keyId.indexOf('c') < 0) {
-				this.keyId.push('c');
+			if(this.keyId.indexOf('3') < 0) {
+				// this.keyId.push('c');
+				this.keyId.push('3');
 			}
 		}
 		if(this.map[74]) {
 			this.items[x].dot4 = true;
-			if(this.keyId.indexOf('d') < 0) {
-				this.keyId.push('d');
+			if(this.keyId.indexOf('4') < 0) {
+				// this.keyId.push('d');
+				this.keyId.push('4');
 			}
 		}
 		if(this.map[75]) {
 			this.items[x].dot5 = true;
-			if(this.keyId.indexOf('e') < 0) {
-				this.keyId.push('e');
+			if(this.keyId.indexOf('5') < 0) {
+				// this.keyId.push('e');
+				this.keyId.push('5');
 			}
 		}
 		if(this.map[76]) {
 			this.items[x].dot6 = true;
-			if(this.keyId.indexOf('f') < 0) {
-				this.keyId.push('f');
+			if(this.keyId.indexOf('6') < 0) {
+				// this.keyId.push('f');
+				this.keyId.push('6');
 			}
 		}
 
@@ -149,7 +155,8 @@ export class SoundComponent {
 				}
 			}
 			//Num initiator
-			if(this.id === 'cdef') {
+			// if(this.id === 'cdef') {
+			if(this.id === '3456') {
 				this.items[x].text = '#';
 				this.say.text = 'numbers';
 				this.isRightKey = true;
@@ -159,7 +166,8 @@ export class SoundComponent {
 			console.log('Not right key');
 			this.isRightKey = false;
 		}
-		else if(this.isNum && (this.id === 'ef')) {
+		// else if(this.isNum && (this.id === 'ef')) {
+		else if(this.isNum && (this.id === '56')) {
 			this.items[x].text = 'alphabet';
 			this.isRightKey = true;
 			this.isNum = false;
@@ -292,13 +300,11 @@ export class SoundComponent {
 
 				//When numSign is erased
 				if(this.items[self].text === '#') {
-					alert('NUM was deleted');
 					this.isNum = false;
 				}
 
 				//When numCanceller is erased
 				if(this.items[self].text === 'alphabet') {
-					alert('NUM canceller was deleted');
 					this.isNum = true;
 				}
 
