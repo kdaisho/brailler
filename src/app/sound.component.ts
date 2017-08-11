@@ -98,6 +98,9 @@ export class SoundComponent {
 
 		this.keyId = this.keyId.sort();
 		this.id = this.keyId.join('');
+
+		console.log("isNum?: " + this.isNum);
+		console.log("id?: " + this.id);
 	}
 	
 	addCounter(x) {
@@ -121,67 +124,46 @@ export class SoundComponent {
 	numCancelCount: number = 0;
 
 	saveNumber(x) {
-		//Num initiator
-		if(!this.isNum) {
-			if(this.items[x].dot3 && this.items[x].dot4 && this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2)) {
-				this.items[x].text = '#';
-				this.say.text = 'numbers';
-				this.isRightKey = true;
-				this.isNum = true;
-			}
-		}
-		//Num canceller
-		if(this.isNum) {
-			if(this.items[x].dot5 && this.items[x].dot6 && !(this.items[x].dot1 || this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4)) {
-				this.items[x].text = 'alphabet';
-				this.isRightKey = true;
-				this.isNum = false;
-			}
-		}
 
 		if(this.isNum) {
-			if(this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '0';
+			for(let i = 0, len = this.p.length; i < len; i++) {
+
+				if(this.id === this.p[i].id && this.p[i].num !== '') {
+					this.isRightKey = true;
+					this.items[x].text = this.say.text = this.p[i].num;
+					return;
+				}
+
 			}
-			if(this.items[x].dot1 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '1';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '2';
-			}
-			if(this.items[x].dot1 && this.items[x].dot4 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '3';
-			}
-			if(this.items[x].dot1 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 ||this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '4';
-			}
-			if(this.items[x].dot1 && this.items[x].dot5 && !(this.items[x].dot2 || this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '5';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '6';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot4 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '7';
-			}
-			if(this.items[x].dot1 && this.items[x].dot2 && this.items[x].dot5 && !(this.items[x].dot3 || this.items[x].dot4 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '8';
-			}
-			if(this.items[x].dot2 && this.items[x].dot4 && !(this.items[x].dot1 || this.items[x].dot3 || this.items[x].dot5 || this.items[x].dot6)) {
-				this.items[x].text = this.say.text = '9';
-			}
+			console.log('Not right number');
+			this.isRightKey = false;
 		}
 	}
 
 	saveSound(x, max) {
-		for(let i = 0, len = this.p.length; i < len; i++) {
-			if(this.id === this.p[i].id) {
-				this.isRightKey = true;
-				return this.items[x].text = this.say.text = this.p[i].value;
+		if(!this.isNum) {
+			for(let i = 0, len = this.p.length; i < len; i++) {
+				if(this.id === this.p[i].id) {
+					this.isRightKey = true;
+					return this.items[x].text = this.say.text = this.p[i].value;
+				}
 			}
+			//Num initiator
+			if(this.id === 'cdef') {
+				this.items[x].text = '#';
+				this.say.text = 'numbers';
+				this.isRightKey = true;
+				this.isNum = true;
+				return;
+			}
+			console.log('Not right key');
+			this.isRightKey = false;
 		}
-		console.log('Not right key');
-		this.isRightKey = false;
+		else if(this.isNum && (this.id === 'ef')) {
+			this.items[x].text = 'alphabet';
+			this.isRightKey = true;
+			this.isNum = false;
+		}
 	}
 
 	@HostListener('window:keydown', ['$event'])
@@ -203,15 +185,13 @@ export class SoundComponent {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keyup';
 
+			this.saveNumber(this.counter);
+
 			this.saveSound(this.counter, this.maxCounter);
 
 			if(!this.exceedBlock) {
-				this.id = '';
 				this.keyId = [];
-				console.log('id: ' + this.id);
 			}
-
-			this.saveNumber(this.counter);
 
 			if(this.isRightKey) {
 				if(this.winRef.nativeWindow.speechSynthesis.speaking) {
@@ -238,14 +218,14 @@ export class SoundComponent {
 					this.items[this.maxCounter - 2].pointer = false;
 					this.items[0].pointer = true;
 				}
-				return;
 			}
 
-			else if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
-				this.playAudio(120, .15, .06);
+			if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
+				this.id = '';
+				this.playAudio(140, .2, .06);
 			}
 
-			if(this.isRightKey === false) {
+			if(!this.isRightKey) {
 				console.log('Falsy key pressed');
 				if(!this.exceedBlock) {
 					this.clearBlock(this.counter);
@@ -312,11 +292,13 @@ export class SoundComponent {
 
 				//When numSign is erased
 				if(this.items[self].text === '#') {
+					alert('NUM was deleted');
 					this.isNum = false;
 				}
 
 				//When numCanceller is erased
 				if(this.items[self].text === 'alphabet') {
+					alert('NUM canceller was deleted');
 					this.isNum = true;
 				}
 
