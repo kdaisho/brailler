@@ -1,18 +1,22 @@
 export const characters = [
 	{
 		id: '2',
-		value: '.'
+		value: ',',
+		pronounce: 'comma'
 	},
 	{
 		id: '23',
-		value: ';'
+		value: ';',
+		pronounce: 'semicolon'
 	},
 	{
 		id: '25',
-		value: ':'
+		value: ':',
+		pronounce: 'colon'
 	},
 	{
 		id: '256',
-		value: '.'
+		value: '.',
+		pronounce: 'period'
 	}
 ];

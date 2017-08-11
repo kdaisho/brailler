@@ -35,6 +35,8 @@ export class SoundComponent {
 
 	keyDown: boolean;
 
+	blur;
+
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
 		this.p = p.letters;
@@ -104,8 +106,9 @@ export class SoundComponent {
 
 		console.log("isNum?: " + this.isNum);
 		console.log("id?: " + this.id);
+		console.log('Saving key on Key down: ' + event);
 	}
-	
+
 	addCounter(x) {
 		return this.counter += x;
 	}
@@ -125,6 +128,7 @@ export class SoundComponent {
 	stroke: number = 0;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
+	// isStroke: boolean = false;
 
 	saveSpecialCharacter(x) {
 		for(let i = 0, len = this.sp.length; i < len; i++) {
@@ -132,12 +136,13 @@ export class SoundComponent {
 				console.log('special hit: ' + this.id );
 				console.log('special value: ' + this.sp[i].value );
 				this.isRightKey = true;
-				this.items[x].text = this.say.text = this.sp[i].value;
+				this.items[x].text = this.sp[i].value;
+				this.say.text = this.sp[i].pronounce;
 				return;
 			}
 		}
 		console.log('Not right special character');
-		this.isRightKey = false;
+		// this.isRightKey = false;
 	}
 
 	saveNumber(x) {
@@ -180,25 +185,44 @@ export class SoundComponent {
 		}
 	}
 
+	//Prevent stroke count left unmatched after a user leaves window and come back
+	@HostListener('window:focus', ['$event'])
+		onFocus(event: any): void {
+	    this.stroke = 0;
+	}
+
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		if(!event.repeat) {
+			// console.log("Stroke on down?: " + this.isStroke);
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keydown';
 			if(!this.exceedBlock) {
 				this.saveKeyCode(this.counter);
 			}
 			this.stroke++;
+			//new
+			// this.isStroke = true;
+			return;
 		}
+		console.log('key down: ' + event);
+		console.log('stroke on down: ' + this.stroke);
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
+
+		console.log('Key up: ' + event);
+		console.log('stroke on up: ' + this.stroke);
+
 		this.stroke--;
+
+		// console.log('Stroke on up?: ' + this.isStroke);
+
+
 		if(this.stroke === 0) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keyup';
-
 
 			this.saveNumber(this.counter);
 
@@ -294,6 +318,10 @@ export class SoundComponent {
 				}
 			}
 
+			//new
+			// this.isStroke = false;
+
+
 			//Delete key
 			if(this.map[8] && this.counter !== 0) {
 
@@ -333,5 +361,6 @@ export class SoundComponent {
 				this.items[this.counter].text = '';
 			}
 		}
+		// this.stroke = 0
 	}
 }
