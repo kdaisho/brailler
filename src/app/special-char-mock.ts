@@ -33,5 +33,40 @@ export const characters = [
 		id: '3',
 		value: '\'',
 		pronounce: 'apostrophe'
+	},
+	{
+		id: '23645',
+		value: '"',
+		pronounce: 'opening quotation mark'
+	},
+	{
+		id: '35645',
+		value: '"',
+		pronounce: 'closing quotation mark'
+	},
+	{
+		id: '126',
+		value: '(',
+		pronounce: 'left parenthesis'
+	},
+	{
+		id: '345',
+		value: ')',
+		pronounce: 'right parenthesis'
+	},
+	{
+		id: '34',
+		value: '/',
+		pronounce: 'slash'
+	},
+	{
+		id: '36',
+		value: '-',
+		pronounce: 'hyphen'
+	},
+	{
+		id: '45',
+		value: '\'',
+		pronounce: 'apostrophe'
 	}
 ];

@@ -103,6 +103,14 @@ export class SoundComponent {
 
 		this.keyId = this.keyId.sort();
 		this.id = this.keyId.join('');
+		console.log('what id ' + this.id);
+		// if(this.isSpecial && (this.id == '356' || this.id == '236')) {
+		// 	this.id += this.speId;
+		// 	alert(this.id);
+		// }
+		// else {
+		// 	this.isSpecial = false;
+		// }
 
 		console.log("isNum?: " + this.isNum);
 		console.log("id?: " + this.id);
@@ -128,16 +136,65 @@ export class SoundComponent {
 	stroke: number = 0;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
+	isSpecial: boolean = false;
+	speId: string;
 
 	saveSpecialCharacter(x) {
+
+			// let self = x - 1;
+			// console.log('self ' + self);
+			// console.log('valueee ' + this.items[x]);
+			// console.log('sp value ' + this.sp[self].value);
+			// if(this.sp[x].value === "'") {
+			// 	console.log('ahaa');
+			// 	if(this.sp[x]) {
+
+			// 	}
+			// }
+
 		for(let i = 0, len = this.sp.length; i < len; i++) {
+
+			//Special character initiator
+			if(this.id === this.sp[i].id && this.sp[i].id === '45' && this.isSpecial === false) {
+				this.isSpecial = true;
+				this.speId = this.id;
+				console.log('SPECIAL CHARACTOR INIT: ' + this.isSpecial);
+				console.log('SPECIAL ID: ' + this.speId);
+			}
+			//Open quotation mark
+
+			// if(this.id === '236' && this.isSpecial === true) {
+			// 	this.say.text = 'opening quotation mark';
+			// 	this.items[x].text = '"';
+			// 	this.isRightKey = true;
+			// 	this.isSpecial = false;
+			// 	return;
+			// }
+			// //Closing quotation mark
+			// if(this.id === '356' && this.isSpecial === true) {
+			// 	this.say.text = 'closing quotation mark';
+			// 	this.items[x].text = '"';
+			// 	this.isRightKey = true;
+			// 	this.isSpecial = false;
+			// 	return;
+			// }
+
 			if(this.id === this.sp[i].id) {
 				console.log('special hit: ' + this.id );
 				console.log('special value: ' + this.sp[i].value );
 				this.isRightKey = true;
 				this.items[x].text = this.sp[i].value;
 				this.say.text = this.sp[i].pronounce;
+				if(this.id !== '45') {
+					this.isSpecial = false;
+				}
 				return;
+			}
+			// else if(this.items[x].text === "'") {
+			// 	alert('ha');
+			// }
+			if(this.id === '23645' || this.id === '35645' ) {
+				this.isSpecial = false;
 			}
 		}
 		console.log('Not right special character');
@@ -163,6 +220,7 @@ export class SoundComponent {
 			for(let i = 0, len = this.p.length; i < len; i++) {
 				if(this.id === this.p[i].id) {
 					this.isRightKey = true;
+					this.isSpecial = false;
 					return this.items[x].text = this.say.text = this.p[i].value;
 				}
 			}
@@ -207,11 +265,23 @@ export class SoundComponent {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keyup';
 
+
+			if(this.isSpecial && (this.id == '356' || this.id == '236')) {
+				this.id += this.speId;
+			}
+			else {
+				// this.isSpecial = false;
+			}
+
+
+
 			this.saveNumber(this.counter);
 
 			this.saveSound(this.counter, this.maxCounter);
 
 			this.saveSpecialCharacter(this.counter);
+
+			// this.isSpecial = false;
 
 			if(!this.exceedBlock) {
 				this.keyId = [];
@@ -270,6 +340,7 @@ export class SoundComponent {
 			this.items[0].pointer = true;
 			this.exceedBlock = this.lastBlock = false;
 			this.stroke = 0;
+			this.isSpecial = false;
 		}
 
 		//Space key
@@ -277,6 +348,7 @@ export class SoundComponent {
 			if(this.map[32]) {
 				this.playAudio(600, .15, .06);
 				this.items[this.counter].text = ' ';
+				this.isSpecial = false;
 
 				this.addCounter(1);
 
@@ -307,7 +379,9 @@ export class SoundComponent {
 		if(this.map[8] && this.counter !== 0) {
 
 			let max = this.maxCounter - 1;
-			let self = this.counter - 1;
+			let prev = this.counter - 1;
+			let prev2 = this.counter - 2;
+
 
 			//When pointer was in last position
 			if(this.lastBlock) {
@@ -317,21 +391,31 @@ export class SoundComponent {
 			}
 
 			//When numSign is erased
-			if(this.items[self].text === '#') {
+			if(this.items[prev].text === '#') {
 				this.isNum = false;
 			}
 
 			//When numCanceller is erased
-			if(this.items[self].text === 'alphabet') {
+			if(this.items[prev].text === 'alphabet') {
 				this.isNum = true;
 			}
 
 			//When space is erased
-			if(this.items[self].text === ' ') {
+			if(this.items[prev].text === ' ') {
 				this.isNum = false;
 				if(this.items[this.counter].wasNum) {
 					this.isNum = true;
 				}
+			}
+
+			//When 45 is erased
+			if(this.items[prev].text === '\'') {
+				this.isSpecial = false;
+			}
+
+			//When 45 is one step before
+			if(this.counter >= 2 && this.items[prev2].text === '\'') {
+				this.isSpecial = true;
 			}
 
 			this.items[this.counter].pointer = false;
