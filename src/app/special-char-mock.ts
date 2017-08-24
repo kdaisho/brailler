@@ -66,7 +66,7 @@ export const characters = [
 	},
 	{
 		id: '45',
-		value: '\'',
-		pronounce: 'apostrophe'
+		value: '',
+		pronounce: ''
 	}
 ];
