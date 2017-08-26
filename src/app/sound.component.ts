@@ -128,7 +128,6 @@ export class SoundComponent {
 	speId: string;
 
 	saveSpecialCharacter(x) {
-
 		for(let i = 0, len = this.sp.length; i < len; i++) {
 
 			//Special character initiator
@@ -145,6 +144,7 @@ export class SoundComponent {
 				this.isRightKey = true;
 				this.items[x].text = this.sp[i].value;
 				this.say.text = this.sp[i].pronounce;
+
 				if(this.id !== '45') {
 					this.isSpecial = false;
 				}
@@ -225,12 +225,17 @@ export class SoundComponent {
 			if(this.isSpecial && (this.id == '356' || this.id == '236')) {
 				this.id += this.speId;
 			}
+			else {
+				this.isSpecial = false;
+			}
 
 			this.saveNumber(this.counter);
 
 			this.saveSound(this.counter, this.maxCounter);
 
 			this.saveSpecialCharacter(this.counter);
+
+			// this.isSpecial = false;
 
 			if(!this.exceedBlock) {
 				this.keyId = [];
@@ -357,12 +362,14 @@ export class SoundComponent {
 			}
 
 			//When 45 is erased
+
 			if(this.items[prev].text === '') {
 				console.log('items[prev] ' + this.items[prev].id);
 				this.isSpecial = false;
 			}
 
 			//When 45 is one step before
+
 			if(this.counter >= 2 && this.items[prev2].text === '') {
 				console.log('items[prev2] ' + this.items[prev2].id);
 				this.isSpecial = true;
