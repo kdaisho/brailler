@@ -1,0 +1,69 @@
+<section class="cheatsheet">
+	<div class="header">
+		<h1 class="title">{{title}}</h1>
+		<div class="menu">
+			<a (click)="selectSheet('alpha')" [ngClass]="{'active': isAlphabet}">
+				alphabet
+			</a>
+			<a (click)="selectSheet('others')" [ngClass]="{'active': !isAlphabet}">
+				numbers &amp; special characters
+			</a>
+		</div>
+	</div>
+	<div class="rows" *ngIf="isAlphabet">
+		<div *ngFor="let char of chars; let i = index" class="row">
+			<p class="character">
+				{{char.value}}
+			</p>
+			<div class="dot-group">
+				<div class="col">
+					<div id="dot2-{{idx+1}}-{{i+1}}-1" class="field" [ngClass]="{'dot': char.bullets[0]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-2" class="field" [ngClass]="{'dot': char.bullets[1]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-3" class="field" [ngClass]="{'dot': char.bullets[2]}"></div>
+				</div>
+				<div class="col">
+					<div id="dot2-{{idx+1}}-{{i+1}}-4" class="field" [ngClass]="{'dot': char.bullets[3]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-5" class="field" [ngClass]="{'dot': char.bullets[4]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-6" class="field" [ngClass]="{'dot': char.bullets[5]}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="rows" *ngIf="!isAlphabet">
+		<div *ngFor="let char of numbers; let i = index" class="row">
+			<p class="character">
+				{{char.num}}
+			</p>
+			<div class="dot-group">
+				<div class="col">
+					<div id="dot2-{{idx+1}}-{{i+1}}-1" class="field" [ngClass]="{'dot': char.bullets[0]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-2" class="field" [ngClass]="{'dot': char.bullets[1]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-3" class="field" [ngClass]="{'dot': char.bullets[2]}"></div>
+				</div>
+				<div class="col">
+					<div id="dot2-{{idx+1}}-{{i+1}}-4" class="field" [ngClass]="{'dot': char.bullets[3]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-5" class="field" [ngClass]="{'dot': char.bullets[4]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-6" class="field" [ngClass]="{'dot': char.bullets[5]}"></div>
+				</div>
+			</div>
+		</div>
+		<div *ngFor="let char of specials; let i = index" class="row" [ngClass]="{'initiator': char.id == '45'}">
+			<p class="character">
+				{{char.value}}
+			</p>
+			<div class="dot-group">
+				<div class="col">
+					<div id="dot2-{{idx+1}}-{{i+1}}-1" class="field" [ngClass]="{'dot': char.bullets[0]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-2" class="field" [ngClass]="{'dot': char.bullets[1]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-3" class="field" [ngClass]="{'dot': char.bullets[2]}"></div>
+				</div>
+				<div class="col">
+					<div id="dot2-{{idx+1}}-{{i+1}}-4" class="field" [ngClass]="{'dot': char.bullets[3]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-5" class="field" [ngClass]="{'dot': char.bullets[4]}"></div>
+					<div id="dot2-{{idx+1}}-{{i+1}}-6" class="field" [ngClass]="{'dot': char.bullets[5]}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

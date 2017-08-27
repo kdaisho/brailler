@@ -1,0 +1,92 @@
+.cheatsheet {
+	border: 2px solid #fff;
+	border-radius: 6px;
+	background: #111;
+	padding: 2em;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+.header {
+	display: flex;
+	align-items: center;
+}
+.menu {
+	align-items: center;
+	display: flex;
+	flex-grow: 2;
+	justify-content: flex-end;
+}
+.menu a {
+	display: block;
+	font-size: 1.8em;
+	padding: .5em .8em;
+	text-transform: capitalize;
+}
+.menu a.active {
+	text-decoration: underline;
+}
+.menu a:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.title {
+	color: rgba(118, 255, 3, 1);
+	font-size: 2.5em;
+	flex-grow: 1;
+	margin: 0;
+	text-align: center;
+}
+.rows {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 1.5em 0 1em;
+}
+.row {
+	border-right: 2px solid #fff;
+	margin: 12px 0;
+    padding: 0 12px;
+}
+.row:last-child {
+	border: none;
+}
+.row.initiator {
+	border-right-style: dashed;
+}
+.dot-group {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+.dot-group.focused {
+	background: rgba(118, 255, 3, .75);
+}
+.pointer {
+	height: 16px;
+	width: 50px;
+}
+.pointer.focused {
+	background: rgba(118, 255, 3, 1);
+}
+.field {
+	border: 1px solid #fff;
+	border-radius: 7px;
+	margin: 6px 3px;
+	height: 14px;
+	width: 14px;
+}
+.field.focused {
+	border: 1px solid #000;
+}
+.field.dot {
+	background: #fff;
+}
+.field.dot.focused {
+	background: #000;
+}
+.character {
+	font-size: 3.7em;
+	height: 1.2em;
+	margin: .1em 0 0;
+	text-align: center;
+}

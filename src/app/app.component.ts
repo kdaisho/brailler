@@ -12,7 +12,8 @@ import * as patterns from './lego-mock';
 
 export class AppComponent {
 
-	title = 'Webraille 2.0';
+	// title = 'Webraille 2.0';
+	title = 'My Brailler';
 	items;
 	counter = 0;
 	maxCounter;

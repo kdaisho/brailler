@@ -5,6 +5,7 @@ import * as patterns from './lego-mock';
 import * as p from './letters-mock';
 import * as sp from './special-char-mock';
 
+
 @Component({
 	selector: 'sound',
 	template: ''
