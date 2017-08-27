@@ -157,6 +157,7 @@ export class SoundComponent {
 			}
 		}
 		console.log('Not right special character');
+		// this.isRightKey = false;
 	}
 
 	saveNumber(x) {

@@ -1,7 +1,7 @@
 export const letters = [
 	{
-		id: '',
-		value: '',
+		id: '0',
+		value: null,
 		num: '#',
 		bullets: [false, false, true, true, true, true]
 	},
@@ -16,8 +16,7 @@ export const letters = [
 		value: 'b',
 		num: '2',
 		bullets: [true, true, false, false, false, false]
-	}
-	,
+	},
 	{
 		id: '14',
 		value: 'c',

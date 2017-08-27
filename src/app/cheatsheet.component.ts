@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HostListener } from '@angular/core';
 import * as patterns from './lego-mock';
 import * as chars from './letters-mock';
 import * as specials from './special-char-mock';
@@ -15,6 +16,7 @@ export class CheatsheetComponent {
 	chars: any[];
 	numbers: any[];
 	specials: any[];
+	isHelp: boolean = false;
 	isAlphabet: boolean = true;
 
 	constructor() {
@@ -25,5 +27,15 @@ export class CheatsheetComponent {
 
 	selectSheet(type) {
 		this.isAlphabet = type === 'alpha' ? true : false;
+	}
+
+	@HostListener('window:keydown', ['$event'])
+	toggleHelp(event: KeyboardEvent) {
+		if(!this.isHelp && event.keyCode === 18) {
+			this.isHelp = true;
+		}
+		else if(this.isHelp && event.keyCode === 18) {
+			this.isHelp = false;
+		}
 	}
 }

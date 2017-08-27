@@ -1,7 +1,7 @@
 <div class="brailler">
 	<div class="wrapper">
 		<h1 class="title">{{title}}</h1>
-		<!-- <div *ngFor="let row of rows; let idx = index; trackBy:post?.id" class="rows"> -->
+		<p class="help-text">Press Alt key for help sheet</p>
 		<div class="rows">
 			<div *ngFor="let item of items; let i = index" class="row">
 				<p class="character">
@@ -21,7 +21,6 @@
 				</div>
 				<div class="pointer" [class.focused]="item.pointer"></div>
 			</div>
-		<!-- </div> -->
 		</div>
 	</div>
 </div>

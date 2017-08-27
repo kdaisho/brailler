@@ -6,6 +6,10 @@
 	font-size: 3em;
 	text-align: center;
 }
+.help-text {
+	font-size: 1.5em;
+	text-align: right;
+}
 .wrapper {
 	max-width: 1199px;
 	margin: 0 auto;
@@ -18,16 +22,12 @@
 .row {
 	margin: 0 2px;
 }
-.row:last-child {
-	/*display: none;*/
-}
 .dot-group {
 	display: flex;
 	justify-content: center;
 	margin: 0 auto;
 }
 .dot-group.focused {
-	/*background: rgba(255, 23, 68, .5);*/
 	background: rgba(118, 255, 3, .75);
 }
 .pointer {
@@ -35,7 +35,6 @@
 	width: 50px;
 }
 .pointer.focused {
-	/*background: rgba(255, 23, 68, 1);*/
 	background: rgba(118, 255, 3, 1);
 }
 .field {
