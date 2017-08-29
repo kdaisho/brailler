@@ -1,0 +1,28 @@
+<div class="brailler">
+	<div class="wrapper">
+		<h1 class="title">{{title}}</h1>
+		<p class="help-text">Press Alt key for help sheet</p>
+		<div class="rows">
+			<div *ngFor="let item of items; let i = index" class="row">
+				<p class="character">
+					<span *ngIf="item.text !== 'alphabet'">{{item.text}}</span>
+				</p>
+				<div class="dot-group" [class.focused]="item.pointer">
+					<div class="col">
+						<div id="dot-{{idx+1}}-{{i+1}}-1" class="field" [ngClass]="{'dot': item.dot1, 'focused': item.pointer}"></div>
+						<div id="dot-{{idx+1}}-{{i+1}}-2" class="field" [ngClass]="{'dot': item.dot2, 'focused': item.pointer}"></div>
+						<div id="dot-{{idx+1}}-{{i+1}}-3" class="field" [ngClass]="{'dot': item.dot3, 'focused': item.pointer}"></div>
+					</div>
+					<div class="col">
+						<div id="dot-{{idx+1}}-{{i+1}}-4" class="field" [ngClass]="{'dot': item.dot4, 'focused': item.pointer}"></div>
+						<div id="dot-{{idx+1}}-{{i+1}}-5" class="field" [ngClass]="{'dot': item.dot5, 'focused': item.pointer}"></div>
+						<div id="dot-{{idx+1}}-{{i+1}}-6" class="field" [ngClass]="{'dot': item.dot6, 'focused': item.pointer}"></div>
+					</div>
+				</div>
+				<div class="pointer" [class.focused]="item.pointer"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<sound></sound>
+<cheatsheet style="position: relative; display: block;"></cheatsheet>

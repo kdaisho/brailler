@@ -5,15 +5,14 @@ import { SoundComponent } from './sound.component';
 import * as patterns from './lego-mock';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+	selector: 'free-typing',
+	templateUrl: './free-typing.component.html',
+	styleUrls: ['./free-typing.component.css']
 })
 
-export class AppComponent {
+export class FreeTypingComponent {
 
-	// title = 'Webraille 2.0';
-	title = 'My Brailler';
+	title = 'Free Typing';
 	items;
 	counter = 0;
 	maxCounter;
@@ -26,7 +25,6 @@ export class AppComponent {
 	audio;
 	rows = [1];
 
-	//Experimental: audio
 	audioCtx;
 	oscillator;
 	volume;

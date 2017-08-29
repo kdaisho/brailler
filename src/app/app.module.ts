@@ -6,12 +6,14 @@ import { WindowRef } from './windowRef';
 
 import { AppComponent } from './app.component';
 import { SoundComponent } from './sound.component';
+import { FreeTypingComponent } from './free-typing.component';
 import { CheatsheetComponent } from './cheatsheet.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		SoundComponent,
+		FreeTypingComponent,
 		CheatsheetComponent
 	],
 	imports: [
