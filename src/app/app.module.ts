@@ -7,6 +7,7 @@ import { WindowRef } from './windowRef';
 import { AppComponent } from './app.component';
 import { SoundComponent } from './sound.component';
 import { FreeTypingComponent } from './free-typing.component';
+import { ExerciseComponent } from './exercise.component';
 import { CheatsheetComponent } from './cheatsheet.component';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 		AppComponent,
 		SoundComponent,
 		FreeTypingComponent,
+		ExerciseComponent,
 		CheatsheetComponent
 	],
 	imports: [

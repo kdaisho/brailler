@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { HostListener } from '@angular/core';
 import { WindowRef } from './windowRef';
 import { SoundComponent } from './sound.component';
@@ -12,6 +12,7 @@ import * as patterns from './lego-mock';
 
 export class FreeTypingComponent {
 
+	@Input() free;
 	title = 'Free Typing';
 	items;
 	counter = 0;
@@ -29,6 +30,8 @@ export class FreeTypingComponent {
 	oscillator;
 	volume;
 
+	isHelpAvailable: boolean = false;;
+
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
 		this.maxCounter = this.items.length;
@@ -36,4 +39,10 @@ export class FreeTypingComponent {
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 	}
+
+	ngOnInit() {
+		if(this.free) {
+			this.isHelpAvailable = true;
+		}
+    }
 }

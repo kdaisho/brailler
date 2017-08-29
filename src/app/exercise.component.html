@@ -1,7 +1,7 @@
-<section class="free-typing" *ngIf="free">
+<section class="exercise" *ngIf="exec">
 	<div class="wrapper">
 		<h1 class="title">{{title}}</h1>
-		<p class="help-text">Press Alt key for help sheet</p>
+		<!-- <p class="help-text">Press Alt key for help sheet</p> -->
 		<div class="rows">
 			<div *ngFor="let item of items; let i = index" class="row">
 				<p class="character">
@@ -25,4 +25,4 @@
 	</div>
 </section>
 <sound></sound>
-<cheatsheet [help]="isHelpAvailable" style="position: relative; display: block;"></cheatsheet>
+<!-- <cheatsheet style="position: relative; display: block;"></cheatsheet> -->
