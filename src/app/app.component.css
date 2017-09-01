@@ -1,0 +1,32 @@
+.wrapper {
+	font-size: 1em;
+	padding: 3em 0;
+	margin: 0 auto;
+	max-width: 1199px;
+	width: 100%;
+}
+
+.btn-group {
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.btn-group button {
+	background: transparent;
+	border: 2px solid #fff;
+	-webkit-border-radius: 5px;
+	        border-radius: 5px;
+	color: #fff;
+	font-size: 1.5em;
+	margin: 0 1em;
+	padding: .25em .8em;
+	text-transform: uppercase;
+	width: 10em;
+}
+.btn-group button:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}

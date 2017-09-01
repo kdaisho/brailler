@@ -7,7 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 
 export class ExerciseComponent {
-	@Input() exec;
+
+	// @Input() exec;
 	title = 'Exercise';
-	constructor() {}
+	constructor() {
+	}
 }

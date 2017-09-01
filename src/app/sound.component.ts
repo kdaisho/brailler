@@ -23,7 +23,7 @@ export class SoundComponent {
 	isRightKey = false;
 	audio;
 
-	audioCtx;
+	audioCtx:any = false;
 	oscillator;
 	volume;
 
@@ -44,8 +44,14 @@ export class SoundComponent {
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
+		console.log("audio before created " + this.audioCtx.state);
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
+		console.log("audio after created " + this.audioCtx.state);
 		this.items[0].pointer = true;
+	}
+
+	destroyAudio() {
+		this.audioCtx.close();
 	}
 
 	playAudio(freq, vol, duration) {
