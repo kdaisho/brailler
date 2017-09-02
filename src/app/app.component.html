@@ -8,6 +8,7 @@
 		<a routerLink="freetyping" (click)="selectMode('free')" [class.active]="isFreeTyping">free typing</a>
 		<a routerLink="exercise" (click)="selectMode('exer')" [class.active]="isExercise">exercise</a>
 	</div>
-	<sound [type]="pageType"></sound>
+	<!-- <sound [type]="pageType"></sound> -->
+	<!-- <sound></sound> -->
 	<router-outlet></router-outlet>
 </section>
