@@ -1,5 +1,5 @@
 // import { Component } from '@angular/core';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { HostListener } from '@angular/core';
 import { WindowRef } from './windowRef';
 import * as patterns from './lego-mock';
@@ -14,7 +14,7 @@ import * as sp from './special-char-mock';
 
 export class SoundComponent {
 
-	@Input() init;
+	@Input() type;
 	items;
 	counter = 0;
 	maxCounter;
@@ -51,9 +51,7 @@ export class SoundComponent {
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
-		console.log("audio before created " + this.audioCtx.state);
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
-		console.log("audio after created " + this.audioCtx.state);
 		this.items[0].pointer = true;
 	}
 
@@ -73,41 +71,44 @@ export class SoundComponent {
 		this.oscillator.stop(this.audioCtx.currentTime + duration);
 	}
 
-	saveKeyCode(x) {
-		if(this.map[70]) {
-			this.items[x].dot1 = true;
-			if(this.keyId.indexOf('1') < 0) {
-				this.keyId.push('1');
+	saveKeyCode(x, type) {
+		console.log("INIT IN A FUNC " + type);
+		if(type === 'free') {
+			if(this.map[70]) {
+				this.items[x].dot1 = true;
+				if(this.keyId.indexOf('1') < 0) {
+					this.keyId.push('1');
+				}
 			}
-		}
-		if(this.map[68]) {
-			this.items[x].dot2 = true;
-			if(this.keyId.indexOf('2') < 0) {
-				this.keyId.push('2');
+			if(this.map[68]) {
+				this.items[x].dot2 = true;
+				if(this.keyId.indexOf('2') < 0) {
+					this.keyId.push('2');
+				}
 			}
-		}
-		if(this.map[83]) {
-			this.items[x].dot3 = true;
-			if(this.keyId.indexOf('3') < 0) {
-				this.keyId.push('3');
+			if(this.map[83]) {
+				this.items[x].dot3 = true;
+				if(this.keyId.indexOf('3') < 0) {
+					this.keyId.push('3');
+				}
 			}
-		}
-		if(this.map[74]) {
-			this.items[x].dot4 = true;
-			if(this.keyId.indexOf('4') < 0) {
-				this.keyId.push('4');
+			if(this.map[74]) {
+				this.items[x].dot4 = true;
+				if(this.keyId.indexOf('4') < 0) {
+					this.keyId.push('4');
+				}
 			}
-		}
-		if(this.map[75]) {
-			this.items[x].dot5 = true;
-			if(this.keyId.indexOf('5') < 0) {
-				this.keyId.push('5');
+			if(this.map[75]) {
+				this.items[x].dot5 = true;
+				if(this.keyId.indexOf('5') < 0) {
+					this.keyId.push('5');
+				}
 			}
-		}
-		if(this.map[76]) {
-			this.items[x].dot6 = true;
-			if(this.keyId.indexOf('6') < 0) {
-				this.keyId.push('6');
+			if(this.map[76]) {
+				this.items[x].dot6 = true;
+				if(this.keyId.indexOf('6') < 0) {
+					this.keyId.push('6');
+				}
 			}
 		}
 
@@ -205,7 +206,7 @@ export class SoundComponent {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
-		if(this.init) {
+		if(this.type !== 'hompe') {
 			//Reset stroke to prevent it won't match when a user changed window or triggered mission control
 			this.stroke = 0;
 
@@ -213,7 +214,7 @@ export class SoundComponent {
 				this.map = [];
 				this.map[event.keyCode] = event.type === 'keydown';
 				if(!this.exceedBlock) {
-					this.saveKeyCode(this.counter);
+					this.saveKeyCode(this.counter, this.type);
 				}
 				this.stroke++;
 				return;
@@ -223,7 +224,7 @@ export class SoundComponent {
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		if(this.init) {
+		if(this.type !== 'home') {
 			this.stroke--;
 			if(this.stroke === 0) {
 				this.map = [];

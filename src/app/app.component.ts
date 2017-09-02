@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WindowRef } from './windowRef';
 import { HomeComponent } from './home.component';
 import { SoundComponent } from './sound.component';
 
@@ -12,23 +13,30 @@ export class AppComponent {
 	title = 'My Brailler';
 	isFreeTyping: boolean = false;
 	isExercise: boolean = false;
-	allowType: boolean = false;
+	// pageType: boolean = false;
+	pageType: string;
+	// _window;
 
-	constructor() {
-	}
+	constructor() {}
+	// constructor(private winRef: WindowRef) {
+	// 	this._window = winRef.nativeWindow;
+	// 	console.log(this._window);
+	// }
+
 	selectMode(type) {
-		if(type === 'freeTyping') {
+		// console.log('private ' + this._window);
+		// this._window.location.reload();
+		this.pageType = type;
+		if(type === 'free') {
 			this.isFreeTyping = true;
 			this.isExercise = false;
-			this.allowType = true;
 		}
-		else if(type === 'exercise') {
+		else if(type === 'exer') {
 			this.isExercise = true;
 			this.isFreeTyping = false;
-			this.allowType = true;
 		}
 		else if(type === 'home') {
-			this.isExercise = this.isFreeTyping = this.allowType = false;
+			this.isExercise = this.isFreeTyping = false;
 		}
 	}
 }

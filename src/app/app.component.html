@@ -5,9 +5,9 @@
 		</a>
 	</h1>
 	<div class="btn-group">
-		<a routerLink="freetyping" (click)="selectMode('freeTyping')" [class.active]="isFreeTyping">free typing</a>
-		<a routerLink="exercise" (click)="selectMode('exercise')" [class.active]="isExercise">exercise</a>
+		<a routerLink="freetyping" (click)="selectMode('free')" [class.active]="isFreeTyping">free typing</a>
+		<a routerLink="exercise" (click)="selectMode('exer')" [class.active]="isExercise">exercise</a>
 	</div>
-	<sound [init]="allowType"></sound>
+	<sound [type]="pageType"></sound>
 	<router-outlet></router-outlet>
 </section>
