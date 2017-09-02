@@ -14,19 +14,20 @@
 	-webkit-justify-content: center;
 	        justify-content: center;
 }
-.btn-group button {
-	background: transparent;
-	border: 2px solid #fff;
-	-webkit-border-radius: 5px;
-	        border-radius: 5px;
+.btn-group a {
+	border-bottom: 3px solid transparent;
 	color: #fff;
 	font-size: 1.5em;
 	margin: 0 1em;
 	padding: .25em .8em;
+	text-align: center;
 	text-transform: uppercase;
-	width: 10em;
+	/*width: 10em;*/
 }
-.btn-group button:hover {
+.btn-group a:hover {
 	cursor: pointer;
-	text-decoration: underline;
+}
+.btn-group a.active {
+	color: rgba(118, 255, 3, 1);
+	border-color: rgba(118, 255, 3, 1);
 }

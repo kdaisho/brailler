@@ -7,6 +7,9 @@ h1, h2, p, a {
 h1, h2, a {
 	letter-spacing: .05em;
 }
+a {
+	text-decoration: none;
+}
 button {
 	letter-spacing: .1em;
 }
