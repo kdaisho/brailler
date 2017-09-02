@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { WindowRef } from './windowRef';
+import { routing } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { SoundComponent } from './sound.component';
@@ -21,6 +22,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 	imports: [
 		BrowserModule,
 		FormsModule,
+		routing,
 		HttpModule
 	],
 	providers: [WindowRef],

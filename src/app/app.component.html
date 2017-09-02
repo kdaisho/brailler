@@ -3,16 +3,22 @@
 		My Brailler
 	</h1>
 	<div class="btn-group">
-		<button (click)="selectMode('freeTyping')">Free Typing</button>
-		<button (click)="selectMode('exercise')">Exercise</button>
+		<!-- <a routerLink="freetyping" [class.active]="inforeit.langen || inforeit.langfr == true">free typing</a> -->
+		<a routerLink="freetyping" (click)="selectMode('freeTyping')">free typing</a>
+		<!-- <a routerLink="exercise" [class.active]="infopenn.langen || infopenn.langfr == true">exercise</a> -->
+		<a routerLink="exercise" (click)="selectMode('exercise')">exercise</a>
+		<!-- <button (click)="selectMode('freeTyping')">Free Typing</button>
+		<button (click)="selectMode('exercise')">Exercise</button> -->
 	</div>
+	<sound [init]="allowType"></sound>
+	<router-outlet></router-outlet>
 </section>
 <!-- <free-typing *ngIf="isFreeTyping"> -->
-<free-typing [hidden]="!isFreeTyping">
+<!-- <free-typing [hidden]="!isFreeTyping">
 	<sound [init]="allowType"></sound>
-</free-typing>
+</free-typing> -->
 
 <!-- <exercise *ngIf="isExercise"> -->
-<exercise [hidden]="!isExercise">
+<!-- <exercise [hidden]="!isExercise"> -->
 	<!-- <sound></sound> -->
-</exercise>
+<!-- </exercise> -->

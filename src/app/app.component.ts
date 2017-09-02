@@ -17,14 +17,14 @@ export class AppComponent {
 	}
 	selectMode(type) {
 		if(type === 'freeTyping') {
-			this.isFreeTyping = true;
-			this.isExercise = false;
-
+			// this.isFreeTyping = true;
+			// this.isExercise = false;
+			alert("yes");
 			this.allowType = true;
 		}
 		else if(type === 'exercise') {
-			this.isExercise = true;
-			this.isFreeTyping = false;
+			// this.isExercise = true;
+			// this.isFreeTyping = false;
 		}
 	}
 }
