@@ -7,10 +7,12 @@
 		<button (click)="selectMode('exercise')">Exercise</button>
 	</div>
 </section>
-<free-typing *ngIf="isFreeTyping">
-	<sound></sound>
+<!-- <free-typing *ngIf="isFreeTyping"> -->
+<free-typing [hidden]="!isFreeTyping">
+	<sound [init]="allowType"></sound>
 </free-typing>
 
-<exercise *ngIf="isExercise">
-	<sound></sound>
+<!-- <exercise *ngIf="isExercise"> -->
+<exercise [hidden]="!isExercise">
+	<!-- <sound></sound> -->
 </exercise>

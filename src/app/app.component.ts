@@ -11,6 +11,7 @@ export class AppComponent {
 	title = 'My Brailler';
 	isFreeTyping: boolean = false;
 	isExercise: boolean = false;
+	allowType;
 
 	constructor() {
 	}
@@ -18,6 +19,8 @@ export class AppComponent {
 		if(type === 'freeTyping') {
 			this.isFreeTyping = true;
 			this.isExercise = false;
+
+			this.allowType = true;
 		}
 		else if(type === 'exercise') {
 			this.isExercise = true;

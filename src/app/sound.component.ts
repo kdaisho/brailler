@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { WindowRef } from './windowRef';
 import * as patterns from './lego-mock';
@@ -13,6 +14,7 @@ import * as sp from './special-char-mock';
 
 export class SoundComponent {
 
+	@Input() init;
 	items;
 	counter = 0;
 	maxCounter;
@@ -36,7 +38,12 @@ export class SoundComponent {
 
 	keyDown: boolean;
 
-	blur;
+	isNum: boolean = false;
+	stroke: number = 0;
+	numSignCount: number = 0;
+	numCancelCount: number = 0;
+	isSpecial: boolean = false;
+	speId: string;
 
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
@@ -48,10 +55,6 @@ export class SoundComponent {
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		console.log("audio after created " + this.audioCtx.state);
 		this.items[0].pointer = true;
-	}
-
-	destroyAudio() {
-		this.audioCtx.close();
 	}
 
 	playAudio(freq, vol, duration) {
@@ -126,13 +129,6 @@ export class SoundComponent {
 		this.items[x].dot1 = this.items[x].dot2 = this.items[x].dot3 = this.items[x].dot4 = this.items[x].dot5 = this.items[x].dot6 = false;
 		this.items[x].text = '';
 	}
-
-	isNum: boolean = false;
-	stroke: number = 0;
-	numSignCount: number = 0;
-	numCancelCount: number = 0;
-	isSpecial: boolean = false;
-	speId: string;
 
 	saveSpecialCharacter(x) {
 		for(let i = 0, len = this.sp.length; i < len; i++) {
@@ -209,186 +205,190 @@ export class SoundComponent {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
-		//Reset stroke to prevent it won't match when a user changed window or triggered mission control
-		this.stroke = 0;
+		if(this.init) {
+			//Reset stroke to prevent it won't match when a user changed window or triggered mission control
+			this.stroke = 0;
 
-		if(!event.repeat) {
-			this.map = [];
-			this.map[event.keyCode] = event.type === 'keydown';
-			if(!this.exceedBlock) {
-				this.saveKeyCode(this.counter);
+			if(!event.repeat) {
+				this.map = [];
+				this.map[event.keyCode] = event.type === 'keydown';
+				if(!this.exceedBlock) {
+					this.saveKeyCode(this.counter);
+				}
+				this.stroke++;
+				return;
 			}
-			this.stroke++;
-			return;
 		}
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		this.stroke--;
-		if(this.stroke === 0) {
-			this.map = [];
-			this.map[event.keyCode] = event.type === 'keyup';
+		if(this.init) {
+			this.stroke--;
+			if(this.stroke === 0) {
+				this.map = [];
+				this.map[event.keyCode] = event.type === 'keyup';
 
-			if(this.isSpecial && (this.id == '356' || this.id == '236')) {
-				this.id += this.speId;
-			}
-			else {
-				this.isSpecial = false;
-			}
-
-			this.saveNumber(this.counter);
-
-			this.saveSound(this.counter, this.maxCounter);
-
-			this.saveSpecialCharacter(this.counter);
-
-			// this.isSpecial = false;
-
-			if(!this.exceedBlock) {
-				this.keyId = [];
-			}
-
-			if(this.isRightKey) {
-				if(this.winRef.nativeWindow.speechSynthesis.speaking) {
-					this.winRef.nativeWindow.speechSynthesis.cancel();
-				}
-				this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-
-				this.say.text = '';
-
-				if(!this.lastBlock) {
-					this.addCounter(1);
+				if(this.isSpecial && (this.id == '356' || this.id == '236')) {
+					this.id += this.speId;
 				}
 				else {
-					this.exceedBlock = true;
+					this.isSpecial = false;
 				}
 
-				this.checkCounter();
+				this.saveNumber(this.counter);
 
-				if(this.counter !== 0) {
-					this.items[this.counter].pointer = true;
-					this.items[this.counter - 1].pointer = false;
-				}
-				if(this.counter === 0) {
-					this.items[this.maxCounter - 2].pointer = false;
-					this.items[0].pointer = true;
-				}
-			}
+				this.saveSound(this.counter, this.maxCounter);
 
-			if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
-				this.id = '';
-				this.playAudio(140, .2, .06);
-			}
+				this.saveSpecialCharacter(this.counter);
 
-			if(!this.isRightKey) {
-				console.log('Falsy key pressed');
+				// this.isSpecial = false;
+
 				if(!this.exceedBlock) {
-					this.clearBlock(this.counter);
+					this.keyId = [];
+				}
+
+				if(this.isRightKey) {
+					if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+						this.winRef.nativeWindow.speechSynthesis.cancel();
+					}
+					this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+
+					this.say.text = '';
+
+					if(!this.lastBlock) {
+						this.addCounter(1);
+					}
+					else {
+						this.exceedBlock = true;
+					}
+
 					this.checkCounter();
+
+					if(this.counter !== 0) {
+						this.items[this.counter].pointer = true;
+						this.items[this.counter - 1].pointer = false;
+					}
+					if(this.counter === 0) {
+						this.items[this.maxCounter - 2].pointer = false;
+						this.items[0].pointer = true;
+					}
+				}
+
+				if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
+					this.id = '';
+					this.playAudio(140, .2, .06);
+				}
+
+				if(!this.isRightKey) {
+					console.log('Falsy key pressed');
+					if(!this.exceedBlock) {
+						this.clearBlock(this.counter);
+						this.checkCounter();
+					}
 				}
 			}
-		}
 
-		//Enter key
-		if(this.map[13]) {
-			for(var i = 0, len = this.counter; i <= len; i++) {
-				this.clearBlock(i);
-				this.items[i].pointer = false;
-			}
-			this.counter = 0;
-			this.isNum = false;
-			this.numSignCount = 0;
-			this.items[0].pointer = true;
-			this.exceedBlock = this.lastBlock = false;
-			this.stroke = 0;
-			this.isSpecial = false;
-		}
-
-		//Space key
-		if(!this.lastBlock) {
-			if(this.map[32]) {
-				this.playAudio(600, .15, .06);
-				this.items[this.counter].text = ' ';
+			//Enter key
+			if(this.map[13]) {
+				for(var i = 0, len = this.counter; i <= len; i++) {
+					this.clearBlock(i);
+					this.items[i].pointer = false;
+				}
+				this.counter = 0;
+				this.isNum = false;
+				this.numSignCount = 0;
+				this.items[0].pointer = true;
+				this.exceedBlock = this.lastBlock = false;
+				this.stroke = 0;
 				this.isSpecial = false;
+			}
 
-				this.addCounter(1);
+			//Space key
+			if(!this.lastBlock) {
+				if(this.map[32]) {
+					this.playAudio(600, .15, .06);
+					this.items[this.counter].text = ' ';
+					this.isSpecial = false;
 
-				this.checkCounter();
+					this.addCounter(1);
 
-				if(this.isNum) {
-					this.items[this.counter].wasNum = true;
+					this.checkCounter();
+
+					if(this.isNum) {
+						this.items[this.counter].wasNum = true;
+						this.isNum = false;
+					}
+					else if(!this.isNum){
+						this.items[this.counter].wasNum = false;
+					}
+
+					if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
+						this.items[this.counter].pointer = true;
+						this.items[this.counter - 1].pointer = false;
+						return;
+					}
+					if(this.counter === 0) {
+						this.items[this.maxCounter - 2].pointer = false;
+						this.items[0].pointer = true;
+						return;
+					}
+				}
+			}
+
+			//Delete key
+			if(this.map[8] && this.counter !== 0) {
+
+				let max = this.maxCounter - 1;
+				let prev = this.counter - 1;
+				let prev2 = this.counter - 2;
+
+				//When pointer was in last position
+				if(this.lastBlock) {
+					this.clearBlock(max);
+					this.lastBlock = false;
+					this.exceedBlock = false;
+				}
+
+				//When numSign is erased
+				if(this.items[prev].text === '#') {
 					this.isNum = false;
 				}
-				else if(!this.isNum){
-					this.items[this.counter].wasNum = false;
-				}
 
-				if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
-					this.items[this.counter].pointer = true;
-					this.items[this.counter - 1].pointer = false;
-					return;
-				}
-				if(this.counter === 0) {
-					this.items[this.maxCounter - 2].pointer = false;
-					this.items[0].pointer = true;
-					return;
-				}
-			}
-		}
-
-		//Delete key
-		if(this.map[8] && this.counter !== 0) {
-
-			let max = this.maxCounter - 1;
-			let prev = this.counter - 1;
-			let prev2 = this.counter - 2;
-
-			//When pointer was in last position
-			if(this.lastBlock) {
-				this.clearBlock(max);
-				this.lastBlock = false;
-				this.exceedBlock = false;
-			}
-
-			//When numSign is erased
-			if(this.items[prev].text === '#') {
-				this.isNum = false;
-			}
-
-			//When numCanceller is erased
-			if(this.items[prev].text === 'alphabet') {
-				this.isNum = true;
-			}
-
-			//When space is erased
-			if(this.items[prev].text === ' ') {
-				this.isNum = false;
-				if(this.items[this.counter].wasNum) {
+				//When numCanceller is erased
+				if(this.items[prev].text === 'alphabet') {
 					this.isNum = true;
 				}
+
+				//When space is erased
+				if(this.items[prev].text === ' ') {
+					this.isNum = false;
+					if(this.items[this.counter].wasNum) {
+						this.isNum = true;
+					}
+				}
+
+				//When 45 is erased
+
+				if(this.items[prev].text === '') {
+					console.log('items[prev] ' + this.items[prev].id);
+					this.isSpecial = false;
+				}
+
+				//When 45 is one step before
+
+				if(this.counter >= 2 && this.items[prev2].text === '') {
+					console.log('items[prev2] ' + this.items[prev2].id);
+					this.isSpecial = true;
+				}
+
+				this.items[this.counter].pointer = false;
+				this.items[this.counter - 1].pointer = true;
+				this.counter--;
+				this.clearBlock(this.counter);
+				this.playAudio(300, .15, .06);
+				this.items[this.counter].text = '';
 			}
-
-			//When 45 is erased
-
-			if(this.items[prev].text === '') {
-				console.log('items[prev] ' + this.items[prev].id);
-				this.isSpecial = false;
-			}
-
-			//When 45 is one step before
-
-			if(this.counter >= 2 && this.items[prev2].text === '') {
-				console.log('items[prev2] ' + this.items[prev2].id);
-				this.isSpecial = true;
-			}
-
-			this.items[this.counter].pointer = false;
-			this.items[this.counter - 1].pointer = true;
-			this.counter--;
-			this.clearBlock(this.counter);
-			this.playAudio(300, .15, .06);
-			this.items[this.counter].text = '';
 		}
 	}
 }

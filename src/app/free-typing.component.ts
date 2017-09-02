@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { HostListener } from '@angular/core';
-import { SoundComponent } from './sound.component';
+// import { SoundComponent } from './sound.component';
 import * as patterns from './lego-mock';
 
 @Component({
