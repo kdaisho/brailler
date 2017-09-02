@@ -1,14 +1,15 @@
 <section class="wrapper">
 	<h1 class="title">
-		<a routerLink="" (click)="selectMode('home')">
+		<a routerLink="" (click)="selectMode('/home')">
 			My Brailler
 		</a>
 	</h1>
 	<div class="btn-group">
-		<a routerLink="freetyping" (click)="selectMode('free')" [class.active]="isFreeTyping">free typing</a>
-		<a routerLink="exercise" (click)="selectMode('exer')" [class.active]="isExercise">exercise</a>
+		<a routerLink="freetyping" (click)="selectMode('/freetyping')" [class.active]="isFreeTyping">free typing</a>
+		<a routerLink="exercise" (click)="selectMode('/exercise')" [class.active]="isExercise">exercise</a>
 	</div>
 	<!-- <sound [type]="pageType"></sound> -->
 	<!-- <sound></sound> -->
-	<router-outlet></router-outlet>
+	<home></home>
+	<!-- <router-outlet></router-outlet> -->
 </section>

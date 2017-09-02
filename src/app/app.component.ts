@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+// import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { WindowRef } from './windowRef';
 import { HomeComponent } from './home.component';
 import { SoundComponent } from './sound.component';
+
+// import { Router } from '@angular/router';
 
 
 // import { Component } from '@angular/core';
@@ -23,7 +26,7 @@ export class AppComponent {
 	isFreeTyping: boolean = false;
 	isExercise: boolean = false;
 	// pageType: boolean = false;
-	pageType: string;
+	// pageType: string;
 	_window;
 
 	// constructor() {}
@@ -33,23 +36,21 @@ export class AppComponent {
 	// }
 
 	selectMode(type) {
-		// console.log('private ' + this._window);
-		// this._window.location.reload();
-		this.pageType = type;
+		// this.pageType = type;
 		this.clearAll();
-		if(type === 'free') {
+		if(type === '/freetyping') {
 			this.isFreeTyping = true;
 			this.isExercise = false;
 
 			this.keyLock = false;
 		}
-		else if(type === 'exer') {
+		else if(type === '/exercise') {
 			this.isExercise = true;
 			this.isFreeTyping = false;
 
 			this.keyLock = false;
 		}
-		else if(type === 'home') {
+		else if(type === '/home') {
 			this.isExercise = this.isFreeTyping = false;
 
 			this.keyLock = true;
@@ -105,6 +106,7 @@ export class AppComponent {
 	speId: string;
 
 	keyLock: boolean = true;
+	pathName;
 
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
@@ -114,6 +116,12 @@ export class AppComponent {
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
+	}
+
+	//Keep link active when page is refreshed
+	ngOnInit() {
+		this.pathName = window.location.pathname;
+		this.selectMode(this.pathName);
 	}
 
 	playAudio(freq, vol, duration) {

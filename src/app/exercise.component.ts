@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+// import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import * as patterns from './lego-mock';
 
 @Component({
 	selector: 'exercise',
@@ -10,6 +12,10 @@ export class ExerciseComponent {
 
 	// @Input() exec;
 	title = 'Exercise';
+	items;
+
 	constructor() {
+		this.items = patterns.legos.first;
+		this.items[0].pointer = true;
 	}
 }
