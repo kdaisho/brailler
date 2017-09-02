@@ -40,18 +40,23 @@ export class AppComponent {
 		if(type === 'free') {
 			this.isFreeTyping = true;
 			this.isExercise = false;
+
+			this.keyLock = false;
 		}
 		else if(type === 'exer') {
 			this.isExercise = true;
 			this.isFreeTyping = false;
+
+			this.keyLock = false;
 		}
 		else if(type === 'home') {
 			this.isExercise = this.isFreeTyping = false;
+
+			this.keyLock = true;
 		}
 	}
 
 	clearAll() {
-		console.log('clear success ' + this.counter);
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			console.log('pointer ' + this.items[i].pointer);
 			this.clearBlock(i);
@@ -98,6 +103,8 @@ export class AppComponent {
 	numCancelCount: number = 0;
 	isSpecial: boolean = false;
 	speId: string;
+
+	keyLock: boolean = true;
 
 	constructor(private winRef: WindowRef) {
 		this.items = patterns.legos.first;
@@ -260,7 +267,7 @@ export class AppComponent {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
-		// if(this.type !== 'home') {
+		if(this.keyLock === false) {
 			//Reset stroke to prevent it won't match when a user changed window or triggered mission control
 			this.stroke = 0;
 
@@ -273,12 +280,12 @@ export class AppComponent {
 				this.stroke++;
 				return;
 			}
-		// }
+		}
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		// if(this.type !== 'home') {
+		if(this.keyLock === false) {
 			this.stroke--;
 			if(this.stroke === 0) {
 				this.map = [];
@@ -434,7 +441,7 @@ export class AppComponent {
 				this.playAudio(300, .15, .06);
 				this.items[this.counter].text = '';
 			}
-		// }
+		}
 	}
 
 }
