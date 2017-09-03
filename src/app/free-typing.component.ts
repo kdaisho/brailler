@@ -17,6 +17,7 @@ export class FreeTypingComponent {
 	soundComponent;
 
 	constructor(private sound: AppComponent) {
+
 		this.soundComponent = sound;
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;

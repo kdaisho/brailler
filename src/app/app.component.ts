@@ -1,16 +1,12 @@
-// import { Component } from '@angular/core';
-import { Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { WindowRef } from './windowRef';
 import { HomeComponent } from './home.component';
 import { SoundComponent } from './sound.component';
 
-// import { Router } from '@angular/router';
+import * as currentPage from './site-state';
 
-
-// import { Component } from '@angular/core';
-// import { Component, Input} from '@angular/core';
 import { HostListener } from '@angular/core';
-// import { WindowRef } from './windowRef';
+
 import * as patterns from './lego-mock';
 import * as p from './letters-mock';
 import * as sp from './special-char-mock';
@@ -26,27 +22,29 @@ export class AppComponent {
 	isFreeTyping: boolean = false;
 	isExercise: boolean = false;
 
-	// keyLock: boolean = true;
-	keyLock: boolean = false;
+	keyLock: boolean = true;
+	currentPage;
 
 	selectMode(type) {
-		this.clearAll();
 		if(type === '/freetyping') {
-			this.isFreeTyping = true;
-			this.isExercise = false;
-
+			this.currentPage.isFree = true;
+			this.currentPage.isExer = false;
+			this.currentPage.isHome = false;
 			this.keyLock = false;
 		}
-		else if(type === '/exercise') {
-			this.isExercise = true;
-			this.isFreeTyping = false;
-
+		if(type === '/exercise') {
 			this.keyLock = false;
+			this.currentPage.isExer = true;
+			this.currentPage.isFree = false;
+			this.currentPage.isHome = false;
+			return;
 		}
-		else if(type === '/home') {
-			this.isExercise = this.isFreeTyping = false;
-
+		if(type === '/') {
+			this.currentPage.isHome = true;
+			this.currentPage.isFree = false;
+			this.currentPage.isExer = false;
 			this.keyLock = true;
+			return;
 		}
 	}
 
@@ -100,6 +98,11 @@ export class AppComponent {
 	pathName;
 
 	constructor(private winRef: WindowRef) {
+		this.currentPage = currentPage.state;
+
+		this.pathName = window.location.pathname;
+		this.selectMode(this.pathName);
+
 		this.items = patterns.legos.first;
 		this.p = p.letters;
 		this.sp = sp.characters;
@@ -111,12 +114,6 @@ export class AppComponent {
 		//Clear all when user comes from Exercise page
 		this.clearAll();
 	}
-
-	//Keep link active when page is refreshed
-	// ngOnInit() {
-	// 	this.pathName = window.location.pathname;
-	// 	this.selectMode(this.pathName);
-	// }
 
 	playAudio(freq, vol, duration) {
 		//create the volume node;

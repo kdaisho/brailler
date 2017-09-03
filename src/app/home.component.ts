@@ -8,7 +8,8 @@ import { Component } from '@angular/core';
 
 export class HomeComponent {
 
-	title = 'My Brailler';
+	title = 'HOME';
+
 	constructor() {
 	}
 }
