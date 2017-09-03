@@ -8,6 +8,9 @@
 	font-size: 1.5em;
 	text-align: right;
 }
+.help-text span {
+	color: rgba(118, 255, 3, 1);
+}
 .wrapper {
 	max-width: 1199px;
 	margin: 0 auto;

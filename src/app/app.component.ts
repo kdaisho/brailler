@@ -26,6 +26,9 @@ export class AppComponent {
 	isFreeTyping: boolean = false;
 	isExercise: boolean = false;
 
+	// keyLock: boolean = true;
+	keyLock: boolean = false;
+
 	selectMode(type) {
 		this.clearAll();
 		if(type === '/freetyping') {
@@ -94,7 +97,6 @@ export class AppComponent {
 	isSpecial: boolean = false;
 	speId: string;
 
-	keyLock: boolean = true;
 	pathName;
 
 	constructor(private winRef: WindowRef) {
@@ -105,13 +107,16 @@ export class AppComponent {
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
+
+		//Clear all when user comes from Exercise page
+		this.clearAll();
 	}
 
 	//Keep link active when page is refreshed
-	ngOnInit() {
-		this.pathName = window.location.pathname;
-		this.selectMode(this.pathName);
-	}
+	// ngOnInit() {
+	// 	this.pathName = window.location.pathname;
+	// 	this.selectMode(this.pathName);
+	// }
 
 	playAudio(freq, vol, duration) {
 		//create the volume node;

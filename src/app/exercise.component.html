@@ -3,9 +3,11 @@
 		<h1 class="title">
 			{{title}}
 		</h1>
-		<button (click)="checkAnswer()">
-			Enter
-		</button>
+		<!-- <div class="question"> -->
+		<p class="question">
+			{{question}}
+		</p>
+		<!-- </div> -->
 		<div class="rows">
 			<div *ngFor="let item of items; let i = index" class="row">
 				<p class="character">
