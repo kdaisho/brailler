@@ -350,7 +350,8 @@ export class AppComponent {
 
 			//Enter key
 			if(this.map[13]) {
-				this.clearAll();
+				//Disabled this due to Exercise page's checkAnswer function
+				// this.clearAll();
 			}
 
 			//Space key
