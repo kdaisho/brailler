@@ -25,18 +25,8 @@ export class AppComponent {
 	title = 'My Brailler';
 	isFreeTyping: boolean = false;
 	isExercise: boolean = false;
-	// pageType: boolean = false;
-	// pageType: string;
-	_window;
-
-	// constructor() {}
-	// constructor(private winRef: WindowRef) {
-	// 	this._window = winRef.nativeWindow;
-	// 	console.log(this._window);
-	// }
 
 	selectMode(type) {
-		// this.pageType = type;
 		this.clearAll();
 		if(type === '/freetyping') {
 			this.isFreeTyping = true;
@@ -59,7 +49,6 @@ export class AppComponent {
 
 	clearAll() {
 		for(let i = 0, len = this.items.length; i < len; i++) {
-			console.log('pointer ' + this.items[i].pointer);
 			this.clearBlock(i);
 			this.items[i].pointer = false;
 		}
