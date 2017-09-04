@@ -27,12 +27,16 @@ export class ExerciseComponent {
 		{num: 1, isSelected: false},
 		{num: 2, isSelected: false}
 	];
-	level;
+	currentLevel;;
 
 	questions = [
 		'aaa',
 		'bbb',
 		'ccc'
+	];
+	questions2 = [
+		'lll',
+		'abb'
 	];
 	question: string;
 
@@ -49,7 +53,7 @@ export class ExerciseComponent {
 		this.counter = 0;
 		this.question = this.questions[0];
 
-		this.level = this.levels[0].num + 1;
+		this.currentLevel = this.levels[0].num + 1;
 
 		this.soundComponent.clearAll();
 	}
@@ -66,29 +70,53 @@ export class ExerciseComponent {
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
 		if(this.map[13]) {
-			this.checkAnswer();
+			// this.checkAnswer(this.levels[this.currentLevel].num);
+			this.checkAnswer(this.currentLevel);
 		}
 	}
 
 	selectLevel(level) {
-		this.level = this.levels[level].num + 1;
+		this.currentLevel = this.levels[level].num + 1;
+		this.resetCounter();
+
+		//Just for link style
 		for(let i = 0, len = this.levels.length; i < len; i++) {
 			this.levels[i].isSelected = false;
 		}
 		this.levels[level].isSelected = true;
+		if(this.currentLevel === 1) {
+			this.question = this.questions[0];
+		}
+		if(this.currentLevel === 2) {
+			this.question = this.questions2[0];
+		}
 	}
 
-	checkAnswer() {
+	checkAnswer(currentLevel) {
 		this.myAnswer = this.concateText();
 		console.log("MY ANSWER: " + this.myAnswer);
-		if(this.questions[this.counter] == this.myAnswer) {
-			console.log("Correct!");
-			this.getQuestion();
-			this.addCounter(1);
+
+		if(currentLevel === 1) {
+			if(this.questions[this.counter] == this.myAnswer) {
+				console.log("Correct!");
+				this.getQuestion(currentLevel);
+			}
+			else {
+				console.log("Wrong");
+			}
 		}
-		else {
-			console.log("Wrong");
+		if(currentLevel === 2) {
+			if(this.questions2[this.counter] == this.myAnswer) {
+				console.log("Correct!");
+				this.getQuestion(currentLevel);
+			}
+			else {
+				console.log("Wrong");
+			}
 		}
+		this.addCounter(1);
+
+
 		this.soundComponent.clearAll();
 		this.clearText();
 		// this.addCounter(1);
@@ -118,9 +146,17 @@ export class ExerciseComponent {
 		this.counter = 0;
 	}
 
-	getQuestion() {
+	resetCounter() {
+		this.counter = 0;
+	}
+
+	getQuestion(currentLevel) {
 		let newCounter = this.counter + 1;
-		console.log("COUNTER " + newCounter);
-		this.question = this.questions[newCounter];
+		if(currentLevel === 1) {
+			this.question = this.questions[newCounter];
+		}
+		if(currentLevel === 2) {
+			this.question = this.questions2[newCounter];
+		}
 	}
 }
