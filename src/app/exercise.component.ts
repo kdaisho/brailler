@@ -27,33 +27,46 @@ export class ExerciseComponent {
 		{num: 1, isSelected: false},
 		{num: 2, isSelected: false}
 	];
-	currentLevel;;
+	currentLevel;
 
 	questions = [
-		'aaa',
-		'bbb',
-		'ccc'
+		[
+			'aaa',
+			'bbb',
+			'ccc'
+		],
+		[
+			'lll',
+			'abb',
+			'all'
+		]
 	];
-	questions2 = [
-		'lll',
-		'abb'
-	];
+
 	question: string;
 
 	keyInputs = [];
 
 	myAnswer;
 
+	msg;
+
+	points;
+
+	life;
+
 
 	constructor(private sound: AppComponent) {
-		this.question = this.questions[this.counter];
+		this.question = this.questions[0][this.counter];
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;
 		this.soundComponent = sound;
 		this.counter = 0;
-		this.question = this.questions[0];
+		// this.question = this.questions[0];
 
 		this.currentLevel = this.levels[0].num + 1;
+		console.log('> ' + this.currentLevel);
+
+		this.points = 0;
 
 		this.soundComponent.clearAll();
 	}
@@ -76,46 +89,39 @@ export class ExerciseComponent {
 	}
 
 	selectLevel(level) {
-		this.currentLevel = this.levels[level].num + 1;
-		this.resetCounter();
 
-		//Just for link style
+
+		this.reset();
+		this.currentLevel = this.levels[level].num + 1;
+
+		this.styleLevelSelect(level);
+		// if(this.currentLevel === 1) {
+		this.question = this.questions[level][0];
+	}
+
+	styleLevelSelect(x) {
 		for(let i = 0, len = this.levels.length; i < len; i++) {
 			this.levels[i].isSelected = false;
 		}
-		this.levels[level].isSelected = true;
-		if(this.currentLevel === 1) {
-			this.question = this.questions[0];
-		}
-		if(this.currentLevel === 2) {
-			this.question = this.questions2[0];
-		}
+		this.levels[x].isSelected = true;
 	}
 
 	checkAnswer(currentLevel) {
+		let index = currentLevel - 1;
 		this.myAnswer = this.concateText();
 		console.log("MY ANSWER: " + this.myAnswer);
 
-		if(currentLevel === 1) {
-			if(this.questions[this.counter] == this.myAnswer) {
-				console.log("Correct!");
-				this.getQuestion(currentLevel);
-			}
-			else {
-				console.log("Wrong");
-			}
+		if(this.questions[index][this.counter] == this.myAnswer) {
+			this.displayMsg('Correct');
+			this.addPoints(1);
+			this.getQuestion(index);
+			this.addCounter(1, 3);
 		}
-		if(currentLevel === 2) {
-			if(this.questions2[this.counter] == this.myAnswer) {
-				console.log("Correct!");
-				this.getQuestion(currentLevel);
-			}
-			else {
-				console.log("Wrong");
-			}
+		else {
+			this.displayMsg('Wrong');
 		}
-		this.addCounter(1);
 
+		this.endGame(3);
 
 		this.soundComponent.clearAll();
 		this.clearText();
@@ -137,26 +143,40 @@ export class ExerciseComponent {
 		}
 	}
 
-	addCounter(x) {
-		while(this.counter < this.questions.length - 1) {
+	addCounter(x, max) {
+		while(this.counter < max - 1) {
 			this.counter += x;
 			return;
 		}
-		alert("DONE");
 		this.counter = 0;
 	}
 
-	resetCounter() {
-		this.counter = 0;
+	addPoints(x) {
+		this.points += x;
+	}
+
+	reset() {
+		this.counter = this.points = 0;
+		this.msg = '';
 	}
 
 	getQuestion(currentLevel) {
 		let newCounter = this.counter + 1;
-		if(currentLevel === 1) {
-			this.question = this.questions[newCounter];
-		}
-		if(currentLevel === 2) {
-			this.question = this.questions2[newCounter];
+		// if(currentLevel === 1) {
+			this.question = this.questions[currentLevel][newCounter];
+		// }
+		// if(currentLevel === 2) {
+		// 	this.question = this.questions[currentLevel][newCounter];
+		// }
+	}
+
+	displayMsg(myMessage) {
+		this.msg = myMessage;
+	}
+
+	endGame(x) {
+		if(this.points >= x) {
+			this.displayMsg("Great!");
 		}
 	}
 }

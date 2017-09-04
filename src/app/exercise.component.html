@@ -5,13 +5,16 @@
 		</h1>
 		<div class="level-group">
 			<a *ngFor="let level of levels" [class.active]="level.isSelected" (click)="selectLevel(level.num)">
-				Level {{num}}
+				Level {{level.num + 1}}
 			</a>
 		</div>
 		<div class="question-group">
 			<h2>
-				Level {{level}}
+				Level {{currentLevel}} <br>
 			</h2>
+			<p class="message">
+				{{msg}}
+			</p>
 			<p class="question" style="letter-spacing: .15em;">
 				{{question}}
 			</p>
