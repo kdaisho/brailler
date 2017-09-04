@@ -58,8 +58,19 @@
 	text-align: center;
 }
 
+.level-group,
+.question-group {
+	text-align: center;
+}
+.level-group a:hover {
+	color: rgba(118, 255, 3, 1);
+}
+.level-group a.active {
+	color: rgba(118, 255, 3, 1);
+	text-decoration: underline;
+}
 .question {
 	color: #fff;
 	font-size: 2em;
-	text-align: center;
+	/*text-align: center;*/
 }

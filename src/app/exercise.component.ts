@@ -22,6 +22,13 @@ export class ExerciseComponent {
 	say;
 	audioCtx;
 
+	levels = [
+		{num: 0, isSelected: true},
+		{num: 1, isSelected: false},
+		{num: 2, isSelected: false}
+	];
+	level;
+
 	questions = [
 		'aaa',
 		'bbb',
@@ -42,6 +49,8 @@ export class ExerciseComponent {
 		this.counter = 0;
 		this.question = this.questions[0];
 
+		this.level = this.levels[0].num + 1;
+
 		this.soundComponent.clearAll();
 	}
 
@@ -61,8 +70,15 @@ export class ExerciseComponent {
 		}
 	}
 
-	checkAnswer() {
+	selectLevel(level) {
+		this.level = this.levels[level].num + 1;
+		for(let i = 0, len = this.levels.length; i < len; i++) {
+			this.levels[i].isSelected = false;
+		}
+		this.levels[level].isSelected = true;
+	}
 
+	checkAnswer() {
 		this.myAnswer = this.concateText();
 		console.log("MY ANSWER: " + this.myAnswer);
 		if(this.questions[this.counter] == this.myAnswer) {

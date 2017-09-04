@@ -3,11 +3,19 @@
 		<h1 class="title">
 			{{title}}
 		</h1>
-		<!-- <div class="question"> -->
-		<p class="question">
-			{{question}}
-		</p>
-		<!-- </div> -->
+		<div class="level-group">
+			<a *ngFor="let level of levels" [class.active]="level.isSelected" (click)="selectLevel(level.num)">
+				Level {{num}}
+			</a>
+		</div>
+		<div class="question-group">
+			<h2>
+				Level {{level}}
+			</h2>
+			<p class="question" style="letter-spacing: .15em;">
+				{{question}}
+			</p>
+		</div>
 		<div class="rows">
 			<div *ngFor="let item of items; let i = index" class="row">
 				<p class="character">
