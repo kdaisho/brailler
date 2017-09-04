@@ -32,14 +32,16 @@ export class ExerciseComponent {
 	questions = [
 		[
 			'aaa',
-			'bbb',
-			'ccc'
+			'bbb'
 		],
 		[
 			'lll',
-			'abb',
-			'all'
+			'abb'
 		]
+		// [
+		// 	'ccc',
+		// 	'acc'
+		// ]
 	];
 
 	question: string;
@@ -69,6 +71,7 @@ export class ExerciseComponent {
 		this.points = 0;
 
 		this.soundComponent.clearAll();
+
 	}
 
 	@HostListener('window:keydown', ['$event'])
@@ -89,13 +92,10 @@ export class ExerciseComponent {
 	}
 
 	selectLevel(level) {
-
-
-		this.reset();
+		this.resetCounterPoints();
 		this.currentLevel = this.levels[level].num + 1;
 
 		this.styleLevelSelect(level);
-		// if(this.currentLevel === 1) {
 		this.question = this.questions[level][0];
 	}
 
@@ -114,14 +114,30 @@ export class ExerciseComponent {
 		if(this.questions[index][this.counter] == this.myAnswer) {
 			this.displayMsg('Correct');
 			this.addPoints(1);
-			this.getQuestion(index);
+			if(this.points < 3) {
+				this.getQuestion(index);
+			}
 			this.addCounter(1, 3);
 		}
 		else {
 			this.displayMsg('Wrong');
 		}
 
-		this.endGame(3);
+		if(this.points >= 2) {
+			console.log('current ' + this.currentLevel);
+			this.displayMsg("Level up!");
+			// this.endGame();
+			this.resetCounterPoints();
+			if(this.currentLevel <= this.questions.length - 1) {
+				this.getNextLevel();	
+			}
+			else {
+				this.endGame();
+				return;
+			}
+			// this.getNextLevel();
+			this.continueGame();
+		}
 
 		this.soundComponent.clearAll();
 		this.clearText();
@@ -155,28 +171,40 @@ export class ExerciseComponent {
 		this.points += x;
 	}
 
-	reset() {
+	resetCounterPoints() {
 		this.counter = this.points = 0;
-		this.msg = '';
 	}
 
 	getQuestion(currentLevel) {
 		let newCounter = this.counter + 1;
-		// if(currentLevel === 1) {
-			this.question = this.questions[currentLevel][newCounter];
-		// }
-		// if(currentLevel === 2) {
-		// 	this.question = this.questions[currentLevel][newCounter];
-		// }
+		this.question = this.questions[currentLevel][newCounter];
 	}
 
 	displayMsg(myMessage) {
 		this.msg = myMessage;
 	}
 
-	endGame(x) {
-		if(this.points >= x) {
-			this.displayMsg("Great!");
-		}
+	endGame() {
+		this.displayMsg("End of game");
+		this.resetCounterPoints();
+		this.soundComponent.clearAll();
+		this.clearText();
+		this.soundComponent.keyLock = true;
+	}
+
+	getNextLevel() {
+		this.currentLevel += 1;
+		// if(this.currentLevel >= this.questions.length) {
+		// 	this.displayMsg("END!");
+		// 	this.endGame();
+		// 	this.resetCounterPoints();
+		// }
+		// this.displayMsg("You've completed all levels");
+	}
+
+	continueGame() {
+		console.log("CUU " + this.currentLevel);
+		let index = this.currentLevel - 1;
+		this.question = this.questions[index][0];
 	}
 }
