@@ -1,12 +1,16 @@
-<section class="wrapper">
-	<h1 class="title">
-		<a routerLink="" (click)="selectMode('/')">
-			My Brailler
-		</a>
-	</h1>
-	<div class="btn-group">
-		<a routerLink="freetyping" [class.active]="currentPage.isFree" (click)="selectMode('/freetyping')">free typing</a>
-		<a routerLink="exercise" [class.active]="currentPage.isExer" (click)="selectMode('/exercise')">exercise</a>
+<section class="app">
+	<div class="wrapper">
+		<h1 class="title">
+			<a routerLink="" (click)="selectMode('/')">
+				My Brailler
+			</a>
+		</h1>
+		<div class="btn-group">
+			<a routerLink="" [class.active]="currentPage.isHome" (click)="selectMode('/')">home</a>
+			<a routerLink="freetyping" [class.active]="currentPage.isFree" (click)="selectMode('/freetyping')">free typing</a>
+			<a routerLink="exercise" [class.active]="currentPage.isExer" (click)="selectMode('/exercise')">exercise</a>
+		</div>
+		<div style="clear: both;"></div>
 	</div>
 	<router-outlet></router-outlet>
 </section>
