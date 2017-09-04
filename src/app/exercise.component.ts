@@ -54,7 +54,7 @@ export class ExerciseComponent {
 
 	points;
 
-	life;
+	isPopup: boolean;
 
 
 	constructor(private sound: AppComponent) {
@@ -190,6 +190,7 @@ export class ExerciseComponent {
 		this.soundComponent.clearAll();
 		this.clearText();
 		this.soundComponent.keyLock = true;
+		this.displayPopup();
 	}
 
 	getNextLevel() {
@@ -206,5 +207,9 @@ export class ExerciseComponent {
 		console.log("CUU " + this.currentLevel);
 		let index = this.currentLevel - 1;
 		this.question = this.questions[index][0];
+	}
+
+	displayPopup() {
+		this.isPopup = true;
 	}
 }

@@ -1,5 +1,6 @@
 .exercise {
 	padding: 2em .25em;
+	position: relative;
 }
 .title {
 	color: #fff;
@@ -79,4 +80,28 @@
 }
 .message {
 	color: #fff;
+}
+.modal {
+	background: #222;
+	border: 2px solid #fff;
+	border-radius: 3px;
+	height: 80%;
+	left: 50%;
+	padding: 3em 0 0;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 80%;
+	z-index: 10;
+}
+.modal-bg {
+	position: fixed;
+	background: red;
+	opacity: .3;
+	height: 100%;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 8;
 }

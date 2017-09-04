@@ -39,5 +39,15 @@
 				<div class="pointer" [class.focused]="item.pointer"></div>
 			</div>
 		</div>
+
+		<div *ngIf="isPopup" class="modal">
+			<p>
+				Thank you for playing.
+			</p>
+			<a href="/">
+				go back
+			</a>
+		</div>
 	</div>
+	<div *ngIf="isPopup" class="modal-bg"></div>
 </section>
