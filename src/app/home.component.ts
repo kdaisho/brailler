@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppComponent } from './app.component';
 
 @Component({
 	selector: 'home',
@@ -10,6 +11,8 @@ export class HomeComponent {
 
 	title = 'my brailler';
 
-	constructor() {
+	constructor(private sound: AppComponent) {
+		//Disable user input on homepage
+		sound.keyLock = true;
 	}
 }

@@ -6,7 +6,8 @@ import { FreeTypingComponent } from './free-typing.component';
 import { ExerciseComponent } from './exercise.component';
 
 export const routing = RouterModule.forRoot([
-	{ path: '', component: HomeComponent },
+	{ path: '', redirectTo: 'home', pathMatch: 'full' },
+	{ path: 'home', component: HomeComponent },
 	{ path: 'freetyping', component: FreeTypingComponent },
 	{ path: 'exercise', component: ExerciseComponent }
 ]);

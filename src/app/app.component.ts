@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { WindowRef } from './windowRef';
+
 import { HomeComponent } from './home.component';
 import { SoundComponent } from './sound.component';
 
@@ -19,34 +20,9 @@ import * as sp from './special-char-mock';
 export class AppComponent {
 	
 	title = 'My Brailler';
-	isFreeTyping: boolean = false;
-	isExercise: boolean = false;
 
 	keyLock: boolean = true;
 	currentPage;
-
-	selectMode(type) {
-		if(type === '/freetyping') {
-			this.currentPage.isFree = true;
-			this.currentPage.isExer = false;
-			this.currentPage.isHome = false;
-			this.keyLock = false;
-		}
-		if(type === '/exercise') {
-			this.keyLock = false;
-			this.currentPage.isExer = true;
-			this.currentPage.isFree = false;
-			this.currentPage.isHome = false;
-			return;
-		}
-		if(type === '/') {
-			this.currentPage.isHome = true;
-			this.currentPage.isFree = false;
-			this.currentPage.isExer = false;
-			this.keyLock = true;
-			return;
-		}
-	}
 
 	clearAll() {
 		for(let i = 0, len = this.items.length; i < len; i++) {
@@ -101,7 +77,6 @@ export class AppComponent {
 		this.currentPage = currentPage.state;
 
 		this.pathName = window.location.pathname;
-		this.selectMode(this.pathName);
 
 		this.items = patterns.legos.first;
 		this.p = p.letters;

@@ -16,7 +16,6 @@ export class ExerciseComponent {
 	title = 'Exercise';
 	items;
 	result: string = '';
-	soundComponent;
 	counter: number = 0;
 	map;
 	say;
@@ -61,7 +60,6 @@ export class ExerciseComponent {
 		this.question = this.questions[0][this.counter];
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;
-		this.soundComponent = sound;
 		this.counter = 0;
 		// this.question = this.questions[0];
 
@@ -70,7 +68,8 @@ export class ExerciseComponent {
 
 		this.points = 0;
 
-		this.soundComponent.clearAll();
+		this.sound.keyLock = false;
+		this.sound.clearAll();
 
 	}
 
@@ -139,7 +138,7 @@ export class ExerciseComponent {
 			this.continueGame();
 		}
 
-		this.soundComponent.clearAll();
+		this.sound.clearAll();
 		this.clearText();
 		// this.addCounter(1);
 	}
@@ -187,9 +186,9 @@ export class ExerciseComponent {
 	endGame() {
 		this.displayMsg("End of game");
 		this.resetCounterPoints();
-		this.soundComponent.clearAll();
+		this.sound.clearAll();
 		this.clearText();
-		this.soundComponent.keyLock = true;
+		this.sound.keyLock = true;
 		this.displayPopup();
 	}
 

@@ -15,16 +15,15 @@ export class FreeTypingComponent {
 	title = 'Free Typing';
 	items;
 	map;
-	soundComponent;
 
 	constructor(private sound: AppComponent) {
 
-		this.soundComponent = sound;
+		this.sound.keyLock = false;
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;
 
 		//Clear all when user comes from Exercise page
-		this.soundComponent.clearAll();
+		this.sound.clearAll();
 	}
 
 	@HostListener('window:keydown', ['$event'])
@@ -39,7 +38,7 @@ export class FreeTypingComponent {
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
 		if(this.map[13]) {
-			this.soundComponent.clearAll();
+			this.sound.clearAll();
 		}
 	}
 }
