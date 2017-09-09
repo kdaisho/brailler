@@ -19,3 +19,10 @@ button {
 	font-size: 3em;
 	text-align: center;
 }
+.character {
+	font-family: "Courier New";
+	font-size: 3.7em;
+	height: 1.2em;
+	margin: .1em 0 0;
+	text-align: center;
+}

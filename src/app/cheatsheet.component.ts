@@ -21,7 +21,7 @@ export class CheatsheetComponent {
 
 	constructor() {
 		this.chars = chars.letters.slice(1);
-		this.numbers = chars.letters.slice(0, 10);
+		this.numbers = chars.letters.slice(0, 11);
 		this.specials = specials.characters;
 	}
 
