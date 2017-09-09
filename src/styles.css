@@ -4,7 +4,7 @@ h1, h2, p, a {
 	color: #fff;
 	font-family: "Helvetica", "Arial", sans-serif;
 }
-h1, h2, a {
+h1, h2, a, p {
 	/*letter-spacing: .05em;*/
 	letter-spacing: .1em;
 }
@@ -16,6 +16,7 @@ button {
 	letter-spacing: .1em;
 }
 .container {
+	font-size: 1em;
 	padding: 1em .25em;
 }
 .title {
@@ -26,6 +27,7 @@ button {
 	font-family: "Courier New";
 	font-size: 3.7em;
 	height: 1.2em;
+	letter-spacing: 0;
 	margin: .1em 0 0;
 	text-align: center;
 }

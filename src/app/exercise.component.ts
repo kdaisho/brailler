@@ -36,11 +36,11 @@ export class ExerciseComponent {
 		[
 			'lll',
 			'abb'
+		],
+		[
+			'ccc',
+			'acc'
 		]
-		// [
-		// 	'ccc',
-		// 	'acc'
-		// ]
 	];
 
 	question: string;
@@ -61,6 +61,7 @@ export class ExerciseComponent {
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;
 		this.counter = 0;
+		this.msg = "Type below";
 		// this.question = this.questions[0];
 
 		this.currentLevel = this.levels[0].num + 1;
