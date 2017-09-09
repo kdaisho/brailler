@@ -72,6 +72,8 @@ export class AppComponent {
 	speId: string;
 
 	pathName;
+	myWindow;
+	speak;
 
 	constructor(private winRef: WindowRef) {
 		this.currentPage = currentPage.state;
@@ -83,6 +85,9 @@ export class AppComponent {
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
+		// this.speak = this.winRef.nativeWindow.speechSynthesis.speak();
+		// this.myWindow = new winRef.nativeWindow.SpeechSynthesis;
+		// this.speak = window.speechSynthesis.speak();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 
@@ -289,6 +294,7 @@ export class AppComponent {
 						this.winRef.nativeWindow.speechSynthesis.cancel();
 					}
 					this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+					console.log('what is this? ' + this.say);
 
 					this.say.text = '';
 

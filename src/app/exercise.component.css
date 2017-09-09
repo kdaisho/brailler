@@ -58,6 +58,7 @@
 .level-group a {
 	display: inline-block;
 	font-size: 1.5em;
+	padding: .05em 0;
 	margin: 0 1em;
 	text-transform: uppercase;
 }
