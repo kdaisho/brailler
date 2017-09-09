@@ -12,8 +12,9 @@
 	height: 100px;
 	width: 100%;
 }
-.title {
+.title.logo{
 	align-self: center;
+	font-size: 2.25em;
 }
 .btn-group {
 	align-self: center;

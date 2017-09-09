@@ -15,6 +15,9 @@ a {
 button {
 	letter-spacing: .1em;
 }
+.container {
+	padding: 1em .25em;
+}
 .title {
 	font-size: 3em;
 	text-align: center;
