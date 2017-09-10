@@ -16,118 +16,92 @@ export class ExerciseComponent implements OnInit {
 	title = 'Exercise';
 	items;
 	result: string = '';
-	counter: number = 0;
+	counter: number;
+	lev: number;
 	map;
 	say;
 	audioCtx;
 
 	levels = [
-		{num: 0, isSelected: true},
 		{num: 1, isSelected: false},
-		{num: 2, isSelected: false}
+		{num: 2, isSelected: false},
+		{num: 3, isSelected: false}
 	];
-	currentLevel;
 
 	questions = [
 		[
-			'a, a, a',
-			'b, b, b'
+			'aaa',
+			'bbb',
+			'ccc',
+			'ddd'
 		],
 		[
-			'l,l,l',
-			'a,b,b'
+			'lll',
+			'abb',
+			'add',
+			'lbb'
 		],
 		[
-			'c,c,c',
-			'a,c,c'
+			'ace',
+			'add',
+			'bad',
+			'cab'
 		]
 	];
 
 	question: string;
-	questionText = [];
-
-
-	keyInputs = [];
-
-	myAnswer;
-
-	msg;
-
-	points;
-
+	myAnswer: string;
+	msg: string;
+	max: number;
 	isPopup: boolean;
-
-	sayText;
-	questionsForDisplay = [];
+	questionForSpeak: any;
 
 	constructor(private sound: AppComponent, private winRef: WindowRef) {
-		// constructor(private sound: AppComponent) {
-
-		// this.question = this.questions[0][this.counter];
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;
 		this.counter = 0;
-		this.msg = "Type below";
-		console.log(this.sound.say);
+		this.lev = 0;
+		this.max = this.questions[0].length;
 
-		this.currentLevel = this.levels[0].num + 1;
-		console.log('> ' + this.currentLevel);
-
-		this.points = 0;
-
-		this.sound.keyLock = false;
 		this.sound.clearAll();
 	}
 
 	ngOnInit() {
-		this.beautifyQuestions();
-		// this.question = this.questionsForDisplay[0];
+		this.formatQuestions(this.lev, this.counter);
+		console.log('Q for speak ' + this.questionForSpeak);
 	}
 
-	beautifyQuestions() {
-		//Remove comma out of questions for display purpose
-		for(let i = 0, len = this.questions.length; i < len; i++) {
-			for(let key in this.questions[i]) {
-				this.questionsForDisplay.push(this.questions[i][key].replace(/,\s{0,1}/g, ""));
-			}
-		}
-	}
+	selectLevel(x) {
+		this.sound.keyLock = false;
+		this.resetLevelandCounter();
+		this.lev = x;
+		let index = x - 1;
 
-	@HostListener('window:keydown', ['$event'])
-	keyDownBrailler(event: KeyboardEvent) {
-		this.sound.say.text = "no man";
-		if(!event.repeat) {
-			this.map = [];
-			this.map[event.keyCode] = event.type === 'keydown';
-			return;
-		}
-	}
+		//Get the first question
+		this.question = this.questions[index][0];
+		console.log("FIRST Q " + this.question);
 
-	@HostListener('window:keyup', ['$event'])
-	keyUpBrailler(event: KeyboardEvent) {
-		if(this.map[13]) {
-			// this.checkAnswer(this.levels[this.currentLevel].num);
-			this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
-			this.checkAnswer(this.currentLevel);
-		}
-	}
-
-	selectLevel(level) {
-		this.resetCounterPoints();
-		this.currentLevel = this.levels[level].num + 1;
-
-		this.styleLevelSelect(level);
-		console.log("HOW " + this.questions[level][0]);
-		// this.question = this.questions[level][0];
-		this.question = this.questionsForDisplay[level];
+		this.styleLevelSelect(index);
 
 		if(this.winRef.nativeWindow.speechSynthesis.speaking) {
 			this.winRef.nativeWindow.speechSynthesis.cancel();
 		}
-		this.sound.say.text = "You've selected level " + this.currentLevel;
-		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
-		this.sound.say.text = "Type, " + this.questions[0][0];
-		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
+
+		this.sayNextQuestion(index, this.counter);
+	}
+
+	formatQuestions(x, y) {
+		let beginnerLevel = 2;
+		if(x < beginnerLevel) {
+			//Pronunce letter one by one instead of whole word
+			this.questionForSpeak = this.questions[x][y].split('');
+			return this.questionForSpeak;
+		}
+		else {
+			//Pronunce word
+			this.questionForSpeak = this.questions[x][y].toString();
+			return this.questionForSpeak;
+		}
 	}
 
 	styleLevelSelect(x) {
@@ -137,45 +111,38 @@ export class ExerciseComponent implements OnInit {
 		this.levels[x].isSelected = true;
 	}
 
-	checkAnswer(currentLevel) {
-		let index = currentLevel - 1;
+	sayNextQuestion(x, y) {
+		console.log('huhu ' + x);
+		this.formatQuestions(x, y);
+		this.sound.say.text = "Type, " + this.questionForSpeak;
+		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
+	}
+
+	checkAnswer(x, y) {
+		let index = x - 1;
 		this.myAnswer = this.concateText();
-		console.log("MY ANSWER: " + this.myAnswer);
 
-		if(this.questions[index][this.counter] == this.myAnswer) {
-			this.displayMsg('Correct');
+		if(this.questions[index][y] == this.myAnswer) {
+			this.displayMsg('Correct!');
 
-			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-
-			this.addPoints(1);
-			if(this.points < 3) {
-				this.getQuestion(index);
-			}
-			this.addCounter(1, 3);
-		}
-		else {
-			this.displayMsg('Wrong');
-		}
-
-		if(this.points >= 2) {
-			console.log('current ' + this.currentLevel);
-			this.displayMsg("Level up!");
-			// this.endGame();
-			this.resetCounterPoints();
-			if(this.currentLevel <= this.questions.length - 1) {
-				this.getNextLevel();	
+			if(y < this.max - 1) {
+				this.getNextQuestion(index, this.counter);
+				this.addCounter(this.counter);
 			}
 			else {
 				this.endGame();
 				return;
 			}
-			// this.getNextLevel();
-			this.continueGame();
+			this.sayNextQuestion(index, this.counter);
+		}
+		else {
+			this.displayMsg('Again!');
+			//Repeat the same question
+			this.sayNextQuestion(index, this.counter);
 		}
 
 		this.sound.clearAll();
 		this.clearText();
-		// this.addCounter(1);
 	}
 
 	concateText() {
@@ -193,25 +160,19 @@ export class ExerciseComponent implements OnInit {
 		}
 	}
 
-	addCounter(x, max) {
-		while(this.counter < max - 1) {
-			this.counter += x;
-			return;
+	addCounter(x) {
+		if(x < this.max) {
+			this.counter += 1;
 		}
-		this.counter = 0;
 	}
 
-	addPoints(x) {
-		this.points += x;
+	resetLevelandCounter() {
+		this.counter = this.lev = 0;
 	}
 
-	resetCounterPoints() {
-		this.counter = this.points = 0;
-	}
-
-	getQuestion(currentLevel) {
-		let newCounter = this.counter + 1;
-		this.question = this.questions[currentLevel][newCounter];
+	getNextQuestion(x, y) {
+		let next = y + 1;
+		this.question = this.questions[x][next];
 	}
 
 	displayMsg(myMessage) {
@@ -219,31 +180,36 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	endGame() {
-		this.displayMsg("End of game");
-		this.resetCounterPoints();
+		this.displayMsg('');
+		this.resetLevelandCounter();
 		this.sound.clearAll();
 		this.clearText();
+		this.question = '';
 		this.sound.keyLock = true;
 		this.displayPopup();
 	}
 
-	getNextLevel() {
-		this.currentLevel += 1;
-		// if(this.currentLevel >= this.questions.length) {
-		// 	this.displayMsg("END!");
-		// 	this.endGame();
-		// 	this.resetCounterPoints();
-		// }
-		// this.displayMsg("You've completed all levels");
-	}
-
-	continueGame() {
-		console.log("CUU " + this.currentLevel);
-		let index = this.currentLevel - 1;
-		this.question = this.questions[index][0];
-	}
-
 	displayPopup() {
 		this.isPopup = true;
+	}
+
+	cleanPage() {
+		this.isPopup = false;
+	}
+
+	@HostListener('window:keydown', ['$event'])
+	keyDownBrailler(event: KeyboardEvent) {
+		if(!event.repeat) {
+			this.map = [];
+			this.map[event.keyCode] = event.type === 'keydown';
+			return;
+		}
+	}
+
+	@HostListener('window:keyup', ['$event'])
+	keyUpBrailler(event: KeyboardEvent) {
+		if(this.map[13]) {
+			this.checkAnswer(this.lev, this.counter);
+		}
 	}
 }
