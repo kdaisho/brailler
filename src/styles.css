@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~normalize.css/normalize.css';
-h1, h2, p, a {
+h1, h2, h3, p, a, li {
 	color: #fff;
 	font-family: "Helvetica", "Arial", sans-serif;
 }
-h1, h2, a, p {
-	/*letter-spacing: .05em;*/
+h1, h2, a, p, li {
 	letter-spacing: .1em;
 }
 a {

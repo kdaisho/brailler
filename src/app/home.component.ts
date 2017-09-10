@@ -9,8 +9,6 @@ import { AppComponent } from './app.component';
 
 export class HomeComponent {
 
-	title = 'my brailler';
-
 	constructor(private sound: AppComponent) {
 		//Disable user input on homepage
 		sound.keyLock = true;
