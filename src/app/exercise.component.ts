@@ -118,12 +118,17 @@ export class ExerciseComponent implements OnInit {
 		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
 	}
 
+	beep(freq, vol) {
+		this.sound.playAudio(freq, vol, .1)
+	}
+
 	checkAnswer(x, y) {
 		let index = x - 1;
 		this.myAnswer = this.concateText();
 
 		if(this.questions[index][y] == this.myAnswer) {
 			this.displayMsg('Correct!');
+			this.beep(2200, .15);
 
 			if(y < this.max - 1) {
 				this.getNextQuestion(index, this.counter);
@@ -137,6 +142,7 @@ export class ExerciseComponent implements OnInit {
 		}
 		else {
 			this.displayMsg('Again!');
+			this.beep(100, .35);
 			//Repeat the same question
 			this.sayNextQuestion(index, this.counter);
 		}
