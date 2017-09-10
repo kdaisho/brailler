@@ -112,7 +112,7 @@
 }
 .modal-bg {
 	position: fixed;
-	background: red;
+	background: #fff;
 	opacity: .3;
 	height: 100%;
 	left: 0;

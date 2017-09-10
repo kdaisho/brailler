@@ -68,7 +68,6 @@ export class ExerciseComponent implements OnInit {
 
 	ngOnInit() {
 		this.formatQuestions(this.lev, this.counter);
-		console.log('Q for speak ' + this.questionForSpeak);
 	}
 
 	selectLevel(x) {
@@ -79,7 +78,6 @@ export class ExerciseComponent implements OnInit {
 
 		//Get the first question
 		this.question = this.questions[index][0];
-		console.log("FIRST Q " + this.question);
 
 		this.styleLevelSelect(index);
 
@@ -112,7 +110,6 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	sayNextQuestion(x, y) {
-		console.log('huhu ' + x);
 		this.formatQuestions(x, y);
 		this.sound.say.text = "Type, " + this.questionForSpeak;
 		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
@@ -135,7 +132,7 @@ export class ExerciseComponent implements OnInit {
 				this.addCounter(this.counter);
 			}
 			else {
-				this.endGame();
+				this.endGame(index);
 				return;
 			}
 			this.sayNextQuestion(index, this.counter);
@@ -153,7 +150,6 @@ export class ExerciseComponent implements OnInit {
 
 	concateText() {
 		this.result = '';
-		console.log("LENGTH " + this.items.length);
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			this.result += this.items[i].text;
 		}
@@ -185,7 +181,7 @@ export class ExerciseComponent implements OnInit {
 		this.msg = myMessage;
 	}
 
-	endGame() {
+	endGame(level) {
 		this.displayMsg('');
 		this.resetLevelandCounter();
 		this.sound.clearAll();
@@ -193,6 +189,7 @@ export class ExerciseComponent implements OnInit {
 		this.question = '';
 		this.sound.keyLock = true;
 		this.displayPopup();
+		this.levels[level].isSelected = false;
 	}
 
 	displayPopup() {
