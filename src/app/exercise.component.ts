@@ -206,6 +206,7 @@ export class ExerciseComponent implements OnInit {
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		this.keydown = true;
+		this.stroke = 0;
 		if(!event.repeat) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keydown';
@@ -216,10 +217,12 @@ export class ExerciseComponent implements OnInit {
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		this.stroke--;
-		if(this.keydown === true && this.stroke === 0) {
-			if(this.map[13]) {
-				this.checkAnswer(this.lev, this.counter);
+		if(this.sound.keyLock === false) {
+			this.stroke--;
+			if(this.keydown === true && this.stroke === 0) {
+				if(this.map[13]) {
+					this.checkAnswer(this.lev, this.counter);
+				}
 			}
 		}
 	}

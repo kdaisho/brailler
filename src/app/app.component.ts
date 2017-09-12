@@ -51,6 +51,8 @@ export class AppComponent {
 
 	keydown: boolean = false;
 
+	stroke: number = 0;
+
 	constructor(private winRef: WindowRef) {
 		this.pathName = window.location.pathname;
 		this.items = patterns.legos.first;
@@ -224,6 +226,7 @@ export class AppComponent {
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		this.keydown = true;
+		this.stroke = 0;
 		if(this.keyLock === false) {
 			if(!event.repeat) {
 				this.map = [];
@@ -231,6 +234,7 @@ export class AppComponent {
 				if(!this.exceedBlock) {
 					this.saveKeyCode(this.counter);
 				}
+				this.stroke++;
 				return;
 			}
 		}
@@ -238,147 +242,153 @@ export class AppComponent {
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		this.map = [];
-		this.map[event.keyCode] = event.type === 'keyup';
+		if(this.keyLock === false) {
+			this.stroke--;
 
-		if(this.isSpecial && (this.id == '356' || this.id == '236')) {
-			this.id += this.speId;
-		}
-		else {
-			this.isSpecial = false;
-		}
+			if(this.stroke === 0) {
+				this.map = [];
+				this.map[event.keyCode] = event.type === 'keyup';
 
-		this.saveNumber(this.counter);
-
-		this.saveSound(this.counter, this.maxCounter);
-
-		this.saveSpecialCharacter(this.counter);
-
-		if(!this.exceedBlock) {
-			this.keyId = [];
-		}
-
-		if(this.isRightKey) {
-			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
-				this.winRef.nativeWindow.speechSynthesis.cancel();
-			}
-			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-
-			this.say.text = '';
-
-			if(!this.lastBlock) {
-				this.addCounter(1);
-			}
-			else {
-				this.exceedBlock = true;
-			}
-
-			this.checkCounter();
-
-			if(this.counter !== 0) {
-				this.items[this.counter].pointer = true;
-				this.items[this.counter - 1].pointer = false;
-			}
-			if(this.counter === 0) {
-				this.items[this.maxCounter - 2].pointer = false;
-				this.items[0].pointer = true;
-			}
-		}
-
-		if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
-			this.id = '';
-			this.playAudio(140, .2, .06);
-		}
-
-		if(!this.isRightKey) {
-			console.log('Falsy key pressed');
-			if(!this.exceedBlock) {
-				this.clearBlock(this.counter);
-				this.checkCounter();
-			}
-		}
-
-		//Space key
-		if(!this.lastBlock && this.keydown) {
-			if(this.map[32]) {
-				this.playAudio(600, .15, .06);
-				this.items[this.counter].text = ' ';
-				this.isSpecial = false;
-
-				this.addCounter(1);
-
-				this.checkCounter();
-
-				if(this.isNum) {
-					this.items[this.counter].wasNum = true;
-					this.isNum = false;
+				if(this.isSpecial && (this.id == '356' || this.id == '236')) {
+					this.id += this.speId;
 				}
-				else if(!this.isNum){
-					this.items[this.counter].wasNum = false;
-				}
-
-				if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
-					this.items[this.counter].pointer = true;
-					this.items[this.counter - 1].pointer = false;
-					return;
-				}
-				if(this.counter === 0) {
-					this.items[this.maxCounter - 2].pointer = false;
-					this.items[0].pointer = true;
-					return;
-				}
-			}
-		}
-
-		//Delete key
-		if(this.keydown) {
-			if(this.map[8] && this.counter !== 0) {
-
-				let max = this.maxCounter - 1;
-				let prev = this.counter - 1;
-				let prev2 = this.counter - 2;
-
-				//When pointer was in last position
-				if(this.lastBlock) {
-					this.clearBlock(max);
-					this.lastBlock = false;
-					this.exceedBlock = false;
-				}
-
-				//When numSign is erased
-				if(this.items[prev].text === '#') {
-					this.isNum = false;
-				}
-
-				//When numCanceller is erased
-				if(this.items[prev].text === 'alphabet') {
-					this.isNum = true;
-				}
-
-				//When space is erased
-				if(this.items[prev].text === ' ') {
-					this.isNum = false;
-					if(this.items[this.counter].wasNum) {
-						this.isNum = true;
-					}
-				}
-
-				//When 45 is erased
-				if(this.items[prev].text === '') {
+				else {
 					this.isSpecial = false;
 				}
 
-				//When 45 is one step before
-				if(this.counter >= 2 && this.items[prev2].text === '') {
-					this.isSpecial = true;
+				this.saveNumber(this.counter);
+
+				this.saveSound(this.counter, this.maxCounter);
+
+				this.saveSpecialCharacter(this.counter);
+
+				if(!this.exceedBlock) {
+					this.keyId = [];
 				}
 
-				this.items[this.counter].pointer = false;
-				this.items[this.counter - 1].pointer = true;
-				this.counter--;
-				this.clearBlock(this.counter);
-				this.playAudio(300, .15, .06);
-				this.items[this.counter].text = '';
+				if(this.isRightKey) {
+					if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+						this.winRef.nativeWindow.speechSynthesis.cancel();
+					}
+					this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+
+					this.say.text = '';
+
+					if(!this.lastBlock) {
+						this.addCounter(1);
+					}
+					else {
+						this.exceedBlock = true;
+					}
+
+					this.checkCounter();
+
+					if(this.counter !== 0) {
+						this.items[this.counter].pointer = true;
+						this.items[this.counter - 1].pointer = false;
+					}
+					if(this.counter === 0) {
+						this.items[this.maxCounter - 2].pointer = false;
+						this.items[0].pointer = true;
+					}
+				}
+
+				if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
+					this.id = '';
+					this.playAudio(140, .2, .06);
+				}
+
+				if(!this.isRightKey) {
+					console.log('Falsy key pressed');
+					if(!this.exceedBlock) {
+						this.clearBlock(this.counter);
+						this.checkCounter();
+					}
+				}
+
+				//Space key
+				if(!this.lastBlock && this.keydown) {
+					if(this.map[32]) {
+						this.playAudio(600, .15, .06);
+						this.items[this.counter].text = ' ';
+						this.isSpecial = false;
+
+						this.addCounter(1);
+
+						this.checkCounter();
+
+						if(this.isNum) {
+							this.items[this.counter].wasNum = true;
+							this.isNum = false;
+						}
+						else if(!this.isNum){
+							this.items[this.counter].wasNum = false;
+						}
+
+						if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
+							this.items[this.counter].pointer = true;
+							this.items[this.counter - 1].pointer = false;
+							return;
+						}
+						if(this.counter === 0) {
+							this.items[this.maxCounter - 2].pointer = false;
+							this.items[0].pointer = true;
+							return;
+						}
+					}
+				}
+
+				//Delete key
+				if(this.keydown) {
+					if(this.map[8] && this.counter !== 0) {
+
+						let max = this.maxCounter - 1;
+						let prev = this.counter - 1;
+						let prev2 = this.counter - 2;
+
+						//When pointer was in last position
+						if(this.lastBlock) {
+							this.clearBlock(max);
+							this.lastBlock = false;
+							this.exceedBlock = false;
+						}
+
+						//When numSign is erased
+						if(this.items[prev].text === '#') {
+							this.isNum = false;
+						}
+
+						//When numCanceller is erased
+						if(this.items[prev].text === 'alphabet') {
+							this.isNum = true;
+						}
+
+						//When space is erased
+						if(this.items[prev].text === ' ') {
+							this.isNum = false;
+							if(this.items[this.counter].wasNum) {
+								this.isNum = true;
+							}
+						}
+
+						//When 45 is erased
+						if(this.items[prev].text === '') {
+							this.isSpecial = false;
+						}
+
+						//When 45 is one step before
+						if(this.counter >= 2 && this.items[prev2].text === '') {
+							this.isSpecial = true;
+						}
+
+						this.items[this.counter].pointer = false;
+						this.items[this.counter - 1].pointer = true;
+						this.counter--;
+						this.clearBlock(this.counter);
+						this.playAudio(300, .15, .06);
+						this.items[this.counter].text = '';
+					}
+				}
 			}
 		}
 	}

@@ -14,8 +14,7 @@ export class FreeTypingComponent {
 	title = 'Free Typing';
 	items;
 	map;
-	// keydown: boolean = false;
-	keydown: boolean;
+	keydown: boolean = false;
 	stroke: number = 0;
 
 	constructor(private sound: AppComponent) {
@@ -26,12 +25,12 @@ export class FreeTypingComponent {
 
 		//Clear all when user comes from Exercise page
 		this.sound.clearAll();
-		this.keydown = false;
 	}
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
 		this.keydown = true;
+		this.stroke = 0;
 		if(!event.repeat) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keydown';
