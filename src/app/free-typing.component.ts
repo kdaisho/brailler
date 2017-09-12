@@ -1,6 +1,5 @@
 import { Component, Input} from '@angular/core';
 import { HostListener } from '@angular/core';
-// import { SoundComponent } from './sound.component';
 import { AppComponent } from './app.component';
 import * as patterns from './lego-mock';
 
@@ -11,10 +10,13 @@ import * as patterns from './lego-mock';
 })
 
 export class FreeTypingComponent {
-	// @Input() free;
+
 	title = 'Free Typing';
 	items;
 	map;
+	// keydown: boolean = false;
+	keydown: boolean;
+	stroke: number = 0;
 
 	constructor(private sound: AppComponent) {
 
@@ -24,21 +26,27 @@ export class FreeTypingComponent {
 
 		//Clear all when user comes from Exercise page
 		this.sound.clearAll();
+		this.keydown = false;
 	}
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
+		this.keydown = true;
 		if(!event.repeat) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keydown';
+			this.stroke++;
 			return;
 		}
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		if(this.map[13]) {
-			this.sound.clearAll();
+		this.stroke--;
+		if(this.keydown === true && this.stroke === 0) {
+			if(this.map[13]) {
+				this.sound.clearAll();
+			}
 		}
 	}
 }

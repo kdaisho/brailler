@@ -4,7 +4,7 @@ import { WindowRef } from './windowRef';
 import { HomeComponent } from './home.component';
 import { SoundComponent } from './sound.component';
 
-import * as currentPage from './site-state';
+// import * as currentPage from './site-state';
 
 import { HostListener } from '@angular/core';
 
@@ -20,27 +20,7 @@ import * as sp from './special-char-mock';
 export class AppComponent {
 	
 	title = 'My Brailler';
-
 	keyLock: boolean = true;
-	currentPage;
-
-	clearAll() {
-		for(let i = 0, len = this.items.length; i < len; i++) {
-			this.clearBlock(i);
-			this.items[i].pointer = false;
-		}
-		this.counter = 0;
-		this.isNum = false;
-		this.numSignCount = 0;
-		this.items[0].pointer = true;
-		this.exceedBlock = this.lastBlock = false;
-		this.stroke = 0;
-		this.isSpecial = false;
-	}
-
-	// BELOW Migrated from Sound component
-
-	// @Input() type;
 	items;
 	counter = 0;
 	maxCounter;
@@ -62,10 +42,8 @@ export class AppComponent {
 	lastBlock: boolean;
 	exceedBlock: boolean;
 
-	keyDown: boolean;
-
 	isNum: boolean = false;
-	stroke: number = 0;
+	// stroke: number = 0;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
 	isSpecial: boolean = false;
@@ -75,8 +53,10 @@ export class AppComponent {
 	myWindow;
 	speak;
 
+	keydown: boolean = false;
+
 	constructor(private winRef: WindowRef) {
-		this.currentPage = currentPage.state;
+		// this.currentPage = currentPage.state;
 
 		this.pathName = window.location.pathname;
 
@@ -85,14 +65,25 @@ export class AppComponent {
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
-		// this.speak = this.winRef.nativeWindow.speechSynthesis.speak();
-		// this.myWindow = new winRef.nativeWindow.SpeechSynthesis;
-		// this.speak = window.speechSynthesis.speak();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 
 		//Clear all when user comes from Exercise page
 		this.clearAll();
+	}
+
+	clearAll() {
+		for(let i = 0, len = this.items.length; i < len; i++) {
+			this.clearBlock(i);
+			this.items[i].pointer = false;
+		}
+		this.counter = 0;
+		this.isNum = false;
+		this.numSignCount = 0;
+		this.items[0].pointer = true;
+		this.exceedBlock = this.lastBlock = false;
+		// this.stroke = 0;
+		this.isSpecial = false;
 	}
 
 	playAudio(freq, vol, duration) {
@@ -112,45 +103,42 @@ export class AppComponent {
 	}
 
 	saveKeyCode(x) {
-
-		// if(type === 'free') {
-			if(this.map[70]) {
-				this.items[x].dot1 = true;
-				if(this.keyId.indexOf('1') < 0) {
-					this.keyId.push('1');
-				}
+		if(this.map[70]) {
+			this.items[x].dot1 = true;
+			if(this.keyId.indexOf('1') < 0) {
+				this.keyId.push('1');
 			}
-			if(this.map[68]) {
-				this.items[x].dot2 = true;
-				if(this.keyId.indexOf('2') < 0) {
-					this.keyId.push('2');
-				}
+		}
+		if(this.map[68]) {
+			this.items[x].dot2 = true;
+			if(this.keyId.indexOf('2') < 0) {
+				this.keyId.push('2');
 			}
-			if(this.map[83]) {
-				this.items[x].dot3 = true;
-				if(this.keyId.indexOf('3') < 0) {
-					this.keyId.push('3');
-				}
+		}
+		if(this.map[83]) {
+			this.items[x].dot3 = true;
+			if(this.keyId.indexOf('3') < 0) {
+				this.keyId.push('3');
 			}
-			if(this.map[74]) {
-				this.items[x].dot4 = true;
-				if(this.keyId.indexOf('4') < 0) {
-					this.keyId.push('4');
-				}
+		}
+		if(this.map[74]) {
+			this.items[x].dot4 = true;
+			if(this.keyId.indexOf('4') < 0) {
+				this.keyId.push('4');
 			}
-			if(this.map[75]) {
-				this.items[x].dot5 = true;
-				if(this.keyId.indexOf('5') < 0) {
-					this.keyId.push('5');
-				}
+		}
+		if(this.map[75]) {
+			this.items[x].dot5 = true;
+			if(this.keyId.indexOf('5') < 0) {
+				this.keyId.push('5');
 			}
-			if(this.map[76]) {
-				this.items[x].dot6 = true;
-				if(this.keyId.indexOf('6') < 0) {
-					this.keyId.push('6');
-				}
+		}
+		if(this.map[76]) {
+			this.items[x].dot6 = true;
+			if(this.keyId.indexOf('6') < 0) {
+				this.keyId.push('6');
 			}
-		// }
+		}
 
 		this.keyId = this.keyId.sort();
 		this.id = this.keyId.join('');
@@ -199,8 +187,6 @@ export class AppComponent {
 				this.isSpecial = false;
 			}
 		}
-		console.log('Not right special character');
-		// this.isRightKey = false;
 	}
 
 	saveNumber(x) {
@@ -212,7 +198,6 @@ export class AppComponent {
 					return;
 				}
 			}
-			console.log('Not right number');
 			this.isRightKey = false;
 		}
 	}
@@ -246,9 +231,10 @@ export class AppComponent {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
+		this.keydown = true;
 		if(this.keyLock === false) {
 			//Reset stroke to prevent it won't match when a user changed window or triggered mission control
-			this.stroke = 0;
+			// this.stroke = 0;
 
 			if(!event.repeat) {
 				this.map = [];
@@ -256,7 +242,7 @@ export class AppComponent {
 				if(!this.exceedBlock) {
 					this.saveKeyCode(this.counter);
 				}
-				this.stroke++;
+				// this.stroke++;
 				return;
 			}
 		}
@@ -264,81 +250,73 @@ export class AppComponent {
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		if(this.keyLock === false) {
-			this.stroke--;
-			if(this.stroke === 0) {
-				this.map = [];
-				this.map[event.keyCode] = event.type === 'keyup';
+		// this.stroke--;
+		// if(this.stroke === 0) {
+			this.map = [];
+			this.map[event.keyCode] = event.type === 'keyup';
 
-				if(this.isSpecial && (this.id == '356' || this.id == '236')) {
-					this.id += this.speId;
+			if(this.isSpecial && (this.id == '356' || this.id == '236')) {
+				this.id += this.speId;
+			}
+			else {
+				this.isSpecial = false;
+			}
+
+			this.saveNumber(this.counter);
+
+			this.saveSound(this.counter, this.maxCounter);
+
+			this.saveSpecialCharacter(this.counter);
+
+			// this.isSpecial = false;
+
+			if(!this.exceedBlock) {
+				this.keyId = [];
+			}
+
+			if(this.isRightKey) {
+				if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+					this.winRef.nativeWindow.speechSynthesis.cancel();
+				}
+				this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+
+				this.say.text = '';
+
+				if(!this.lastBlock) {
+					this.addCounter(1);
 				}
 				else {
-					this.isSpecial = false;
+					this.exceedBlock = true;
 				}
 
-				this.saveNumber(this.counter);
+				this.checkCounter();
 
-				this.saveSound(this.counter, this.maxCounter);
+				if(this.counter !== 0) {
+					this.items[this.counter].pointer = true;
+					this.items[this.counter - 1].pointer = false;
+				}
+				if(this.counter === 0) {
+					this.items[this.maxCounter - 2].pointer = false;
+					this.items[0].pointer = true;
+				}
+			}
 
-				this.saveSpecialCharacter(this.counter);
+			if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
+				this.id = '';
+				this.playAudio(140, .2, .06);
+			}
 
-				// this.isSpecial = false;
-
+			if(!this.isRightKey) {
+				console.log('Falsy key pressed');
 				if(!this.exceedBlock) {
-					this.keyId = [];
-				}
-
-				if(this.isRightKey) {
-					if(this.winRef.nativeWindow.speechSynthesis.speaking) {
-						this.winRef.nativeWindow.speechSynthesis.cancel();
-					}
-					this.winRef.nativeWindow.speechSynthesis.speak(this.say);
-					console.log('what is this? ' + this.say);
-
-					this.say.text = '';
-
-					if(!this.lastBlock) {
-						this.addCounter(1);
-					}
-					else {
-						this.exceedBlock = true;
-					}
-
+					this.clearBlock(this.counter);
 					this.checkCounter();
-
-					if(this.counter !== 0) {
-						this.items[this.counter].pointer = true;
-						this.items[this.counter - 1].pointer = false;
-					}
-					if(this.counter === 0) {
-						this.items[this.maxCounter - 2].pointer = false;
-						this.items[0].pointer = true;
-					}
-				}
-
-				if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
-					this.id = '';
-					this.playAudio(140, .2, .06);
-				}
-
-				if(!this.isRightKey) {
-					console.log('Falsy key pressed');
-					if(!this.exceedBlock) {
-						this.clearBlock(this.counter);
-						this.checkCounter();
-					}
 				}
 			}
+		// }
 
-			//Enter key
-			if(this.map[13]) {
-				//Disabled this due to Exercise page's checkAnswer function
-				// this.clearAll();
-			}
-
-			//Space key
-			if(!this.lastBlock) {
+		//Space key
+			if(!this.lastBlock && this.keydown) {
 				if(this.map[32]) {
 					this.playAudio(600, .15, .06);
 					this.items[this.counter].text = ' ';
@@ -369,7 +347,8 @@ export class AppComponent {
 				}
 			}
 
-			//Delete key
+		//Delete key
+		if(this.keydown) {
 			if(this.map[8] && this.counter !== 0) {
 
 				let max = this.maxCounter - 1;
@@ -402,16 +381,12 @@ export class AppComponent {
 				}
 
 				//When 45 is erased
-
 				if(this.items[prev].text === '') {
-					console.log('items[prev] ' + this.items[prev].id);
 					this.isSpecial = false;
 				}
 
 				//When 45 is one step before
-
 				if(this.counter >= 2 && this.items[prev2].text === '') {
-					console.log('items[prev2] ' + this.items[prev2].id);
 					this.isSpecial = true;
 				}
 
@@ -424,5 +399,4 @@ export class AppComponent {
 			}
 		}
 	}
-
 }

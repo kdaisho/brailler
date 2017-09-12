@@ -56,6 +56,9 @@ export class ExerciseComponent implements OnInit {
 	isPopup: boolean;
 	questionForSpeak: any;
 
+	keydown: boolean = false;
+	stroke: number = 0;
+
 	constructor(private sound: AppComponent, private winRef: WindowRef) {
 		this.items = patterns.legos.first;
 		this.items[0].pointer = true;
@@ -202,17 +205,22 @@ export class ExerciseComponent implements OnInit {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
+		this.keydown = true;
 		if(!event.repeat) {
 			this.map = [];
 			this.map[event.keyCode] = event.type === 'keydown';
+			this.stroke++;
 			return;
 		}
 	}
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		if(this.map[13]) {
-			this.checkAnswer(this.lev, this.counter);
+		this.stroke--;
+		if(this.keydown === true && this.stroke === 0) {
+			if(this.map[13]) {
+				this.checkAnswer(this.lev, this.counter);
+			}
 		}
 	}
 }
