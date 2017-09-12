@@ -3,9 +3,6 @@ import { WindowRef } from './windowRef';
 
 import { HomeComponent } from './home.component';
 import { SoundComponent } from './sound.component';
-
-// import * as currentPage from './site-state';
-
 import { HostListener } from '@angular/core';
 
 import * as patterns from './lego-mock';
@@ -43,7 +40,6 @@ export class AppComponent {
 	exceedBlock: boolean;
 
 	isNum: boolean = false;
-	// stroke: number = 0;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
 	isSpecial: boolean = false;
@@ -56,10 +52,7 @@ export class AppComponent {
 	keydown: boolean = false;
 
 	constructor(private winRef: WindowRef) {
-		// this.currentPage = currentPage.state;
-
 		this.pathName = window.location.pathname;
-
 		this.items = patterns.legos.first;
 		this.p = p.letters;
 		this.sp = sp.characters;
@@ -82,7 +75,6 @@ export class AppComponent {
 		this.numSignCount = 0;
 		this.items[0].pointer = true;
 		this.exceedBlock = this.lastBlock = false;
-		// this.stroke = 0;
 		this.isSpecial = false;
 	}
 
@@ -233,16 +225,12 @@ export class AppComponent {
 	keyDownBrailler(event: KeyboardEvent) {
 		this.keydown = true;
 		if(this.keyLock === false) {
-			//Reset stroke to prevent it won't match when a user changed window or triggered mission control
-			// this.stroke = 0;
-
 			if(!event.repeat) {
 				this.map = [];
 				this.map[event.keyCode] = event.type === 'keydown';
 				if(!this.exceedBlock) {
 					this.saveKeyCode(this.counter);
 				}
-				// this.stroke++;
 				return;
 			}
 		}
@@ -250,102 +238,97 @@ export class AppComponent {
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		// this.stroke--;
-		// if(this.stroke === 0) {
-			this.map = [];
-			this.map[event.keyCode] = event.type === 'keyup';
+		this.map = [];
+		this.map[event.keyCode] = event.type === 'keyup';
 
-			if(this.isSpecial && (this.id == '356' || this.id == '236')) {
-				this.id += this.speId;
+		if(this.isSpecial && (this.id == '356' || this.id == '236')) {
+			this.id += this.speId;
+		}
+		else {
+			this.isSpecial = false;
+		}
+
+		this.saveNumber(this.counter);
+
+		this.saveSound(this.counter, this.maxCounter);
+
+		this.saveSpecialCharacter(this.counter);
+
+		if(!this.exceedBlock) {
+			this.keyId = [];
+		}
+
+		if(this.isRightKey) {
+			if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+				this.winRef.nativeWindow.speechSynthesis.cancel();
+			}
+			this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+
+			this.say.text = '';
+
+			if(!this.lastBlock) {
+				this.addCounter(1);
 			}
 			else {
-				this.isSpecial = false;
+				this.exceedBlock = true;
 			}
 
-			this.saveNumber(this.counter);
+			this.checkCounter();
 
-			this.saveSound(this.counter, this.maxCounter);
+			if(this.counter !== 0) {
+				this.items[this.counter].pointer = true;
+				this.items[this.counter - 1].pointer = false;
+			}
+			if(this.counter === 0) {
+				this.items[this.maxCounter - 2].pointer = false;
+				this.items[0].pointer = true;
+			}
+		}
 
-			this.saveSpecialCharacter(this.counter);
+		if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
+			this.id = '';
+			this.playAudio(140, .2, .06);
+		}
 
-			// this.isSpecial = false;
-
+		if(!this.isRightKey) {
+			console.log('Falsy key pressed');
 			if(!this.exceedBlock) {
-				this.keyId = [];
+				this.clearBlock(this.counter);
+				this.checkCounter();
 			}
+		}
 
-			if(this.isRightKey) {
-				if(this.winRef.nativeWindow.speechSynthesis.speaking) {
-					this.winRef.nativeWindow.speechSynthesis.cancel();
-				}
-				this.winRef.nativeWindow.speechSynthesis.speak(this.say);
+		//Space key
+		if(!this.lastBlock && this.keydown) {
+			if(this.map[32]) {
+				this.playAudio(600, .15, .06);
+				this.items[this.counter].text = ' ';
+				this.isSpecial = false;
 
-				this.say.text = '';
-
-				if(!this.lastBlock) {
-					this.addCounter(1);
-				}
-				else {
-					this.exceedBlock = true;
-				}
+				this.addCounter(1);
 
 				this.checkCounter();
 
-				if(this.counter !== 0) {
+				if(this.isNum) {
+					this.items[this.counter].wasNum = true;
+					this.isNum = false;
+				}
+				else if(!this.isNum){
+					this.items[this.counter].wasNum = false;
+				}
+
+				if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
 					this.items[this.counter].pointer = true;
 					this.items[this.counter - 1].pointer = false;
+					return;
 				}
 				if(this.counter === 0) {
 					this.items[this.maxCounter - 2].pointer = false;
 					this.items[0].pointer = true;
+					return;
 				}
 			}
-
-			if(this.exceedBlock && (this.map[70] || this.map[68] || this.map[83] || this.map[74] || this.map[75] || this.map[76])) {
-				this.id = '';
-				this.playAudio(140, .2, .06);
-			}
-
-			if(!this.isRightKey) {
-				console.log('Falsy key pressed');
-				if(!this.exceedBlock) {
-					this.clearBlock(this.counter);
-					this.checkCounter();
-				}
-			}
-		// }
-
-		//Space key
-			if(!this.lastBlock && this.keydown) {
-				if(this.map[32]) {
-					this.playAudio(600, .15, .06);
-					this.items[this.counter].text = ' ';
-					this.isSpecial = false;
-
-					this.addCounter(1);
-
-					this.checkCounter();
-
-					if(this.isNum) {
-						this.items[this.counter].wasNum = true;
-						this.isNum = false;
-					}
-					else if(!this.isNum){
-						this.items[this.counter].wasNum = false;
-					}
-
-					if((this.counter <= this.maxCounter - 1) && (this.counter != 0)) {
-						this.items[this.counter].pointer = true;
-						this.items[this.counter - 1].pointer = false;
-						return;
-					}
-					if(this.counter === 0) {
-						this.items[this.maxCounter - 2].pointer = false;
-						this.items[0].pointer = true;
-						return;
-					}
-				}
-			}
+		}
 
 		//Delete key
 		if(this.keydown) {
