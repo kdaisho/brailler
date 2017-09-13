@@ -3,6 +3,7 @@
 }
 .title {
 	color: #fff;
+	padding: .5em 0;
 }
 .help-text {
 	font-size: 1.5em;
@@ -58,7 +59,7 @@
 .level-group a {
 	display: inline-block;
 	font-size: 1.5em;
-	padding: .05em 0;
+	padding: .25em 0 .15em;
 	margin: 0 1em;
 	text-transform: uppercase;
 }
@@ -68,7 +69,6 @@
 .level-group a.active {
 	border-bottom: 2px solid rgba(118, 255, 3, 1);
 	color: rgba(118, 255, 3, 1);
-	/*text-decoration: underline;*/
 }
 .question-group {
 	margin: 0 auto;
@@ -83,6 +83,7 @@
 .message {
 	color: #fff;
 	font-size: 2em;
+	padding: 1em 0;
 }
 .modal {
 	background: #222;
@@ -101,6 +102,7 @@
 .modal p,
 .modal a {
 	font-size: 2em;
+	margin: 1em 0;
 }
 .modal a {
 	border-bottom: 2px solid #fff;

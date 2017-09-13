@@ -4,20 +4,22 @@
 	width: 100%;
 }
 .title {
-	font-size: 2em;
-	font-weight: normal;
+	font-size: 2.5em;
 }
 h2 {
-	font-weight: normal;
+	font-size: 2em;
 }
-p,
-li {
-	font-size: 1.35em;
-	margin: .75em 0;
+p, li {
+	font-size: 1.5em;
+	line-height: 1.5;
+	margin: .5em 0;
 }
 .features,
 .instructions {
-	margin: 4em 0;
+	padding: 1.5em 0;
+}
+.desc {
+	padding: 1em 0 0;
 }
 .instructions img {
 	display: block;

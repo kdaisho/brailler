@@ -17,21 +17,21 @@
 	justify-content: flex-end;
 }
 .menu a {
+	border-bottom: 2px solid transparent;
 	display: block;
 	font-size: 1.8em;
-	padding: .5em .8em;
+	padding: .25em 0;
+	margin: 0 1em;
 	text-transform: capitalize;
 }
+.menu a:hover,
 .menu a.active {
-	text-decoration: underline;
-}
-.menu a:hover {
+	border-bottom: 2px solid rgba(118, 255, 3, 1);
+	color: rgba(118, 255, 3, 1);
 	cursor: pointer;
-	text-decoration: underline;
 }
 .title {
-	color: rgba(118, 255, 3, 1);
-	font-size: 2.5em;
+	font-size: 2em;
 	flex-grow: 1;
 	margin: 0;
 	text-align: center;
@@ -40,7 +40,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	padding: 1.5em 0 1em;
+	padding: 2em 0 1em;
 }
 .row {
 	border-right: 2px solid #fff;
