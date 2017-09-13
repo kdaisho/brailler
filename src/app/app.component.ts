@@ -225,6 +225,10 @@ export class AppComponent {
 
 	@HostListener('window:keydown', ['$event'])
 	keyDownBrailler(event: KeyboardEvent) {
+		if (event.keyCode === 32) {
+			//Prevent scroll on space key
+			event.preventDefault();
+		}
 		this.keydown = true;
 		this.stroke = 0;
 		if(this.keyLock === false) {
