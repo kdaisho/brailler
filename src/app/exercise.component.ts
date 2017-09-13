@@ -25,27 +25,50 @@ export class ExerciseComponent implements OnInit {
 	levels = [
 		{num: 1, isSelected: false},
 		{num: 2, isSelected: false},
-		{num: 3, isSelected: false}
+		{num: 3, isSelected: false},
+		{num: 4, isSelected: false}
 	];
 
 	questions = [
 		[
-			'aaa',
-			'bbb',
-			'ccc',
-			'ddd'
+			'aaaa',
+			'bbbb',
+			'cccc',
+			'dddd',
+			'abcd',
+			'acbd',
+			'bcad',
+			'dabc'
 		],
 		[
-			'lll',
-			'abb',
-			'add',
-			'lbb'
+			'eeee',
+			'ffff',
+			'gggg',
+			'hhhh',
+			'iiii',
+			'jjjj',
+			'efghij',
+			'efghij'
 		],
 		[
-			'ace',
-			'add',
-			'bad',
-			'cab'
+			'abcdefghij',
+			'aehffjd',
+			'bhfcga',
+			'hjhffcea',
+			'ffgjhbi',
+			'ihgeidhb',
+			'jecgehcdg',
+			'cfbejcdja'
+		],
+		[
+			'i had a bag',
+			'he had a big cab',
+			'ida had a big idea',
+			'he decided',
+			'bee fibbed',
+			'big ice cafe',
+			'jeff had a decade',
+			'heidi faced a chief'
 		]
 	];
 
@@ -92,7 +115,7 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	formatQuestions(x, y) {
-		let beginnerLevel = 2;
+		let beginnerLevel = 3;
 		if(x < beginnerLevel) {
 			//Pronunce letter one by one instead of whole word
 			this.questionForSpeak = this.questions[x][y].split('');
