@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HostListener } from '@angular/core';
-import * as patterns from './lego-mock';
 import * as chars from './letters-mock';
 import * as specials from './special-char-mock';
 

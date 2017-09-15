@@ -20,7 +20,7 @@ export class FreeTypingComponent {
 	constructor(private sound: AppComponent) {
 
 		this.sound.keyLock = false;
-		this.items = patterns.legos.first;
+		this.items = patterns.legos;
 		this.items[0].pointer = true;
 
 		//Clear all when user comes from Exercise page

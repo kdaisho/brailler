@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { WindowRef } from './windowRef';
 
 import { HomeComponent } from './home.component';
-import { SoundComponent } from './sound.component';
 import { HostListener } from '@angular/core';
 
 import * as patterns from './lego-mock';
@@ -55,7 +54,7 @@ export class AppComponent {
 
 	constructor(private winRef: WindowRef) {
 		this.pathName = window.location.pathname;
-		this.items = patterns.legos.first;
+		this.items = patterns.legos;
 		this.p = p.letters;
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;

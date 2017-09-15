@@ -83,7 +83,7 @@ export class ExerciseComponent implements OnInit {
 	stroke: number = 0;
 
 	constructor(private sound: AppComponent, private winRef: WindowRef) {
-		this.items = patterns.legos.first;
+		this.items = patterns.legos;
 		this.items[0].pointer = true;
 		this.counter = 0;
 		this.lev = 0;
