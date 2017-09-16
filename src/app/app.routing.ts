@@ -10,4 +10,4 @@ export const routing = RouterModule.forRoot([
 	{ path: 'home', component: HomeComponent },
 	{ path: 'freetyping', component: FreeTypingComponent },
 	{ path: 'exercise', component: ExerciseComponent }
-], { useHash: true });
+]);

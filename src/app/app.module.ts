@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { WindowRef } from './windowRef';
 import { routing } from './app.routing';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
@@ -25,7 +26,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 		routing,
 		HttpModule
 	],
-	providers: [WindowRef],
+	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

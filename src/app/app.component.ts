@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { WindowRef } from './windowRef';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { HostListener } from '@angular/core';
@@ -7,6 +8,8 @@ import { HostListener } from '@angular/core';
 import * as patterns from './lego-mock';
 import * as p from './letters-mock';
 import * as sp from './special-char-mock';
+
+declare let ga: Function;
 
 @Component({
 	selector: 'app-root',
@@ -52,7 +55,13 @@ export class AppComponent {
 
 	stroke: number = 0;
 
-	constructor(private winRef: WindowRef) {
+	constructor(private winRef: WindowRef, public router: Router) {
+		this.router.events.subscribe(event => {
+			if (event instanceof NavigationEnd) {
+				ga('set', 'page', event.urlAfterRedirects);
+				ga('send', 'pageview');
+			}
+		});
 		this.pathName = window.location.pathname;
 		this.items = patterns.legos;
 		this.p = p.letters;
