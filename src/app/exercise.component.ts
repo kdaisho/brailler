@@ -3,6 +3,7 @@ import { WindowRef } from './windowRef';
 import { HostListener } from '@angular/core';
 import { AppComponent } from './app.component';
 import * as patterns from './lego-mock';
+import * as q from './questions-mock';
 
 
 @Component({
@@ -28,50 +29,7 @@ export class ExerciseComponent implements OnInit {
 		{num: 3, isSelected: false},
 		{num: 4, isSelected: false}
 	];
-
-	questions = [
-		[
-			'aaaa',
-			'bbbb',
-			'cccc',
-			'dddd',
-			'abcd',
-			'acbd',
-			'bcad',
-			'dabc'
-		],
-		[
-			'eeee',
-			'ffff',
-			'gggg',
-			'hhhh',
-			'iiii',
-			'jjjj',
-			'efghij',
-			'efghij'
-		],
-		[
-			'abcdefghij',
-			'aehffjd',
-			'bhfcga',
-			'hjhffcea',
-			'ffgjhbi',
-			'ihgeidhb',
-			'jecgehcdg',
-			'cfbejcdja'
-		],
-		[
-			'i had a bag',
-			'he had a big cab',
-			'ida had a big idea',
-			'he decided',
-			'bee fibbed',
-			'big ice cafe',
-			'jeff had a decade',
-			'heidi faced a chief'
-		]
-	];
-
+    questions: any[] = [];
 	question: string;
 	myAnswer: string;
 	msg: string;
@@ -87,6 +45,7 @@ export class ExerciseComponent implements OnInit {
 		this.items[0].pointer = true;
 		this.counter = 0;
 		this.lev = 0;
+        this.questions = q.QUESTIONS;
 		this.max = this.questions[0].length;
 
 		this.sound.clearAll();

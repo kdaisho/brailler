@@ -61,9 +61,6 @@ export class AppComponent {
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
-
-		//Clear all when user comes from Exercise page
-		this.clearAll();
 	}
 
 	clearAll() {
@@ -159,13 +156,9 @@ export class AppComponent {
 			if(this.id === this.sp[i].id && this.sp[i].id === '45' && this.isSpecial === false) {
 				this.isSpecial = true;
 				this.speId = this.id;
-				console.log('SPECIAL CHARACTOR INIT: ' + this.isSpecial);
-				console.log('SPECIAL ID: ' + this.speId);
 			}
 
 			if(this.id === this.sp[i].id) {
-				console.log('special hit: ' + this.id );
-				console.log('special value: ' + this.sp[i].value );
 				this.isRightKey = true;
 				this.items[x].text = this.sp[i].value;
 				this.say.text = this.sp[i].pronounce;
@@ -212,7 +205,6 @@ export class AppComponent {
 				this.isNum = true;
 				return;
 			}
-			console.log('Not right key');
 			this.isRightKey = false;
 		}
 		else if(this.isNum && (this.id === '56')) {
@@ -302,7 +294,6 @@ export class AppComponent {
 				}
 
 				if(!this.isRightKey) {
-					console.log('Falsy key pressed');
 					if(!this.exceedBlock) {
 						this.clearBlock(this.counter);
 						this.checkCounter();
