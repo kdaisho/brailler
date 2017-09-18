@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { WindowRef } from './windowRef';
 import { routing } from './app.routing';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
@@ -24,7 +25,8 @@ import { CheatsheetComponent } from './cheatsheet.component';
 		BrowserModule,
 		FormsModule,
 		routing,
-		HttpModule
+		HttpModule,
+		Ng2DeviceDetectorModule.forRoot()
 	],
 	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}],
 	bootstrap: [AppComponent]

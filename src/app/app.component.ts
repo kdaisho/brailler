@@ -46,13 +46,10 @@ export class AppComponent {
 	numCancelCount: number = 0;
 	isSpecial: boolean = false;
 	speId: string;
-
 	pathName;
 	myWindow;
 	speak;
-
 	keydown: boolean = false;
-
 	stroke: number = 0;
 
 	constructor(private winRef: WindowRef, public router: Router) {

@@ -1,5 +1,14 @@
 <section class="home container">
 	<div class="features">
+		<div *ngIf="isNotSupported" class="warning">
+			<p>
+				We built My Brailler using the latest technology. Unfortunately, your browser doesn't support those technologies. <br>We recommend that you use Google Chrome or Safari to have full experience.
+			</p>
+			<a href="https://www.google.com/chrome/browser/desktop/index.html" title="Download Google Chrome">
+				<img src="assets/images/icon_chrome_white.svg" alt="Google Chrome">
+				Download Google Chrome
+			</a>
+		</div>
 		<h1 class="title">
 			Need practice braille typing?
 		</h1>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
+import { Ng2DeviceService } from 'ng2-device-detector';
 
 @Component({
 	selector: 'home',
@@ -9,8 +10,19 @@ import { AppComponent } from './app.component';
 
 export class HomeComponent {
 
-	constructor(private sound: AppComponent) {
+	deviceInfo;
+	isNotSupported: boolean = false;
+
+	constructor(private sound: AppComponent, private deviceService: Ng2DeviceService) {
 		//Disable user input on homepage
 		sound.keyLock = true;
+		this.detectBrowser();
+	}
+
+	detectBrowser() {
+		this.deviceInfo = this.deviceService.getDeviceInfo();
+		if(this.deviceInfo.browser === "ie" || this.deviceInfo.browser === "firefox") {
+			this.isNotSupported = true;
+		}
 	}
 }
