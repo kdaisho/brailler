@@ -7,7 +7,12 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
-
+	<script>
+		var isIE = /*@cc_on!@*/false || !!document.documentMode;
+		if(isIE) {
+			alert("Unfortunately, Your browser (Internet Explorer) is not supported. We recommend you use Google Chrome.");
+		}
+	</script>
 </head>
 <body style="background: #000;">
 	<app-root>

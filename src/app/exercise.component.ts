@@ -27,9 +27,15 @@ export class ExerciseComponent implements OnInit {
 		{num: 1, isSelected: false},
 		{num: 2, isSelected: false},
 		{num: 3, isSelected: false},
-		{num: 4, isSelected: false}
+		{num: 4, isSelected: false},
+		{num: 5, isSelected: false},
+		{num: 6, isSelected: false},
+		{num: 7, isSelected: false},
+		{num: 8, isSelected: false}
 	];
     questions: any[] = [];
+    // questions1: any[] = [];
+    // questions2: any[] = [];
 	question: string;
 	myAnswer: string;
 	msg: string;
@@ -45,7 +51,8 @@ export class ExerciseComponent implements OnInit {
 		this.items[0].pointer = true;
 		this.counter = 0;
 		this.lev = 0;
-        this.questions = q.QUESTIONS;
+        this.questions = q.QUESTIONS.n1;
+        // this.questions = q.QUESTIONS.n2;
 		this.max = this.questions[0].length;
 
 		this.sound.clearAll();
@@ -55,14 +62,15 @@ export class ExerciseComponent implements OnInit {
 		this.formatQuestions(this.lev, this.counter);
 	}
 
-	selectLevel(x) {
+	selectLevel(selectedLevel) {
 		this.sound.keyLock = false;
 		this.resetLevelandCounter();
-		this.lev = x;
-		let index = x - 1;
+		this.lev = selectedLevel;
+		let index = selectedLevel - 1;
 
 		//Get the first question
 		this.question = this.questions[index][0];
+		// this.question = this.questions[index][0][0];
 
 		this.styleLevelSelect(index);
 
@@ -73,16 +81,16 @@ export class ExerciseComponent implements OnInit {
 		this.sayNextQuestion(index, this.counter);
 	}
 
-	formatQuestions(x, y) {
+	formatQuestions(index, counter) {
 		let beginnerLevel = 3;
-		if(x < beginnerLevel) {
+		if(index < beginnerLevel) {
 			//Pronunce letter one by one instead of whole word
-			this.questionForSpeak = this.questions[x][y].split('');
+			this.questionForSpeak = this.questions[index][counter].split('');
 			return this.questionForSpeak;
 		}
 		else {
 			//Pronunce word
-			this.questionForSpeak = this.questions[x][y].toString();
+			this.questionForSpeak = this.questions[index][counter].toString();
 			return this.questionForSpeak;
 		}
 	}
@@ -94,8 +102,8 @@ export class ExerciseComponent implements OnInit {
 		this.levels[x].isSelected = true;
 	}
 
-	sayNextQuestion(x, y) {
-		this.formatQuestions(x, y);
+	sayNextQuestion(index, counter) {
+		this.formatQuestions(index, counter);
 		this.sound.say.text = "Type, " + this.questionForSpeak;
 		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
 	}
