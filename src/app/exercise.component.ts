@@ -23,19 +23,42 @@ export class ExerciseComponent implements OnInit {
 	say;
 	audioCtx;
 
+	courses = [
+		{
+			difficulty: 'A to J',
+			isSelected: false
+		},
+		{
+			difficulty: 'K to S',
+			isSelected: false
+		},
+		{
+			difficulty: 'T to Z',
+			isSelected: false
+		},
+		{
+			difficulty: 'NUMBERS',
+			isSelected: false
+		},
+		{
+			difficulty: 'SPECIAL CHARACTERS',
+			isSelected: false
+		}
+	];
+
 	levels = [
 		{num: 1, isSelected: false},
 		{num: 2, isSelected: false},
 		{num: 3, isSelected: false},
-		{num: 4, isSelected: false},
-		{num: 5, isSelected: false},
-		{num: 6, isSelected: false},
-		{num: 7, isSelected: false},
-		{num: 8, isSelected: false}
+		{num: 4, isSelected: false}
+		// {num: 5, isSelected: false},
+		// {num: 6, isSelected: false},
+		// {num: 7, isSelected: false},
+		// {num: 8, isSelected: false}
 	];
-    questions: any[] = [];
-    // questions1: any[] = [];
-    // questions2: any[] = [];
+	questions: any[] = [];
+	// questions1: any[] = [];
+	// questions2: any[] = [];
 	question: string;
 	myAnswer: string;
 	msg: string;
@@ -46,13 +69,16 @@ export class ExerciseComponent implements OnInit {
 	keydown: boolean = false;
 	stroke: number = 0;
 
+	niveau: any[] = [];
+	// one = [];
+
 	constructor(private sound: AppComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
 		this.items[0].pointer = true;
 		this.counter = 0;
 		this.lev = 0;
-        this.questions = q.QUESTIONS.n1;
-        // this.questions = q.QUESTIONS.n2;
+		this.questions = q.QUESTIONS.n1;
+		// this.questions = q.QUESTIONS.n2;
 		this.max = this.questions[0].length;
 
 		this.sound.clearAll();
@@ -60,6 +86,24 @@ export class ExerciseComponent implements OnInit {
 
 	ngOnInit() {
 		this.formatQuestions(this.lev, this.counter);
+	}
+
+	selectCourse(course) {
+		let index = course - 1;
+		if(course === 1) {
+			this.questions = q.QUESTIONS.n1;
+			this.courses[0].isSelected = true;
+			this.courses[1].isSelected = false;
+			this.niveau[0] = true;
+			this.niveau[1] = false;
+		}
+		if(course === 2) {
+			this.questions = q.QUESTIONS.n2;
+			this.courses[1].isSelected = true;
+			this.courses[0].isSelected = false;
+			this.niveau[1] = true;
+			this.niveau[0] = false;
+		}
 	}
 
 	selectLevel(selectedLevel) {
