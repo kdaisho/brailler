@@ -77,33 +77,24 @@ export class ExerciseComponent implements OnInit {
 		this.items[0].pointer = true;
 		this.counter = 0;
 		this.lev = 0;
-		this.questions = q.QUESTIONS.n1;
-		// this.questions = q.QUESTIONS.n2;
-		this.max = this.questions[0].length;
-
+		// this.questions = q.QUESTIONS[0];
+		// this.max = this.questions[0].length;
 		this.sound.clearAll();
 	}
 
 	ngOnInit() {
-		this.formatQuestions(this.lev, this.counter);
+		this.sound.keyLock = true;
 	}
 
-	selectCourse(course) {
-		let index = course - 1;
-		if(course === 1) {
-			this.questions = q.QUESTIONS.n1;
-			this.courses[0].isSelected = true;
-			this.courses[1].isSelected = false;
-			this.niveau[0] = true;
-			this.niveau[1] = false;
+	selectCourse(courseNum) {
+		for(let i = 0, len = this.courses.length; i < len; i++) {
+			this.courses[i].isSelected = false;
+			this.niveau[i] = false;
 		}
-		if(course === 2) {
-			this.questions = q.QUESTIONS.n2;
-			this.courses[1].isSelected = true;
-			this.courses[0].isSelected = false;
-			this.niveau[1] = true;
-			this.niveau[0] = false;
-		}
+		this.questions = q.QUESTIONS[courseNum];
+		this.courses[courseNum].isSelected = true;
+		this.niveau[courseNum] = true;
+		this.formatQuestions(this.lev, this.counter);
 	}
 
 	selectLevel(selectedLevel) {
@@ -114,7 +105,6 @@ export class ExerciseComponent implements OnInit {
 
 		//Get the first question
 		this.question = this.questions[index][0];
-		// this.question = this.questions[index][0][0];
 
 		this.styleLevelSelect(index);
 

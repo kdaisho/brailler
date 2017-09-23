@@ -6,7 +6,7 @@
 		<div>
 			<div class="level-container">
 				<!-- <a *ngFor="let course of courses; let i = index" [class.active]="course.isSelected" (mouseover)="selectCourse(i)" (mouseleave)="niveau[i]=false"> -->
-				<a *ngFor="let course of courses; let i = index" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i+1)" tabindex="0">
+				<a *ngFor="let course of courses; let i = index" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i)" tabindex="0">
 					{{course.difficulty}}
 					<div class="level-group" *ngIf="niveau[i]">
 						<a *ngFor="let level of levels" [class.active]="level.isSelected" (click)="selectLevel(level.num)" tabindex="0">

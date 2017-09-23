@@ -1,5 +1,5 @@
-export const QUESTIONS = {
-	n1: [
+export const QUESTIONS = [
+	[
 		[
 			'aaaa',
 			'bbbb',
@@ -41,7 +41,7 @@ export const QUESTIONS = {
 			'heidi faced a chief'
 		]
 	],
-	n2: [
+	[
 		[
 			'kkkk',
 			'llll',
@@ -83,4 +83,4 @@ export const QUESTIONS = {
 			'norm'
 		]
 	]
-};
+];
