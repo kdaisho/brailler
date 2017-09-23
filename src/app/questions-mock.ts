@@ -40,16 +40,6 @@ export const QUESTIONS = [
 			'jeff had a decade',
 			'heidi faced a chief'
 		]
-		// [
-		// 	'i2 had a bag',
-		// 	'he had a big cab',
-		// 	'ida had a big idea',
-		// 	'he decided',
-		// 	'bee fibbed',
-		// 	'big ice cafe',
-		// 	'jeff had a decade',
-		// 	'heidi faced a chief'
-		// ]
 	],
 	[
 		[
@@ -92,15 +82,37 @@ export const QUESTIONS = [
 			'prom or norm',
 			'norm'
 		]
-		// [
-		// 	'i3 had a bag',
-		// 	'he had a big cab',
-		// 	'ida had a big idea',
-		// 	'he decided',
-		// 	'bee fibbed',
-		// 	'big ice cafe',
-		// 	'jeff had a decade',
-		// 	'heidi faced a chief'
-		// ]
+	],
+	[
+		[
+			'tttt',
+			'uuuu',
+			'vvvv',
+			'wwww',
+			'tuvw',
+			'wvut',
+			'utwv',
+			'vutw'
+		],
+		[
+			'xxxx',
+			'yyyy',
+			'zzzz',
+			'xyzz',
+			'yzxy',
+			'zxyz',
+			'yyzx',
+			'zxxy'
+		],
+		[
+			'tzuvy',
+			'xtxxt',
+			'zuzxy',
+			'wvxvv',
+			'wuzyu',
+			'txvyt',
+			'yutz',
+			'tux'
+		]
 	]
 ];

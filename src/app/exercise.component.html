@@ -5,23 +5,15 @@
 		</h1>
 		<div>
 			<div class="level-container">
-				<!-- <a *ngFor="let course of courses; let i = index" [class.active]="course.isSelected" (mouseover)="selectCourse(i)" (mouseleave)="niveau[i]=false"> -->
-				<!-- <a *ngFor="let course of courses; let i = index" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i)" tabindex={{i}}> -->
-				<a *ngFor="let course of courses; let i = index" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i)" tabindex="1">
-				<!-- <a *ngFor="let course of courses; let i = index" class="level-course" [class.active]="course.isSelected" (keyup.enter)="selectCourse(i)" tabindex="0"> -->
+				<a *ngFor="let course of courses; let i = index;" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i)" tabindex="1">
 					{{course.difficulty}}
 					<div class="level-group" *ngIf="niveau[i]">
-						<a *ngFor="let level of levels; let j = index" [class.active]="level.isSelected" (click)="selectLevel(j)" tabindex="0">
-							Level {{level.num}}
+						<a *ngFor="let q of questions; let j = index" [class.active]="q.isSelected" (click)="selectLevel(j, $event)" tabindex="0">
+							Level {{j + 1}}
 						</a>
 					</div>
 				</a>
 			</div>
-			<!-- <div class="level-group" *ngIf="niveau[0]">
-				<a *ngFor="let level of levels" [class.active]="level.isSelected" (click)="selectLevel(level.num)">
-					Level {{level.num}}
-				</a>
-			</div> -->
 		</div>
 		<div class="question-group">
 			<p class="message" style="height: 1em;">

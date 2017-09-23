@@ -46,16 +46,6 @@ export class ExerciseComponent implements OnInit {
 		}
 	];
 
-	levels = [
-		{num: 1, isSelected: false},
-		{num: 2, isSelected: false},
-		{num: 3, isSelected: false},
-		{num: 4, isSelected: false}
-		// {num: 5, isSelected: false}
-		// {num: 6, isSelected: false},
-		// {num: 7, isSelected: false},
-		// {num: 8, isSelected: false}
-	];
 	questions: any[] = [];
 	question: string;
 	myAnswer: string;
@@ -86,35 +76,28 @@ export class ExerciseComponent implements OnInit {
 			this.courses[i].isSelected = false;
 			this.niveau[i] = false;
 		}
+		this.resetLevelandCounter();
 		this.questions = q.QUESTIONS[courseNum];
 		this.max = this.questions[0].length;
-		console.log(this.questions);
-
 		this.courses[courseNum].isSelected = true;
 		this.niveau[courseNum] = true;
 		this.formatQuestions(this.lev, this.counter);
+		this.resetOnChangeCourse(courseNum);
 	}
 
-	selectLevel(selectedLevel) {
+	selectLevel(selectedLevel, event) {
+		//Prevent resetLevelStyle to be fired by click on parent element (selectCourse)
+		event.stopPropagation();
+
 		this.sound.keyLock = false;
-		// this.formatQuestions(this.lev, this.counter);
-
 		this.resetLevelandCounter();
-		// this.lev = selectedLevel + 1;
 		this.lev = selectedLevel;
-		console.log('1;');
-		//Get the first question
 		this.question = this.questions[selectedLevel][0];
-		console.log(this.question);
-
 		this.styleLevelSelect(selectedLevel);
-		console.log('2;');
 		if(this.winRef.nativeWindow.speechSynthesis.speaking) {
 			this.winRef.nativeWindow.speechSynthesis.cancel();
 		}
-		console.log('3;');
 		this.sayNextQuestion(selectedLevel, this.counter);
-		console.log('4;');
 	}
 
 	formatQuestions(index, counter) {
@@ -131,19 +114,26 @@ export class ExerciseComponent implements OnInit {
 		}
 	}
 
-	styleLevelSelect(x) {
-		for(let i = 0, len = this.levels.length; i < len; i++) {
-			this.levels[i].isSelected = false;
+	styleLevelSelect(levelNum) {
+		for(let i = 0, len = this.questions.length; i < len; i++) {
+			this.questions[i].isSelected = false;
 		}
-		this.levels[x].isSelected = true;
-		console.log('5;');
+		this.questions[levelNum].isSelected = true;
+	}
+
+	resetOnChangeCourse(courseNum) {
+		for(let i = 0, len = this.questions.length; i < len; i++) {
+			this.questions[i].isSelected = false;
+		}
+		this.clearText();
+		this.question = '';
+		this.sound.keyLock = true;
 	}
 
 	sayNextQuestion(index, counter) {
 		this.formatQuestions(index, counter);
 		this.sound.say.text = "Type, " + this.questionForSpeak;
 		this.winRef.nativeWindow.speechSynthesis.speak(this.sound.say);
-		console.log('6;');
 	}
 
 	beep(freq, vol) {
@@ -151,13 +141,11 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	checkAnswer(x, y) {
-		let index = x - 1;
+		let index = x;
 		this.myAnswer = this.concateText();
-
 		if(this.questions[index][y] == this.myAnswer) {
 			this.displayMsg('Correct!');
 			this.beep(2200, .15);
-
 			if(y < this.max - 1) {
 				this.getNextQuestion(index, this.counter);
 				this.addCounter(this.counter);
@@ -174,7 +162,6 @@ export class ExerciseComponent implements OnInit {
 			//Repeat the same question
 			this.sayNextQuestion(index, this.counter);
 		}
-
 		this.sound.clearAll();
 		this.clearText();
 	}
@@ -201,7 +188,6 @@ export class ExerciseComponent implements OnInit {
 
 	resetLevelandCounter() {
 		this.counter = this.lev = 0;
-		console.log('7;');
 	}
 
 	getNextQuestion(x, y) {
@@ -221,7 +207,7 @@ export class ExerciseComponent implements OnInit {
 		this.question = '';
 		this.sound.keyLock = true;
 		this.displayPopup();
-		this.levels[level].isSelected = false;
+		this.questions[level].isSelected = false;
 	}
 
 	displayPopup() {
