@@ -26,27 +26,33 @@ export class ExerciseComponent implements OnInit {
 	courses = [
 		{
 			contents: 'A to J',
-			isSelected: false
+			isSelected: false,
+			beginnerLevel: 3
 		},
 		{
 			contents: 'K to S',
-			isSelected: false
+			isSelected: false,
+			beginnerLevel: 3
 		},
 		{
 			contents: 'T to Z',
-			isSelected: false
+			isSelected: false,
+			beginnerLevel: 3
 		},
 		{
 			contents: 'NUMBERS',
-			isSelected: false
+			isSelected: false,
+			beginnerLevel: 2
 		},
 		{
 			contents: 'CHARACTERS',
-			isSelected: false
+			isSelected: false,
+			beginnerLevel: 3
 		},
 		{
 			contents: 'EXAM',
-			isSelected: false
+			isSelected: false,
+			beginnerLevel: 0
 		},
 	];
 
@@ -77,14 +83,9 @@ export class ExerciseComponent implements OnInit {
 		this.sound.keyLock = true;
 	}
 
-	selectCourse(courseNum, type) {
-		if(type == 'NUMBERS') {
-			this.isCourseNum = true;
-			this.beginnerLevel = 2;
-		}
-		else if(type == 'EXAM') {
-			this.beginnerLevel = 0;
-		}
+	selectCourse(courseNum, type, beginnerLevel) {
+		this.beginnerLevel = beginnerLevel;
+
 		for(let i = 0, len = this.courses.length; i < len; i++) {
 			this.courses[i].isSelected = false;
 			this.niveau[i] = false;
