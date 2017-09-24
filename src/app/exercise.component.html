@@ -3,7 +3,7 @@
 		<h1 class="title">
 			{{title}}
 		</h1>
-		<div>
+		<!-- <div style="text-align: center;"> -->
 			<div class="level-container">
 				<a *ngFor="let course of courses; let i = index;" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i, course.contents)" tabindex="1">
 					{{course.contents}}
@@ -14,7 +14,7 @@
 					</div>
 				</a>
 			</div>
-		</div>
+		<!-- </div> -->
 		<div class="question-group">
 			<p class="message" style="height: 1em;">
 				{{msg}}

@@ -3,7 +3,7 @@
 }
 .title {
 	color: #fff;
-	padding: .5em 0;
+	padding: .75em 0;
 }
 .help-text {
 	font-size: 11.5em;
@@ -53,35 +53,47 @@
 	background: #000;
 }
 .level-container {
+	margin-top: 1em;
 	position: relative;
+	text-align: center;
 }
 .level-course {
 	border-bottom: 2px solid transparent;
 	display: inline-block;
 	font-size: 1.6em;
 	margin: .25em 0;
-	padding: .25em 1em;
-	couser: pointer;
+	padding: .35em 1em .25em;
+	cursor: pointer;
 	text-align: center;
 }
 .level-course:last-child {
 	border: none;
 }
 .level-course.active {
-	color: rgba(118, 255, 3, 1);
-	border-color: rgba(118, 255, 3, 1);
+	background: rgba(118, 255, 3, 1);
+	color: #000;
+	font-weight: bold;
 }
 .level-group {
-	left: 0;
+	background: #000;
+	border: 2px solid rgba(118, 255, 3, 1);
+	height: 2.5em;
+	left: 50%;
+	padding: .9em 0 0;
 	position: absolute;
 	text-align: center;
-	top: 3em;
+	top: 2em;
+	-webkit-transform: translateX(-50%);
+	   -moz-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	     -o-transform: translateX(-50%);
+	        transform: translateX(-50%);
+	width: 80.75%;
 	z-index: 10;
 }
 .level-group a {
 	display: inline-block;
-	/*font-size: 1.6em;*/
-	padding: .25em 0 .15em;
+	padding: .25em 0 .1em;
 	margin: 0 1em;
 	text-transform: uppercase;
 }
@@ -93,8 +105,8 @@
 	color: rgba(118, 255, 3, 1);
 }
 .question-group {
-	margin: 0 auto;
-	max-width: 920px;
+	margin: 6.5em auto 2em;
+	max-width: 1120px;
 }
 .question {
 	color: rgba(118, 255, 3, 1);
@@ -105,7 +117,7 @@
 .message {
 	color: #fff;
 	font-size: 2em;
-	padding: 1em 0;
+	padding: 1em 0 .5em;
 }
 .modal {
 	background: #222;

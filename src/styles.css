@@ -20,14 +20,13 @@ button {
 }
 .container {
 	font-size: 1em;
-	padding: 1em .25em;
+	padding: 2em .25em 1em;
 }
 .title {
 	font-size: 3em;
 	text-align: center;
 }
 .character {
-	/*font-family: "Courier New";*/
 	font-size: 3.7em;
 	height: 1.2em;
 	letter-spacing: 0;

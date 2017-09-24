@@ -82,8 +82,6 @@ export class ExerciseComponent implements OnInit {
 		}
 		this.resetLevelandCounter();
 		this.questions = q.QUESTIONS[courseNum];
-		// this.max = this.questions[0].length;
-		// console.log('max ', this.max);
 		this.courses[courseNum].isSelected = true;
 		this.niveau[courseNum] = true;
 		this.formatQuestions(this.lev, this.counter);
@@ -107,7 +105,13 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	formatQuestions(index, counter) {
-		let beginnerLevel = 3;
+		let beginnerLevel;
+		if(this.isCourseNum) {
+			beginnerLevel = 2;
+		}
+		else {
+			beginnerLevel = 3;
+		}
 		if(index < beginnerLevel) {
 			//Pronunce letter one by one instead of whole word
 			this.questionForSpeak = this.questions[index][counter].split('');
