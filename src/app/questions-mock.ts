@@ -166,5 +166,22 @@ export const QUESTIONS = [
 			'/',
 			'-'
 		]
+	],
+	[
+		[
+			'i know you',
+			'she knew that',
+			'spy plane flies',
+			'my car gets broken',
+			'better review your cv',
+			'do you know the guy?'
+		],
+		[
+			'we have discussed it',
+			'do vegans eat pork?',
+			'hey, how are you?',
+			'donald trump may start',
+			'i was born in japan'
+		]
 	]
 ];

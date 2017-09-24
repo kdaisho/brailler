@@ -41,9 +41,13 @@ export class ExerciseComponent implements OnInit {
 			isSelected: false
 		},
 		{
-			contents: 'SPECIAL CHARACTERS',
+			contents: 'CHARACTERS',
 			isSelected: false
-		}
+		},
+		{
+			contents: 'EXAM',
+			isSelected: false
+		},
 	];
 
 	questions: any[] = [];
@@ -59,6 +63,7 @@ export class ExerciseComponent implements OnInit {
 
 	niveau: any[] = [];
 	isCourseNum: boolean = false;
+	beginnerLevel: number = 3;
 
 	constructor(private sound: AppComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
@@ -75,6 +80,10 @@ export class ExerciseComponent implements OnInit {
 	selectCourse(courseNum, type) {
 		if(type == 'NUMBERS') {
 			this.isCourseNum = true;
+			this.beginnerLevel = 2;
+		}
+		else if(type == 'EXAM') {
+			this.beginnerLevel = 0;
 		}
 		for(let i = 0, len = this.courses.length; i < len; i++) {
 			this.courses[i].isSelected = false;
@@ -105,14 +114,7 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	formatQuestions(index, counter) {
-		let beginnerLevel;
-		if(this.isCourseNum) {
-			beginnerLevel = 2;
-		}
-		else {
-			beginnerLevel = 3;
-		}
-		if(index < beginnerLevel) {
+		if(index < this.beginnerLevel) {
 			//Pronunce letter one by one instead of whole word
 			this.questionForSpeak = this.questions[index][counter].split('');
 			return this.questionForSpeak;
