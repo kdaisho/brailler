@@ -25,23 +25,23 @@ export class ExerciseComponent implements OnInit {
 
 	courses = [
 		{
-			difficulty: 'A to J',
+			contents: 'A to J',
 			isSelected: false
 		},
 		{
-			difficulty: 'K to S',
+			contents: 'K to S',
 			isSelected: false
 		},
 		{
-			difficulty: 'T to Z',
+			contents: 'T to Z',
 			isSelected: false
 		},
 		{
-			difficulty: 'NUMBERS',
+			contents: 'NUMBERS',
 			isSelected: false
 		},
 		{
-			difficulty: 'SPECIAL CHARACTERS',
+			contents: 'SPECIAL CHARACTERS',
 			isSelected: false
 		}
 	];
@@ -58,6 +58,7 @@ export class ExerciseComponent implements OnInit {
 	stroke: number = 0;
 
 	niveau: any[] = [];
+	isCourseNum: boolean = false;
 
 	constructor(private sound: AppComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
@@ -71,14 +72,18 @@ export class ExerciseComponent implements OnInit {
 		this.sound.keyLock = true;
 	}
 
-	selectCourse(courseNum) {
+	selectCourse(courseNum, type) {
+		if(type == 'NUMBERS') {
+			this.isCourseNum = true;
+		}
 		for(let i = 0, len = this.courses.length; i < len; i++) {
 			this.courses[i].isSelected = false;
 			this.niveau[i] = false;
 		}
 		this.resetLevelandCounter();
 		this.questions = q.QUESTIONS[courseNum];
-		this.max = this.questions[0].length;
+		// this.max = this.questions[0].length;
+		// console.log('max ', this.max);
 		this.courses[courseNum].isSelected = true;
 		this.niveau[courseNum] = true;
 		this.formatQuestions(this.lev, this.counter);
@@ -89,6 +94,7 @@ export class ExerciseComponent implements OnInit {
 		//Prevent resetLevelStyle to be fired by click on parent element (selectCourse)
 		event.stopPropagation();
 
+		this.max = this.questions[selectedLevel].length;
 		this.sound.keyLock = false;
 		this.resetLevelandCounter();
 		this.lev = selectedLevel;
@@ -125,6 +131,10 @@ export class ExerciseComponent implements OnInit {
 		for(let i = 0, len = this.questions.length; i < len; i++) {
 			this.questions[i].isSelected = false;
 		}
+		if(this.winRef.nativeWindow.speechSynthesis.speaking) {
+			this.winRef.nativeWindow.speechSynthesis.cancel();
+		}
+		this.displayMsg('');
 		this.clearText();
 		this.question = '';
 		this.sound.keyLock = true;
@@ -170,6 +180,9 @@ export class ExerciseComponent implements OnInit {
 		this.result = '';
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			this.result += this.items[i].text;
+		}
+		if(this.isCourseNum) {
+			this.result = this.result.replace(/#/g, '');	
 		}
 		return this.result;
 	}

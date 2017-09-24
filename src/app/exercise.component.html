@@ -5,8 +5,8 @@
 		</h1>
 		<div>
 			<div class="level-container">
-				<a *ngFor="let course of courses; let i = index;" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i)" tabindex="1">
-					{{course.difficulty}}
+				<a *ngFor="let course of courses; let i = index;" class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i, course.contents)" tabindex="1">
+					{{course.contents}}
 					<div class="level-group" *ngIf="niveau[i]">
 						<a *ngFor="let q of questions; let j = index" [class.active]="q.isSelected" (click)="selectLevel(j, $event)" tabindex="0">
 							Level {{j + 1}}
