@@ -178,10 +178,11 @@ export const QUESTIONS = [
 		],
 		[
 			'we have discussed it',
-			'do vegans eat pork?',
-			'hey, how are you?',
-			'donald trump may start',
-			'i was born in japan'
+			'since when do vegans eat pork?',
+			'hey! how are you?',
+			'donald trump may start war',
+			'i was born in japan, 1977',
+			'x-ray is not a weapon'
 		]
 	]
 ];
