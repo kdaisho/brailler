@@ -8,6 +8,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { AppComponent } from './app.component';
+import { SoundComponent } from './sound.component';
 import { HomeComponent } from './home.component';
 import { FreeTypingComponent } from './free-typing.component';
 import { ExerciseComponent } from './exercise.component';
@@ -16,6 +17,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 @NgModule({
 	declarations: [
 		AppComponent,
+		SoundComponent,
 		HomeComponent,
 		FreeTypingComponent,
 		ExerciseComponent,
@@ -28,7 +30,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 		HttpModule,
 		Ng2DeviceDetectorModule.forRoot()
 	],
-	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}, SoundComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

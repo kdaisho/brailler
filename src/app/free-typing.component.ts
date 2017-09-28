@@ -1,6 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { HostListener } from '@angular/core';
-import { AppComponent } from './app.component';
+// import { AppComponent } from './app.component';
+import { SoundComponent } from './sound.component';
 import * as patterns from './lego-mock';
 
 @Component({
@@ -17,7 +18,7 @@ export class FreeTypingComponent {
 	keydown: boolean = false;
 	stroke: number = 0;
 
-	constructor(private sound: AppComponent) {
+	constructor(private sound: SoundComponent) {
 
 		this.sound.keyLock = false;
 		this.items = patterns.legos;

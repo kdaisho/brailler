@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WindowRef } from './windowRef';
 import { HostListener } from '@angular/core';
-import { AppComponent } from './app.component';
+// import { AppComponent } from './app.component';
+import { SoundComponent } from './sound.component';
 import * as patterns from './lego-mock';
 import * as q from './questions-mock';
 
@@ -71,7 +72,7 @@ export class ExerciseComponent implements OnInit {
 	isCourseNum: boolean = false;
 	beginnerLevel: number = 3;
 
-	constructor(private sound: AppComponent, private winRef: WindowRef) {
+	constructor(private sound: SoundComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
 		this.items[0].pointer = true;
 		this.counter = 0;
