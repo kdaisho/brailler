@@ -58,7 +58,7 @@ export class SoundComponent implements OnChanges {
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
-		this.audioCtx = beep;
+		this.audioCtx = beep.audioCtx;
 		// this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 	}
