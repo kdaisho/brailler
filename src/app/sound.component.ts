@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WindowRef } from './windowRef';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -14,9 +14,10 @@ import * as sp from './special-char-mock';
 	template: ''
 })
 export class SoundComponent {
-	
+	@Input('gr') gc;
 	// title = 'My Brailler';
-	keyLock: boolean = true;
+	// keyLock: boolean = true;
+	keyLock: boolean = false;
 	items;
 	counter = 0;
 	maxCounter;
@@ -61,6 +62,7 @@ export class SoundComponent {
 	}
 
 	clearAll() {
+		console.log('Cleared');
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			this.clearBlock(i);
 			this.items[i].pointer = false;

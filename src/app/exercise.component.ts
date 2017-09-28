@@ -72,6 +72,8 @@ export class ExerciseComponent implements OnInit {
 	isCourseNum: boolean = false;
 	beginnerLevel: number = 3;
 
+	childcounter = 0;
+
 	constructor(private sound: SoundComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
 		this.items[0].pointer = true;
@@ -81,7 +83,7 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.sound.keyLock = true;
+		// this.sound.keyLock = true;
 	}
 
 	selectCourse(courseNum, type, beginnerLevel) {
@@ -180,8 +182,10 @@ export class ExerciseComponent implements OnInit {
 			//Repeat the same question
 			this.sayNextQuestion(index, this.counter);
 		}
+		console.log('Check answer fired');
 		this.sound.clearAll();
 		this.clearText();
+		this.childcounter = 0;
 	}
 
 	concateText() {
