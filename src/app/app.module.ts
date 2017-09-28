@@ -9,6 +9,7 @@ import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { AppComponent } from './app.component';
 import { SoundComponent } from './sound.component';
+import { AudioComponent } from './audio.component';
 import { HomeComponent } from './home.component';
 import { FreeTypingComponent } from './free-typing.component';
 import { ExerciseComponent } from './exercise.component';
@@ -18,6 +19,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 	declarations: [
 		AppComponent,
 		SoundComponent,
+		AudioComponent,
 		HomeComponent,
 		FreeTypingComponent,
 		ExerciseComponent,
@@ -30,7 +32,7 @@ import { CheatsheetComponent } from './cheatsheet.component';
 		HttpModule,
 		Ng2DeviceDetectorModule.forRoot()
 	],
-	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}, SoundComponent],
+	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}, SoundComponent, AudioComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

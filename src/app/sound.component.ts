@@ -3,6 +3,7 @@ import { WindowRef } from './windowRef';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { HomeComponent } from './home.component';
+import { AudioComponent } from './audio.component';
 import { HostListener } from '@angular/core';
 
 import * as patterns from './lego-mock';
@@ -14,12 +15,10 @@ import * as sp from './special-char-mock';
 	template: ''
 })
 export class SoundComponent implements OnChanges {
+	
 	@Input() parentLock;
-	@Input() parentCounter;
-	// title = 'My Brailler';
-	// keyLock: boolean = true;
+
 	keyLock: boolean = false;
-	// keyLock: boolean = true;
 	items;
 	counter = 0;
 	maxCounter;
@@ -28,7 +27,7 @@ export class SoundComponent implements OnChanges {
 
 	// keyCount = 0;
 	isRightKey = false;
-	audio;
+	// audio;
 
 	audioCtx:any = false;
 	oscillator;
@@ -52,21 +51,20 @@ export class SoundComponent implements OnChanges {
 	keydown: boolean = false;
 	stroke: number = 0;
 
-	constructor(private winRef: WindowRef, public router: Router) {
+	constructor(private winRef: WindowRef, public router: Router, private beep: AudioComponent) {
 		this.pathName = window.location.pathname;
 		this.items = patterns.legos;
 		this.p = p.letters;
 		this.sp = sp.characters;
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
-		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
+		this.audioCtx = beep;
+		// this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		console.log('onChange');
 		this.keyLock = this.parentLock;
-		// this.counter = this.parentCounter;
 	}
 
 	clearAll() {
@@ -81,9 +79,6 @@ export class SoundComponent implements OnChanges {
 		this.items[0].pointer = true;
 		this.exceedBlock = this.lastBlock = false;
 		this.isSpecial = false;
-
-		console.log('parentCounter in sound ', this.parentCounter);
-		this.counter = this.parentCounter;
 	}
 
 	playAudio(freq, vol, duration) {
