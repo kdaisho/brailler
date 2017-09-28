@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { WindowRef } from './windowRef';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -13,18 +13,19 @@ import * as sp from './special-char-mock';
 	selector: 'sound',
 	template: ''
 })
-export class SoundComponent {
-	@Input('gr') gc;
+export class SoundComponent implements OnChanges {
+	@Input() keylock;
 	// title = 'My Brailler';
 	// keyLock: boolean = true;
-	keyLock: boolean = false;
+	// keyLock: boolean = false;
+	keyLock: boolean = true;
 	items;
 	counter = 0;
 	maxCounter;
 	map;
 	say;
 
-	keyCount = 0;
+	// keyCount = 0;
 	isRightKey = false;
 	audio;
 
@@ -59,6 +60,13 @@ export class SoundComponent {
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		// this.counter = this.gc;
+		console.log('keyLock in SOUND: ', this.keyLock);
+		console.log('KEYLOCK in SOUND: ', this.keylock);
+		this.keyLock = this.keylock;
 	}
 
 	clearAll() {
@@ -297,6 +305,7 @@ export class SoundComponent {
 						this.clearBlock(this.counter);
 						this.checkCounter();
 					}
+					console.log(':: ', this.counter);
 				}
 
 				//Space key
@@ -333,6 +342,9 @@ export class SoundComponent {
 
 				//Delete key
 				if(this.keydown) {
+					if(this.map[13] && this.counter !== 0) {
+						this.counter = 0;
+					}
 					if(this.map[8] && this.counter !== 0) {
 
 						let max = this.maxCounter - 1;
@@ -380,6 +392,8 @@ export class SoundComponent {
 						this.clearBlock(this.counter);
 						this.playAudio(300, .15, .06);
 						this.items[this.counter].text = '';
+
+						console.log("COUNTER ON DELETE: ", this.counter);
 					}
 				}
 			}

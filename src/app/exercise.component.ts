@@ -54,7 +54,7 @@ export class ExerciseComponent implements OnInit {
 			contents: 'EXAM',
 			isSelected: false,
 			beginnerLevel: 0
-		},
+		}
 	];
 
 	questions: any[] = [];
@@ -72,7 +72,8 @@ export class ExerciseComponent implements OnInit {
 	isCourseNum: boolean = false;
 	beginnerLevel: number = 3;
 
-	childcounter = 0;
+	// childcounter = 0;
+	childlock: boolean;
 
 	constructor(private sound: SoundComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
@@ -83,7 +84,7 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.sound.keyLock = true;
+		this.sound.keyLock = true;
 	}
 
 	selectCourse(courseNum, type, beginnerLevel) {
@@ -107,6 +108,7 @@ export class ExerciseComponent implements OnInit {
 
 		this.max = this.questions[selectedLevel].length;
 		this.sound.keyLock = false;
+		this.childlock = false;
 		this.resetLevelandCounter();
 		this.lev = selectedLevel;
 		this.question = this.questions[selectedLevel][0];
@@ -183,9 +185,9 @@ export class ExerciseComponent implements OnInit {
 			this.sayNextQuestion(index, this.counter);
 		}
 		console.log('Check answer fired');
+		// this.childcounter = 1;
 		this.sound.clearAll();
 		this.clearText();
-		this.childcounter = 0;
 	}
 
 	concateText() {
@@ -262,6 +264,7 @@ export class ExerciseComponent implements OnInit {
 			if(this.keydown === true && this.stroke === 0) {
 				if(this.map[13]) {
 					this.checkAnswer(this.lev, this.counter);
+					console.log('COUNTER ON EXE: ', this.counter)
 				}
 			}
 		}
