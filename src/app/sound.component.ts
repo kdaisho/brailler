@@ -10,13 +10,12 @@ import * as p from './letters-mock';
 import * as sp from './special-char-mock';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+	selector: 'sound',
+	template: ''
 })
 export class SoundComponent {
 	
-	title = 'My Brailler';
+	// title = 'My Brailler';
 	keyLock: boolean = true;
 	items;
 	counter = 0;
