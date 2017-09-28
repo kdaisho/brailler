@@ -14,11 +14,12 @@ import * as sp from './special-char-mock';
 	template: ''
 })
 export class SoundComponent implements OnChanges {
-	@Input() keylock;
+	@Input() parentLock;
+	@Input() parentCounter;
 	// title = 'My Brailler';
 	// keyLock: boolean = true;
-	// keyLock: boolean = false;
-	keyLock: boolean = true;
+	keyLock: boolean = false;
+	// keyLock: boolean = true;
 	items;
 	counter = 0;
 	maxCounter;
@@ -63,10 +64,9 @@ export class SoundComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		// this.counter = this.gc;
-		console.log('keyLock in SOUND: ', this.keyLock);
-		console.log('KEYLOCK in SOUND: ', this.keylock);
-		this.keyLock = this.keylock;
+		console.log('onChange');
+		this.keyLock = this.parentLock;
+		// this.counter = this.parentCounter;
 	}
 
 	clearAll() {
@@ -81,6 +81,9 @@ export class SoundComponent implements OnChanges {
 		this.items[0].pointer = true;
 		this.exceedBlock = this.lastBlock = false;
 		this.isSpecial = false;
+
+		console.log('parentCounter in sound ', this.parentCounter);
+		this.counter = this.parentCounter;
 	}
 
 	playAudio(freq, vol, duration) {
@@ -340,11 +343,14 @@ export class SoundComponent implements OnChanges {
 					}
 				}
 
-				//Delete key
 				if(this.keydown) {
+
+					//Enter key
 					if(this.map[13] && this.counter !== 0) {
 						this.counter = 0;
 					}
+
+					//Delete key
 					if(this.map[8] && this.counter !== 0) {
 
 						let max = this.maxCounter - 1;

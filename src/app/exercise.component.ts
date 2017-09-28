@@ -73,7 +73,8 @@ export class ExerciseComponent implements OnInit {
 	beginnerLevel: number = 3;
 
 	// childcounter = 0;
-	childlock: boolean;
+	childLock: boolean;
+	childCounter: number;
 
 	constructor(private sound: SoundComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
@@ -84,7 +85,8 @@ export class ExerciseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.sound.keyLock = true;
+		this.childLock = true;
+		// this.sound.keyLock = true;
 	}
 
 	selectCourse(courseNum, type, beginnerLevel) {
@@ -107,8 +109,8 @@ export class ExerciseComponent implements OnInit {
 		event.stopPropagation();
 
 		this.max = this.questions[selectedLevel].length;
-		this.sound.keyLock = false;
-		this.childlock = false;
+		// this.sound.keyLock = false;
+		this.childLock = false;
 		this.resetLevelandCounter();
 		this.lev = selectedLevel;
 		this.question = this.questions[selectedLevel][0];
@@ -149,7 +151,8 @@ export class ExerciseComponent implements OnInit {
 		this.displayMsg('');
 		this.clearText();
 		this.question = '';
-		this.sound.keyLock = true;
+		// this.sound.keyLock = true;
+		this.childLock = true;
 	}
 
 	sayNextQuestion(index, counter) {
@@ -232,7 +235,8 @@ export class ExerciseComponent implements OnInit {
 		this.sound.clearAll();
 		this.clearText();
 		this.question = '';
-		this.sound.keyLock = true;
+		// this.sound.keyLock = true;
+		this.childLock = true;
 		this.displayPopup();
 		this.questions[level].isSelected = false;
 	}
@@ -259,10 +263,13 @@ export class ExerciseComponent implements OnInit {
 
 	@HostListener('window:keyup', ['$event'])
 	keyUpBrailler(event: KeyboardEvent) {
-		if(this.sound.keyLock === false) {
+		// if(this.sound.keyLock === false) {
+		if(this.childLock === false) {
 			this.stroke--;
 			if(this.keydown === true && this.stroke === 0) {
 				if(this.map[13]) {
+					this.childCounter = 0;
+					console.log("CHILD COUN in EXE ", this.childCounter);
 					this.checkAnswer(this.lev, this.counter);
 					console.log('COUNTER ON EXE: ', this.counter)
 				}

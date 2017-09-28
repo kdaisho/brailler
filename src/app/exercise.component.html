@@ -53,4 +53,5 @@
 	</div>
 	<div *ngIf="isPopup" class="modal-bg"></div>
 </section>
-<sound [keylock]="childlock"></sound>
+<sound [parentLock]="childLock" [parentCounter]="childCounter"></sound>
+<!-- <sound [parentLock]="childLock"></sound> -->
