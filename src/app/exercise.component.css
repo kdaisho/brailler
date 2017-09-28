@@ -57,6 +57,10 @@
 	position: relative;
 	text-align: center;
 }
+.level-container li {
+	display: inline-block;
+	list-style: none;
+} 
 .level-course {
 	border-bottom: 2px solid transparent;
 	display: inline-block;

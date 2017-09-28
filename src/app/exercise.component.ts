@@ -26,32 +26,38 @@ export class ExerciseComponent implements OnInit {
 		{
 			contents: 'A to J',
 			isSelected: false,
-			beginnerLevel: 3
+			beginnerLevel: 3,
+			tab: 10
 		},
 		{
 			contents: 'K to S',
 			isSelected: false,
-			beginnerLevel: 3
+			beginnerLevel: 3,
+			tab: 20
 		},
 		{
 			contents: 'T to Z',
 			isSelected: false,
-			beginnerLevel: 3
+			beginnerLevel: 3,
+			tab: 30
 		},
 		{
 			contents: 'NUMBERS',
 			isSelected: false,
-			beginnerLevel: 2
+			beginnerLevel: 2,
+			tab: 40
 		},
 		{
 			contents: 'CHARACTERS',
 			isSelected: false,
-			beginnerLevel: 3
+			beginnerLevel: 3,
+			tab: 50
 		},
 		{
 			contents: 'EXAM',
 			isSelected: false,
-			beginnerLevel: 0
+			beginnerLevel: 0,
+			tab: 60
 		}
 	];
 
