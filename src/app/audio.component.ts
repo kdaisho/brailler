@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-// import { AppComponent } from './app.component';
 import { WindowRef } from './windowRef';
 
 @Component({
@@ -10,9 +9,6 @@ import { WindowRef } from './windowRef';
 export class AudioComponent {
 
     audioCtx;
-
-    okcounter = 0;
-    oklock = true;
 
     constructor(private winRef: WindowRef) {
         this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();

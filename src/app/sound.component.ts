@@ -24,10 +24,7 @@ export class SoundComponent implements OnChanges {
 	maxCounter;
 	map;
 	say;
-
-	// keyCount = 0;
 	isRightKey = false;
-	// audio;
 
 	audioCtx:any = false;
 	oscillator;
@@ -59,7 +56,6 @@ export class SoundComponent implements OnChanges {
 		this.maxCounter = this.items.length;
 		this.say = new winRef.nativeWindow.SpeechSynthesisUtterance();
 		this.audioCtx = beep.audioCtx;
-		// this.audioCtx = new (winRef.nativeWindow.AudioContext || winRef.nativeWindow.webkitAudioContext)();
 		this.items[0].pointer = true;
 	}
 
@@ -68,7 +64,6 @@ export class SoundComponent implements OnChanges {
 	}
 
 	clearAll() {
-		console.log('Cleared');
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			this.clearBlock(i);
 			this.items[i].pointer = false;
@@ -303,7 +298,6 @@ export class SoundComponent implements OnChanges {
 						this.clearBlock(this.counter);
 						this.checkCounter();
 					}
-					console.log(':: ', this.counter);
 				}
 
 				//Space key
@@ -393,8 +387,6 @@ export class SoundComponent implements OnChanges {
 						this.clearBlock(this.counter);
 						this.playAudio(300, .15, .06);
 						this.items[this.counter].text = '';
-
-						console.log("COUNTER ON DELETE: ", this.counter);
 					}
 				}
 			}
