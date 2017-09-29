@@ -196,7 +196,10 @@ export class ExerciseComponent implements OnInit {
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			this.result += this.items[i].text;
 		}
+		//Remove heading spaces and hanging spaces out of input
+		this.result = this.result.replace(/^\s+/g, '').replace(/\s+$/g, '');
 		if(this.isNumInvolved) {
+			//Remove num key (initiator) out of input
 			this.result = this.result.replace(/#/g, '');
 		}
 		return this.result;
