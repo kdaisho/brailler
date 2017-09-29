@@ -169,6 +169,7 @@ export const QUESTIONS = [
 	],
 	[
 		[
+			'ab 12 k',
 			'i know you',
 			'she knew that',
 			'spy plane flies',

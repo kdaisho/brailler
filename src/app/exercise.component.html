@@ -5,7 +5,7 @@
 		</h1>
 		<ul class="level-container">
 			<li *ngFor="let course of courses; let i = index;">
-				<a class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i, course.contents, course.beginnerLevel)" tabindex="{{ course.tab }}" aria-haspopup="true" role="menuitem">
+				<a class="level-course" [class.active]="course.isSelected" (click)="selectCourse(i, course.beginnerLevel, course.hasNum)" tabindex="{{ course.tab }}" aria-haspopup="true" role="menuitem">
 					{{course.contents}}
 					<ul class="level-group" *ngIf="niveau[i]">
 						<li *ngFor="let q of questions; let j = index" role="menuitem">

@@ -20,47 +20,7 @@ export class ExerciseComponent implements OnInit {
 	counter: number;
 	lev: number;
 	map;
-	say;
-
-	courses = [
-		{
-			contents: 'A to J',
-			isSelected: false,
-			beginnerLevel: 3,
-			tab: 10
-		},
-		{
-			contents: 'K to S',
-			isSelected: false,
-			beginnerLevel: 3,
-			tab: 20
-		},
-		{
-			contents: 'T to Z',
-			isSelected: false,
-			beginnerLevel: 3,
-			tab: 30
-		},
-		{
-			contents: 'NUMBERS',
-			isSelected: false,
-			beginnerLevel: 2,
-			tab: 40
-		},
-		{
-			contents: 'CHARACTERS',
-			isSelected: false,
-			beginnerLevel: 3,
-			tab: 50
-		},
-		{
-			contents: 'EXAM',
-			isSelected: false,
-			beginnerLevel: 0,
-			tab: 60
-		}
-	];
-
+	// say;
 	questions: any[] = [];
 	question: string;
 	myAnswer: string;
@@ -73,10 +33,55 @@ export class ExerciseComponent implements OnInit {
 	stroke: number = 0;
 
 	niveau: any[] = [];
-	isCourseNum: boolean = false;
+	isNumInvolved: boolean = false;
 	beginnerLevel: number = 3;
 
 	childLock: boolean;
+
+	courses = [
+		{
+			contents: 'A to J',
+			isSelected: false,
+			hasNum: false,
+			beginnerLevel: 3,
+			tab: 10
+		},
+		{
+			contents: 'K to S',
+			isSelected: false,
+			hasNum: false,
+			beginnerLevel: 3,
+			tab: 20
+		},
+		{
+			contents: 'T to Z',
+			isSelected: false,
+			hasNum: false,
+			beginnerLevel: 3,
+			tab: 30
+		},
+		{
+			contents: 'NUMBERS',
+			isSelected: false,
+			hasNum: true,
+			beginnerLevel: 2,
+			tab: 40
+		},
+		{
+			contents: 'CHARACTERS',
+			isSelected: false,
+			hasNum: false,
+			beginnerLevel: 3,
+			tab: 50
+		},
+		{
+			contents: 'EXAM',
+			isSelected: false,
+			hasNum: true,
+			beginnerLevel: 0,
+			tab: 60
+		}
+	];
 
 	constructor(private sound: SoundComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
@@ -90,9 +95,9 @@ export class ExerciseComponent implements OnInit {
 		this.childLock = true;
 	}
 
-	selectCourse(courseNum, type, beginnerLevel) {
+	selectCourse(courseNum,  beginnerLevel, hasNum) {
 		this.beginnerLevel = beginnerLevel;
-
+		this.isNumInvolved = hasNum;
 		for(let i = 0, len = this.courses.length; i < len; i++) {
 			this.courses[i].isSelected = false;
 			this.niveau[i] = false;
@@ -102,7 +107,7 @@ export class ExerciseComponent implements OnInit {
 		this.courses[courseNum].isSelected = true;
 		this.niveau[courseNum] = true;
 		this.formatQuestions(this.lev, this.counter);
-		this.resetOnChangeCourse(courseNum);
+		this.resetOnChangeCourse();
 	}
 
 	selectLevel(selectedLevel, event) {
@@ -141,7 +146,7 @@ export class ExerciseComponent implements OnInit {
 		this.questions[levelNum].isSelected = true;
 	}
 
-	resetOnChangeCourse(courseNum) {
+	resetOnChangeCourse() {
 		for(let i = 0, len = this.questions.length; i < len; i++) {
 			this.questions[i].isSelected = false;
 		}
@@ -195,8 +200,8 @@ export class ExerciseComponent implements OnInit {
 		for(let i = 0, len = this.items.length; i < len; i++) {
 			this.result += this.items[i].text;
 		}
-		if(this.isCourseNum) {
-			this.result = this.result.replace(/#/g, '');	
+		if(this.isNumInvolved) {
+			this.result = this.result.replace(/#/g, '');
 		}
 		return this.result;
 	}
