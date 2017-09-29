@@ -169,7 +169,6 @@ export const QUESTIONS = [
 	],
 	[
 		[
-			'ab 12 k',
 			'i know you',
 			'she knew that',
 			'spy plane flies',
@@ -178,7 +177,7 @@ export const QUESTIONS = [
 			'do you know the guy?'
 		],
 		[
-			'we have discussed it',
+			'we\'ll pay him 300 dollars',
 			'since when do vegans eat pork?',
 			'hey! how are you?',
 			'donald trump may start war',
