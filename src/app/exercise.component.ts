@@ -20,7 +20,6 @@ export class ExerciseComponent implements OnInit {
 	counter: number;
 	lev: number;
 	map;
-	// say;
 	questions: any[] = [];
 	question: string;
 	myAnswer: string;
@@ -28,16 +27,12 @@ export class ExerciseComponent implements OnInit {
 	max: number;
 	isPopup: boolean;
 	questionForSpeak: any;
-
 	keydown: boolean = false;
 	stroke: number = 0;
-
 	niveau: any[] = [];
 	isNumInvolved: boolean = false;
 	beginnerLevel: number = 3;
-
 	childLock: boolean;
-
 	courses = [
 		{
 			contents: 'A to J',
@@ -95,7 +90,7 @@ export class ExerciseComponent implements OnInit {
 		this.childLock = true;
 	}
 
-	selectCourse(courseNum,  beginnerLevel, hasNum) {
+	selectCourse(courseNum, beginnerLevel, hasNum) {
 		this.beginnerLevel = beginnerLevel;
 		this.isNumInvolved = hasNum;
 		for(let i = 0, len = this.courses.length; i < len; i++) {
@@ -153,6 +148,7 @@ export class ExerciseComponent implements OnInit {
 		if(this.winRef.nativeWindow.speechSynthesis.speaking) {
 			this.winRef.nativeWindow.speechSynthesis.cancel();
 		}
+		this.sound.clearAll();
 		this.displayMsg('');
 		this.clearText();
 		this.question = '';

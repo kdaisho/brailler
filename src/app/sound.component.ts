@@ -25,18 +25,15 @@ export class SoundComponent implements OnChanges {
 	map;
 	say;
 	isRightKey = false;
-
 	audioCtx:any = false;
 	oscillator;
 	volume;
-
 	keyId = [];
 	id: string;
 	p;
 	sp;
 	lastBlock: boolean;
 	exceedBlock: boolean;
-
 	isNum: boolean = false;
 	numSignCount: number = 0;
 	numCancelCount: number = 0;
@@ -47,6 +44,7 @@ export class SoundComponent implements OnChanges {
 	speak;
 	keydown: boolean = false;
 	stroke: number = 0;
+	resetNum: boolean = false;
 
 	constructor(private winRef: WindowRef, public router: Router, private beep: AudioComponent) {
 		this.pathName = window.location.pathname;
@@ -61,6 +59,9 @@ export class SoundComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges) {
 		this.keyLock = this.parentLock;
+		//Reset focused position and number key
+		this.isNum = false;
+		this.counter = 0;
 	}
 
 	clearAll() {
