@@ -69,7 +69,6 @@ export class SoundComponent implements OnChanges {
 			this.items[i].pointer = false;
 		}
 		this.counter = 0;
-		this.isNum = false;
 		this.numSignCount = 0;
 		this.items[0].pointer = true;
 		this.exceedBlock = this.lastBlock = false;
@@ -337,6 +336,7 @@ export class SoundComponent implements OnChanges {
 					//Enter key
 					if(this.map[13] && this.counter !== 0) {
 						this.counter = 0;
+						this.isNum = false;
 					}
 
 					//Delete key

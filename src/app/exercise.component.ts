@@ -77,7 +77,6 @@ export class ExerciseComponent implements OnInit {
 	beginnerLevel: number = 3;
 
 	childLock: boolean;
-	childCounter: number;
 
 	constructor(private sound: SoundComponent, private winRef: WindowRef) {
 		this.items = patterns.legos;
@@ -264,7 +263,6 @@ export class ExerciseComponent implements OnInit {
 			this.stroke--;
 			if(this.keydown === true && this.stroke === 0) {
 				if(this.map[13]) {
-					this.childCounter = 0;
 					this.checkAnswer(this.lev, this.counter);
 				}
 			}
