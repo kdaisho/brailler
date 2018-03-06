@@ -32,7 +32,8 @@ import { CheatsheetComponent } from './cheatsheet.component';
 		HttpModule,
 		Ng2DeviceDetectorModule.forRoot()
 	],
-	providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}, SoundComponent, AudioComponent],
+	// providers: [WindowRef, {provide: LocationStrategy, useClass: HashLocationStrategy}, SoundComponent, AudioComponent],
+	providers: [WindowRef, SoundComponent, AudioComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
