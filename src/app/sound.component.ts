@@ -338,6 +338,8 @@ export class SoundComponent implements OnChanges {
 					if(this.map[13] && this.counter !== 0) {
 						this.counter = 0;
 						this.isNum = false;
+						this.exceedBlock = false;
+						this.lastBlock = false;
 					}
 
 					//Delete key
